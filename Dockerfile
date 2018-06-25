@@ -1,6 +1,6 @@
 FROM ubuntu:latest
 
-MAINTAINER skybird1233@gmail.com
+MAINTAINER Mitsuhiko Kai
 
 ENV LANG C.UTF-8
 ENV WORKING_DIR /var/www/html
@@ -16,4 +16,4 @@ RUN sudo apt-get -y install curl
 RUN curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
 RUN sudo apt-get install -y nodejs
 
-EXPOSE 8080
+EXPOSE 1234
