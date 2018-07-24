@@ -9,7 +9,8 @@ WORKDIR $WORKING_DIR
 
 RUN apt-get update && \
     apt-get install -y sudo \
-                       vim
+                       vim \
+                       gnupg
 RUN sudo apt-get -y install curl
 
 # install node.js
