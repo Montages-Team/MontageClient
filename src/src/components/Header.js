@@ -1,9 +1,12 @@
 import { h } from 'hyperapp';
+import { Link, Route, location } from '@hyperapp/router'
 import picostyle from "picostyle";
+
 const ps = picostyle(h)
 
 export default (state, action) => {
   const Header = ps("div")({
+    zIndex: "1",
     display: "block",
     width: "100%",
     height: "50px",
@@ -15,14 +18,17 @@ export default (state, action) => {
 
   const Wrapper = ps("div")({
     display: "block",
-    width: "90vw",
+    width: "76vw",
     margin: "auto",
   })
 
   const LeftWrapper = ps("div")({
     display: "block",
     height: "50px",
+    width: "auto",
     float: "left",
+    textAlign: "center",
+    paddingLeft: "15px"
   })
 
   const RightWrapper = ps("div")({
@@ -30,36 +36,89 @@ export default (state, action) => {
     height: "50px",
     float: "right",
     marginTop: "10px",
+    width: "auto"
   })
 
   const Logo = ps("a")({
     display: "inline-block",
-    float: "left",
     fontSize: "3vh",
     fontWeight: "bold",
     fontFamily: "Pacifico, Gerogia, Times, serif",
     color: "white",
+    textAlign: "left",
     lineHeight: "50px",
     ":hover": {
       color: "#444"
     }
   })
 
-  const Ml = ps("div")({
-    padding: "1000px"
+  const Spacer = ps("div")({
+    display: "inline-block",
+    padding: "0px 5px",
   })
+
+  const UnLoginedHeader = () =>
+    <Wrapper class="is-clearfix">
+      <LeftWrapper class="is-pulled-left">
+        <Logo>Montage</Logo>
+      </LeftWrapper>
+      <RightWrapper class="is-pulled-right">
+        <nav class="level">
+          <div class="level-right">
+          <div class="level-item">
+          <div class="field has-addons">
+            <p class="control">
+              <input class="input is-small" type="text" placeholder="アカウント名・ID"/>
+            </p>
+            <p class="control">
+              <button class="button is-small">
+                検索
+              </button>
+            </p>
+          </div>
+        </div>
+            <p class="level-item"><button class="button is-small">ログイン</button></p>
+            <p class="level-item"><button class="button is-small">新規登録</button></p>
+            <p class="level-item"><Link to="/">Home</Link></p>
+            <p class="level-item"><Link to="/user">User</Link></p>
+          </div>
+        </nav>
+      </RightWrapper>
+    </Wrapper>
+
+  const HomeHeader = () =>
+  <Wrapper class="is-clearfix">
+  <LeftWrapper class="is-pulled-left" id="header-left">
+    <Logo id="logo">Montage</Logo>
+  </LeftWrapper>
+  <RightWrapper class="desktop is-pulled-right" id="header-right">
+    <nav class="level">
+      <div class="level-right">
+      <div class="level-item">
+      <div class="field has-addons">
+        <p class="control">
+          <input class="input is-small" type="text" placeholder="アカウント名・ID"/>
+        </p>
+        <p class="control">
+          <button class="button is-small">
+            検索
+          </button>
+        </p>
+      </div>
+    </div>
+        <p class="level-item"><button class="button is-small">ログイン</button></p>
+        <p class="level-item"><button class="button is-small">新規登録</button></p>
+        {/* <p class="level-item"><Link to="/">Home</Link></p> */}
+        {/* <p class="level-item"><Link to="/user">User</Link></p> */}
+      </div>
+    </nav>
+  </RightWrapper>
+</Wrapper>
 
   return (
     <Header>
-      <Wrapper>
-        <LeftWrapper>
-          <Logo>Montage</Logo>
-        </LeftWrapper>
-        <RightWrapper>
-          <a class="button is-small">ログイン</a>
-          <a class="button is-small Ml">新規登録</a>
-        </RightWrapper>
-      </Wrapper>
+      <Route path="/" render={HomeHeader}/>
+      <Route path="/user" render={HomeHeader} />
     </Header>
   )
 }
