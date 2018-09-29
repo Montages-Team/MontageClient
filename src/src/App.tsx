@@ -12,18 +12,16 @@ import Home from './pages/Home'
 
 const ps = picostyle(h)
 const client = new ApolloClient({
-  uri: "http://localhost:8000/gql"
+  uri: "http://localhost:8000/gql/?"
 })
 
 client
-  .query({
-    query: gql`{
-users{
-  username,
-  isSuperuser
-}
-    }`
-  })
+  .query({query: gql`
+  {
+  users{
+    username
+  }
+    }`})
   .then(result => console.log(result))
 
 
