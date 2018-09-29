@@ -6,6 +6,5 @@ src/.cache/*.json
 node_modules/
 src/.cache/
 
-src/.cache/019bcc9ea0ee9923deee7de093f8dd57.json
-src/.DS_Store
+src/.cache/
 src/.DS_Store
