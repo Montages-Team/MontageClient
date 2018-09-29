@@ -1,3 +1,11 @@
 .DS_Store
+src/src/.DS_Store
 /src/node_modules
 /src/dist
+src/.cache/*.json
+node_modules/
+src/.cache/
+
+src/.cache/019bcc9ea0ee9923deee7de093f8dd57.json
+src/.DS_Store
+src/.DS_Store

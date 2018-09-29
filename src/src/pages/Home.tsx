@@ -1,10 +1,9 @@
-import { h } from 'hyperapp'
-import picostyle from 'picostyle'
+import { h, app } from "hyperapp";
+import picostyle from 'picostyle';
 
 const ps = picostyle(h)
 
-export default (state, action) => {
-  
+export default (state: object, action: object) => {
   const Wrapper = ps("div")({
     paddingTop: "75px"
   })
@@ -30,7 +29,7 @@ export default (state, action) => {
     width: "60%",
     height: "60%",
   })
-  
+
   const CatchCopy = ps("p")({
     fontSize: "2.7vh",
     fontWeight: "bold",

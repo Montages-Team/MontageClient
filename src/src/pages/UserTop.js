@@ -17,7 +17,7 @@ export default (state, action) => {
 
   const ContentWrapper = ps("div")({
     margin: "0 auto",
-    width: "74vw",
+    width: "68vw",
     height: "100%",
     color: "#555",
 	  "@media (max-width: 770px)": {
@@ -63,7 +63,7 @@ export default (state, action) => {
     display: "block",
     background: "white",
     float: "right",
-    width: "77%",
+    width: "75%",
     padding: "20px",
     border: "1px solid #eee",
     borderRadius: "5px",
@@ -87,16 +87,18 @@ export default (state, action) => {
   })
   const QuestionText = ps("p")({
     margin: "0px",
-    padding: "0px"
+    padding: "0px",
+    gridColumn: "1/3"
   })
   const AnswerButton = ps("button")({
     marginTop: "10px",
-    padding: "5px 10px",
-    float: "right",
+    padding: "1px 0px",
+    width: "100%",
+    fontSize: "80%",
     outline: "0px",
     border: `1px solid ${primary}`,
     borderRadius: "5px",
-    color: `${primary}`,
+    color: `#AA1D81`,
     background: "white"
   })
   const NewQuestionForm = ps("input")({
@@ -114,10 +116,10 @@ export default (state, action) => {
     position: "relative",
     marginTop: "10px",
     marginLeft: "20px",
-    padding: "10px",
+    padding: "10px 25px",
     borderRadius: "10px",
     background: "#eee",
-    marginRight: "12%",
+    width: "auto",
     float: "left",
     "::before": {
       position: "absolute",
@@ -142,6 +144,24 @@ export default (state, action) => {
     marginTop: "15px",
     borderRadius: "5px"
   })
+  const ProfileQuestionWrapper = ps('div')({
+    display: "grid",
+    gridTemplateColumns: "50px 1fr"
+  })
+  const CollageButton = ps('span')({
+    display: "block",
+    color: `${primary}`,
+    float: "right",
+    marginTop: "10px",
+    fontSize: "80%",
+    padding: "2px 5px",
+    borderRadius: "5px",
+    border: `${primary} 1px solid`,
+    marginLeft: "10px"
+  })
+  const ButtonsArea = ps('div')({
+    display: "block"
+  })
   return (
     <Wrapper>
       <ContentWrapper class="clearfix">
@@ -153,7 +173,7 @@ export default (state, action) => {
             Follow: <a href="#">10</a> Follower: <a href="#">10</a>
           </ProfileArea>
         </LeftColumn>
-        <RightColumn>
+        <RightColumn class="clearfix">
           <Heading class="mb15">Princeに質問する</Heading>
           <Questions>
           <QuestionWrapper>
@@ -195,7 +215,8 @@ export default (state, action) => {
           </Questions>
           <Heading class="mb15">Princeへの質問と回答</Heading>
           <NewQuestionForm class="clearfix" type="text" placeholder="新しい質問をつくりましょう"/>
-            <QuestionText>
+          <ProfileQuestionWrapper>
+            <QuestionText class="clearfix">
               Q. いままで何カ国を旅したことがありますか？
             </QuestionText>
             <ProfileImage src="http://kalamu.com/neogriot/wp-content/uploads/2016/11/prince-02.jpg" />
@@ -203,6 +224,12 @@ export default (state, action) => {
               ハワイ、カナダ、オーストラリアの3カ国です！！<br />
               ほかにもいろんな国にいきたいなぁ〜〜
             </AnswerText>
+          </ProfileQuestionWrapper>
+          <ButtonsArea class="clearfix">
+            <CollageButton>すべての回答</CollageButton>
+            <CollageButton>回答する</CollageButton>
+          </ButtonsArea>
+          hoge
         </RightColumn>
       </ContentWrapper>
     </Wrapper>

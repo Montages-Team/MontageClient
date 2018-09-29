@@ -18,7 +18,7 @@ export default (state, action) => {
 
   const Wrapper = ps("div")({
     display: "block",
-    width: "76vw",
+    width: "68vw",
     margin: "auto",
   })
 
