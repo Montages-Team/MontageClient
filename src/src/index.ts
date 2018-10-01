@@ -5,4 +5,3 @@ import state from './state'
 import view from './App'
 
 const main = app(state, actions, view, document.body)
-const unsubscribe = location.subscribe(main.location)
