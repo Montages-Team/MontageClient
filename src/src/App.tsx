@@ -7,12 +7,11 @@ import gql from "graphql-tag"
 import Header from './components/Header'
 import Footer from './components/Footer'
 import UserTop from './pages/UserTop'
-import Gql from './components/Gql'
 import Home from './pages/Home'
 
 const ps = picostyle(h)
 const client = new ApolloClient({
-  uri: "http://localhost:8000/gql/?"
+  uri: "https://montage-graphql-api.herokuapp.com/gql/"
 })
 
 client
@@ -22,8 +21,9 @@ client
     username
   }
     }`})
-  .then(result => console.log(result))
-
+  .then(result => {
+    console.log(result.data.users.map(user=>user.username))
+  })
 
 export default (state, action) => {
   const Wrapper = ps("div")({
@@ -37,7 +37,6 @@ export default (state, action) => {
       <Header/>
       <Route path="/" render={Home} />
       <Route path="/user" render={UserTop} />
-      <Gql/>
       <Footer/>
     </Wrapper>
   )
