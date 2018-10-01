@@ -1,5 +1,5 @@
 import { h } from 'hyperapp';
-import { Link, Route, location } from '@hyperapp/router'
+import { Link, Route } from '@hyperapp/router'
 import picostyle from "picostyle";
 
 const ps = picostyle(h)
@@ -50,11 +50,6 @@ export default (state, action) => {
     ":hover": {
       color: "#444"
     }
-  })
-
-  const Spacer = ps("div")({
-    display: "inline-block",
-    padding: "0px 5px",
   })
 
   const UnLoginedHeader = () =>

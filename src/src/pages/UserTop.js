@@ -1,9 +1,6 @@
 import { h } from 'hyperapp'
 import picostyle from 'picostyle'
 
-import UserProfile from '../components/UserProfile'
-import NewQuestions from '../components/NewQuestions';
-
 const ps = picostyle(h)
 const primary = "#B464A3"
 
