@@ -1,5 +1,5 @@
 import { h } from 'hyperapp';
-import { Link, Route } from '@hyperapp/router'
+import { Route } from '@hyperapp/router'
 import picostyle from "picostyle";
 
 const ps = picostyle(h)
