@@ -2,7 +2,6 @@ import { h } from 'hyperapp'
 import picostyle from 'picostyle'
 
 const ps = picostyle(h)
-const primary = "#B464A3"
 
 export default (state, action) => {
   const Wrapper = ps("div")({

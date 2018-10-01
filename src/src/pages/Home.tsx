@@ -1,4 +1,4 @@
-import { h, app } from "hyperapp";
+import { h } from "hyperapp";
 import picostyle from 'picostyle';
 
 const ps = picostyle(h)

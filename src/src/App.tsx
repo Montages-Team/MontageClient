@@ -1,5 +1,5 @@
 import { h } from 'hyperapp';
-import { Link, Route, location } from '@hyperapp/router'
+import { Route } from '@hyperapp/router'
 import picostyle from 'picostyle'
 import ApolloClient from "apollo-boost"
 import gql from "graphql-tag"

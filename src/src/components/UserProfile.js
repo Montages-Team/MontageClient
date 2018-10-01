@@ -2,7 +2,6 @@ import { h } from 'hyperapp'
 import picostyle from 'picostyle'
 
 const ps = picostyle(h)
-const primary = "#B464A3"
 
 export default (state, action) => {
   const Wrapper = ps("div")({
@@ -11,7 +10,7 @@ export default (state, action) => {
   const Descripton = ps("div")({
     padding: "0px 10px 0px 10px",
   })
-  
+
   const UserName = ps("p")({
     color: "#444",
     fontSize: "20px",

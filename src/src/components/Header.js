@@ -52,35 +52,6 @@ export default (state, action) => {
     }
   })
 
-  const UnLoginedHeader = () =>
-    <Wrapper class="is-clearfix">
-      <LeftWrapper class="is-pulled-left">
-        <Logo>Montage</Logo>
-      </LeftWrapper>
-      <RightWrapper class="is-pulled-right">
-        <nav class="level">
-          <div class="level-right">
-          <div class="level-item">
-          <div class="field has-addons">
-            <p class="control">
-              <input class="input is-small" type="text" placeholder="アカウント名・ID"/>
-            </p>
-            <p class="control">
-              <button class="button is-small">
-                検索
-              </button>
-            </p>
-          </div>
-        </div>
-            <p class="level-item"><button class="button is-small">ログイン</button></p>
-            <p class="level-item"><button class="button is-small">新規登録</button></p>
-            <p class="level-item"><Link to="/">Home</Link></p>
-            <p class="level-item"><Link to="/user">User</Link></p>
-          </div>
-        </nav>
-      </RightWrapper>
-    </Wrapper>
-
   const HomeHeader = () =>
   <Wrapper class="is-clearfix">
   <LeftWrapper class="is-pulled-left" id="header-left">
@@ -103,8 +74,6 @@ export default (state, action) => {
     </div>
         <p class="level-item"><button class="button is-small">ログイン</button></p>
         <p class="level-item"><button class="button is-small">新規登録</button></p>
-        {/* <p class="level-item"><Link to="/">Home</Link></p> */}
-        {/* <p class="level-item"><Link to="/user">User</Link></p> */}
       </div>
     </nav>
   </RightWrapper>
