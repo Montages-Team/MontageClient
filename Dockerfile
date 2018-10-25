@@ -20,6 +20,10 @@ RUN sudo apt-get install -y nodejs
 
 EXPOSE 1234
 <<<<<<< HEAD
+<<<<<<< HEAD
 EXPOSE 8040
 =======
 >>>>>>> 862041386ff906532a20946af6cb57dd8914e434
+=======
+EXPOSE 8040
+>>>>>>> staging
