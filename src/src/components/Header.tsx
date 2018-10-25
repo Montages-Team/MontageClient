@@ -4,7 +4,7 @@ import picostyle from "picostyle";
 
 const ps = picostyle(h)
 
-export default (state, action) => {
+export default (state: object, action: object) => {
   const Header = ps("div")({
     zIndex: "1",
     display: "block",

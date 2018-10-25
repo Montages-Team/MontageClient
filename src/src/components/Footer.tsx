@@ -11,7 +11,9 @@ const ContentWrapper = ps("div")({
   color: "#555",
 })
 
-export default (state, action) => {
+export default (
+  state: object,
+  action: object) => {
   return (
     <ContentWrapper>
       <footer class="footer mr-auto">

@@ -27,6 +27,7 @@
     "@hyperapp/logger": "^0.5.0",
     "@hyperapp/render": "^2.0.0",
     "@hyperapp/router": "^0.7.0",
+    "@types/jest": "^23.3.7",
     "apollo-boost": "^0.1.14",
     "apollo-cache-inmemory": "^1.2.10",
     "apollo-client": "^2.4.2",

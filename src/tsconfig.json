@@ -5,6 +5,7 @@
     "jsxFactory": "h",
     "paths": {
       "@app/*": ["src/*"]
-    }
+    },
+    "baseUrl": ".",
   }
 }

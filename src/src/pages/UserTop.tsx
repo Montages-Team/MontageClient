@@ -4,7 +4,7 @@ import picostyle from 'picostyle'
 const ps = picostyle(h)
 const primary = "#B464A3"
 
-export default (state, action) => {
+export default (state: object, action: object) => {
   const Wrapper = ps("div")({
     paddingTop: "75px",
 	  "@media (max-width: 770px)": {

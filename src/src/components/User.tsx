@@ -1,9 +1,10 @@
 import { h } from 'hyperapp'
+
 import picostyle from 'picostyle'
 
 const ps = picostyle(h)
 
-export default (state, action) => {
+export default (state: object, action: object) => {
   const Wrapper = ps("div")({
     padding: "20px",
     marginBottom: "5px",

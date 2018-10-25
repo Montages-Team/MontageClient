@@ -21,11 +21,13 @@ client
     username
   }
     }`})
-  .then(result => {
-    console.log(result.data.users.map(user=>user.username))
+  .then((result: any) => {
+    console.log(result.data.users.map((
+      user: any,
+      )=> user.username))
   })
 
-export default (state, action) => {
+export default (state: any, action: any) => {
   const Wrapper = ps("div")({
     display: "block",
     padding: "none",

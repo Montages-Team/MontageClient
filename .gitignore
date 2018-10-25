@@ -2,7 +2,7 @@
 src/src/.DS_Store
 /src/node_modules
 /src/dist
-src/.cache/*.json
+/src/.cache/*.json
 node_modules/
 src/.cache/
 
@@ -10,3 +10,4 @@ src/.cache/
 src/.DS_Store
 src/.cache
 src/.cache/*.json
+*.json
