@@ -27,9 +27,6 @@
     "@hyperapp/logger": "^0.5.0",
     "@hyperapp/render": "^2.0.0",
     "@hyperapp/router": "^0.7.0",
-<<<<<<< HEAD
-    "bulma": "^0.7.1",
-=======
     "@types/jest": "^23.3.7",
     "apollo-boost": "^0.1.14",
     "apollo-cache-inmemory": "^1.2.10",
@@ -41,7 +38,6 @@
     "cross-fetch": "^2.2.2",
     "graphql": "^14.0.2",
     "graphql-tag": "^2.9.2",
->>>>>>> staging
     "hyperapp": "^1.2.6",
     "hyperapp-apollo": "^0.4.0",
     "jquery": "^3.3.1",
