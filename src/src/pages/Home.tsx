@@ -46,7 +46,7 @@ export default (state: object, action: object) => {
     textAlign: "center"
   })
 
-  const NewReg = ps("p")({
+  const SignupBtn = ps("p")({
     display: "block",
     textAlign: "center",
     textDecoration: "underline",
@@ -91,9 +91,9 @@ export default (state: object, action: object) => {
               </span>
               <span>Twitterアカウントでログイン</span>
             </a>
-            <NewReg>
+            <SignupBtn>
               <a href="#">アカウントを新規登録する</a>
-            </NewReg>
+            </SignupBtn>
           </ButtonsArea>
         </div>
       </div>
