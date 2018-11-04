@@ -3,7 +3,7 @@
 1. `docker build -t montage-client:1.0 ./`
 2. `bash drun.sh montage-client montage-client:1.0`
 3. exitで環境から抜ける
-4. 再度コンテナに入る場合はｓ `docker exec -it montage-client /bin/bash`
+4. 再度コンテナに入る場合は `docker exec -it montage-client /bin/bash`
 
 ## モジュールのインストール
 #### dockerでインストール(推奨)
