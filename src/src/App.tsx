@@ -21,7 +21,7 @@ client
     username
   }
     }`})
-  .then((result: object) => {
+  .then((result: object[object]) => {
     console.log(result.data.users.map((
       user: object,
       )=> user.username))
