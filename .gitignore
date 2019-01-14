@@ -10,4 +10,3 @@ src/.cache/
 src/.DS_Store
 src/.cache
 src/.cache/*.json
-*.json
