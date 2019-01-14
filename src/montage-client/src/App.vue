@@ -5,8 +5,8 @@
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
-import Header from './components/Header'
+import HelloWorld from './components/HelloWorld';
+import Header from './components/Header';
 
 export default {
   name: 'App',
@@ -14,12 +14,12 @@ export default {
     HelloWorld,
     Header,
   },
-  data () {
+  data() {
     return {
       //
-    }
-  }
-}
+    };
+  },
+};
 </script>
 
 <style lang="stylus">
