@@ -71,16 +71,17 @@ body
   clear: both
   display: block
 
-  @media screen and (max-width: 770px)
-    div.desktop display:none
+@media screen and (max-width: 770px)
+  div.desktop display:none
 
-/*ヘッダー */
-#header-right-hamburger
-  background: red
-  display: none
+  /*ヘッダー */
+  #header-right-hamburger
+    background: red
+    display: none
 
   @media screen and (max-width: 770px)
     #header-left width: 100%
+
 
 footer a
   text-decoration: underline
