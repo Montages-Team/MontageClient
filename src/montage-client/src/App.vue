@@ -79,34 +79,26 @@ body
     background: red
     display: none
 
-  @media screen and (max-width: 770px)
-    #header-left width: 100%
+@media screen and (max-width: 770px)
+  #header-left width: 100%
 
+  footer a
+    text-decoration: underline
 
-footer a
-  text-decoration: underline
+  img#profile
+    // border-radius: 100%
+    border-top-left-radius: 5px
+    border-top-right-radius: 5px
+    width: 100%
+    display: inline-block
 
-img#profile
-  // border-radius: 100%
-  border-top-left-radius: 5px
-  border-top-right-radius: 5px
-  width: 100%
-  display: inline-block
-
-  /* スマホ向け */
-  @media screen and (max-width: 770px)
-    /* ユーザレイアウト */
-    img#profile
+@media screen and (max-width: 770px)
+  img#profile
     height: 30vh
     object-fit: cover
 
-/* スペーシング*/
-/* Padding Zero */
-
 .p0
   padding: 0!important
-
-/* Padding Top */
 
 .pt10
   padding-top: 10px!important
