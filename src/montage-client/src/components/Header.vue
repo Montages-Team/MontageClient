@@ -1,8 +1,8 @@
-<template lang=pug>
+<template lang="pug">
   .wrapper.is-clearfix
-    leftwrapper#header-left.is-pulled-left
-      logo#logo Montage
-    rightwrapper#header-right.desktop.is-pulled-right
+    #header-left.is-pulled-left
+      #logo Montage
+    #header-right.desktop.is-pulled-right
       nav.level
         .level-right
           .level-item
@@ -18,7 +18,7 @@
             button.button.is-small 新規登録
 </template>
 
-<style lang=stylus>
+<style lang="stylus">
    .wrapper
       display: block
       width: 68vw
