@@ -5,6 +5,13 @@ import picostyle from "picostyle";
 const ps = picostyle(h)
 
 export default (state: object, action: object) => {
+
+   .wrapper
+      display: block
+      width: 68vw
+      margin: auto
+
+
   const Header = ps("div")({
     zIndex: "1",
     display: "block",
@@ -15,13 +22,6 @@ export default (state: object, action: object) => {
     boxShadow: "1px 2px 5px #AAA",
     textAlign: "center",
   })
-
-  const Wrapper = ps("div")({
-    display: "block",
-    width: "68vw",
-    margin: "auto",
-  })
-
   const LeftWrapper = ps("div")({
     display: "block",
     height: "50px",

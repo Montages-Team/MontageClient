@@ -1,5 +1,5 @@
 <template lang="pug">
-  v-container
+  div
     span(v-for="user in users") {{user.username}}
 </template>
 
