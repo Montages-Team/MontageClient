@@ -1,33 +1,18 @@
-<template>
-  <v-app>
-    <v-toolbar app>
-      <v-toolbar-title class="headline text-uppercase">
-        <span>Vuetify</span>
-        <span class="font-weight-light">MATERIAL DESIGN</span>
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn
-        flat
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-      >
-        <span class="mr-2">Latest Release</span>
-      </v-btn>
-    </v-toolbar>
-
-    <v-content>
-      <HelloWorld/>
-    </v-content>
-  </v-app>
+<template lang="pug">
+  div
+    Header
+    HelloWorld
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld'
+import Header from './components/Header'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    HelloWorld,
+    Header,
   },
   data () {
     return {
@@ -79,34 +64,26 @@ body
     background: red
     display: none
 
-  @media screen and (max-width: 770px)
-    #header-left width: 100%
+@media screen and (max-width: 770px)
+  #header-left width: 100%
 
+  footer a
+    text-decoration: underline
 
-footer a
-  text-decoration: underline
+  img#profile
+    // border-radius: 100%
+    border-top-left-radius: 5px
+    border-top-right-radius: 5px
+    width: 100%
+    display: inline-block
 
-img#profile
-  // border-radius: 100%
-  border-top-left-radius: 5px
-  border-top-right-radius: 5px
-  width: 100%
-  display: inline-block
-
-  /* スマホ向け */
-  @media screen and (max-width: 770px)
-    /* ユーザレイアウト */
-    img#profile
+@media screen and (max-width: 770px)
+  img#profile
     height: 30vh
     object-fit: cover
 
-/* スペーシング*/
-/* Padding Zero */
-
 .p0
   padding: 0!important
-
-/* Padding Top */
 
 .pt10
   padding-top: 10px!important
