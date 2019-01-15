@@ -1,4 +1,4 @@
-import gql from 'graphql-tag'
+import gql from 'graphql-tag';
 
 export const ALL_USERS = gql`
     {
@@ -8,4 +8,4 @@ export const ALL_USERS = gql`
         isSuperuser
         }
     }
-    `
+    `;
