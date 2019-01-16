@@ -2,17 +2,20 @@
   div
     Header
     HelloWorld
+    UserTop
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld';
 import Header from './components/Header';
+import UserTop from './components/UserTop';
 
 export default {
   name: 'App',
   components: {
     HelloWorld,
     Header,
+    UserTop,
   },
   data() {
     return {
@@ -66,7 +69,6 @@ body
     text-decoration underline
 
   img#profile
-    // border-radius 100%
     border-top-left-radius 5px
     border-top-right-radius 5px
     width 100%

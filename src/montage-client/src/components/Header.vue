@@ -18,7 +18,7 @@
             button.button.is-small 新規登録
 </template>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
    .wrapper
       display block
       width 68vw
