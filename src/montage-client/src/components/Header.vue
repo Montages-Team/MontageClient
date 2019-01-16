@@ -20,43 +20,43 @@
 
 <style lang="stylus">
    .wrapper
-      display: block
-      width: 68vw
-      margin: auto
+      display block
+      width 68vw
+      margin auto
 
-  .Header
-    zIndex: 1
-    display: block
-    width: 100%
-    height: 50px
-    background: linear-gradient(#B464A3#807DBA)
-    position: fixed
-    boxShadow: 1px 2px 5px #AAA
-    textAlign: center
+  .header
+    z-index 1
+    display block
+    width 100%
+    height 50px
+    background linear-gradient(#B464A3#807DBA)
+    position fixed
+    box-shadow 1px 2px 5px #AAA
+    text-align center
 
-  .LeftWrapper
-    display: block
-    height: 50px
-    width: auto
-    float: left
-    textAlign: center
-    paddingLeft: 15px
+  .left_wrapper
+    display block
+    height 50px
+    width auto
+    float left
+    text-align center
+    padding-left 15px
 
-  .RightWrapper
-    display: block
-    height: 50px
-    float: right
-    marginTop: 10px
-    width: auto
+  .right_wrapper
+    display block
+    height 50px
+    float right
+    margin-top 10px
+    width auto
 
-  .Logo
-    display: inline-block
-    fontSize: 3vh
-    fontWeight: bold
-    fontFamily: Pacifico, Gerogia, Times, serif
-    color: white
-    textAlign: left
-    lineHeight: 50px
+  #logo
+    display inline-block
+    font-size 3vh
+    font-weight bold
+    font-family Pacifico, Gerogia, Times, serif
+    color white
+    text-align left
+    line-height 50px
     &:hover
-      color: #444
+      color #444
 </style>
