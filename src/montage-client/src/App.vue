@@ -2,17 +2,22 @@
   div
     Header
     HelloWorld
+    montage_footer
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld';
 import Header from './components/Header';
+import montage_footer from './components/montage_footer';
+
+// TODO: Rename components in Kebab case
 
 export default {
   name: 'App',
   components: {
     HelloWorld,
     Header,
+    montage_footer,
   },
   data() {
     return {
