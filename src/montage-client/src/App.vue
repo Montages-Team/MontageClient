@@ -9,8 +9,8 @@ import HelloWorld from './components/HelloWorld';
 import Header from './components/Header';
 
 export default {
-  name 'App',
-  components {
+  name: 'App',
+  components: {
     HelloWorld,
     Header,
   },

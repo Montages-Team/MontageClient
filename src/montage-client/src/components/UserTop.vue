@@ -1,4 +1,4 @@
-<template lang=pug>
+<template lang="pug">
   .wrapper
     .content_wrapper.clearfix
       .left_column
