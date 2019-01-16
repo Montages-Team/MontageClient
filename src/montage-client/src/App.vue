@@ -2,20 +2,20 @@
   div
     Header
     HelloWorld
-    UserTop
+    Home
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld';
 import Header from './components/Header';
-import UserTop from './components/UserTop';
+import Home from './pages/Home';
 
 export default {
   name: 'App',
   components: {
     HelloWorld,
     Header,
-    UserTop,
+    Home,
   },
   data() {
     return {
