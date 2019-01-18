@@ -3,11 +3,13 @@
     Header
     HelloWorld
     Home
+    montage_footer
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld';
 import Header from './components/Header';
+import montage_footer from './components/montage_footer';
 import Home from './pages/Home';
 
 export default {
@@ -15,6 +17,7 @@ export default {
   components: {
     HelloWorld,
     Header,
+    montage_footer,
     Home,
   },
   data() {
