@@ -1,41 +1,49 @@
 <script>
-import { ALL_USERS } from '../../constants/query';
-// import { CreateRelation } from '../../constants/follow-query';
 import { CreateCategory } from '../../constants/category-query.ts';
+import { CreateRelation } from '../../constants/follow-query';
+import { DeleteRelation } from '../../constants/unfollow-query.ts';
 
-const followingUserId = 1
-const followedUserId = 4
+/*
+TODO
+- [x] unfollow作っておく
+- [ ] mutationをべた書きじゃなくする
+- [x] queryの中身の精査
+- [ ] フォローすると解除を切り替える
+- [ ] Vuex
+
+*/
+
 export default {
-  data: () => ({
-    users: [],
-  }),
-  // これはfetchしてくる場合
-  apollo: {
-    users: ALL_USERS,
-  },
+  data: () => ({}),
   methods: {
-    follow() {
-      // データで一回取ったものを再取得するにはこうする
-      // this.$apollo.queries.users.refetch()
-      // console.log(this.users)
-      console.log('categoryします')
+    // follow() {
+    //   this.$apollo.mutate({
+    //     mutation: CreateRelation,
+    //     variables: {
+    //       followingUserId: 1,
+    //       followedUserId: 35
+    //     }
+    //   }).then(data => {
+    //     console.log(data)
+    //   });
+    // },
+    // unfollow() {
+    //   this.$apollo.mutate({
+    //     mutation: DeleteRelation,
+    //   }).then(data => {
+    //     console.log(data)
+    //   });
+    // },
+    makecategory() {
       this.$apollo.mutate({
-        // mutation: CreateRelation,
         mutation: CreateCategory,
-        variables: {
-          // followingUserId: followingUserId,
-          // followedUserId: followedUserId,
-          input: { name: 'お買い物', description: '甲斐光彦のお買い物情報を垂れ流す' }
-        }
       }).then(data => {
-        console.log('thenのとき')
         console.log(data)
       });
+      variables: {
+        input: { name: 'hoge'; description: 'fuga' }
+      }
     },
-    unfollow() {
-
-
-    }
   },
 }
 </script>
@@ -43,7 +51,7 @@ export default {
 <template lang="pug">
   div
     #overlay-follow-prof
-        a(href='#' @click='follow') +
+        a(href='#' @click='makecategory') +
 </template>
 
 <style lang="stylus">
@@ -56,3 +64,5 @@ export default {
   background #7957d5
   border-radius 100%
 </style>
+
+
