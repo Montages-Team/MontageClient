@@ -1,6 +1,7 @@
 <template lang="pug">
   div
     Header
+    followButton
     HelloWorld
     Home
 </template>
@@ -9,12 +10,14 @@
 import HelloWorld from './components/HelloWorld';
 import Header from './components/Header';
 import Home from './pages/Home';
+import followButton from './components/elements/followButton';
 
 export default {
   name: 'App',
   components: {
     HelloWorld,
     Header,
+    followButton,
     Home,
   },
   data() {
