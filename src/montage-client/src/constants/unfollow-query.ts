@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 
-export const CreateRelation = gql`
-  mutation{
-      deleteRelation(id: Int!){
+export const DeleteRelation = gql`
+  mutation ($id: Int){
+      deleteRelation(id: $id){
         ok
       }
     }

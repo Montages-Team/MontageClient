@@ -1,58 +1,50 @@
+<template lang="pug">
+  div
+    #overlay-follow-prof
+        a(href='#' @click='unfollow') +
+</template>
+
 <script>
-import { CreateCategory } from '../../constants/category-query.ts';
 import { CreateRelation } from '../../constants/follow-query';
-import { DeleteRelation } from '../../constants/unfollow-query.ts';
+import { DeleteRelation } from '../../constants/unfollow-query';
 
 /*
 TODO
 - [x] unfollow作っておく
-- [ ] mutationをべた書きじゃなくする
+- [x] mutationをべた書きじゃなくする
 - [x] queryの中身の精査
-- [ ] フォローすると解除を切り替える
+- [x] フォローすると解除を切り替える
 - [ ] Vuex
 
 */
 
 export default {
-  data: () => ({}),
+  data: () => ({
+    loggined_user_id,
+    user_id,
+    relation_id,
+  }),
   methods: {
-    // follow() {
-    //   this.$apollo.mutate({
-    //     mutation: CreateRelation,
-    //     variables: {
-    //       followingUserId: 1,
-    //       followedUserId: 35
-    //     }
-    //   }).then(data => {
-    //     console.log(data)
-    //   });
-    // },
-    // unfollow() {
-    //   this.$apollo.mutate({
-    //     mutation: DeleteRelation,
-    //   }).then(data => {
-    //     console.log(data)
-    //   });
-    // },
-    makecategory() {
+    follow() {
       this.$apollo.mutate({
-        mutation: CreateCategory,
-      }).then(data => {
-        console.log(data)
+        mutation: CreateRelation,
+        variables: {
+          followingUserId: this.loggined_user.id,
+          followedUserId: this.user.id,
+        },
       });
-      variables: {
-        input: { name: 'hoge'; description: 'fuga' }
-      }
+    },
+    unfollow() {
+      this.$apollo.mutate({
+        mutation: DeleteRelation,
+        variables: {
+          id: this.relation_id,
+        },
+      });
     },
   },
-}
+};
 </script>
-
-<template lang="pug">
-  div
-    #overlay-follow-prof
-        a(href='#' @click='makecategory') +
-</template>
 
 <style lang="stylus">
 #overlay-follow-prof
@@ -64,5 +56,3 @@ export default {
   background #7957d5
   border-radius 100%
 </style>
-
-
