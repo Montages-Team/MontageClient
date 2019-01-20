@@ -4,11 +4,13 @@
     followButton
     HelloWorld
     Home
+    montage_footer
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld';
 import Header from './components/Header';
+import montage_footer from './components/montage_footer';
 import Home from './pages/Home';
 import followButton from './components/elements/followButton';
 
@@ -18,6 +20,7 @@ export default {
     HelloWorld,
     Header,
     followButton,
+    montage_footer,
     Home,
   },
   data() {
