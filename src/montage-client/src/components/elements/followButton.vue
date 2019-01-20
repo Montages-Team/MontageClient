@@ -1,7 +1,7 @@
 <template lang="pug">
   div
-    #overlay-follow-prof
-        a(href='#' @click='unfollow') +
+    a(href='#' @click='follow')
+      .follow_button +
 </template>
 
 <script>
@@ -20,9 +20,9 @@ TODO
 
 export default {
   data: () => ({
-    loggined_user_id,
-    user_id,
-    relation_id,
+    loggined_user_id: null,
+    user_id: null,
+    relation_id: null,
   }),
   methods: {
     follow() {
@@ -47,12 +47,19 @@ export default {
 </script>
 
 <style lang="stylus">
-#overlay-follow-prof
-  width: 30px;
-  height: 30px;
+a:link, a:visited
+  color #aaa
+  font-weight bold
+  &:hover
+    color #888
+
+.follow_button
+  width 30px
+  height 30px
   margin 15px
-  padding 0px 10px
-  color white
-  background #7957d5
+  padding 3px 10px
+  background #eee
   border-radius 100%
+  box-shadow 1px 1px 1px #aaa
+
 </style>
