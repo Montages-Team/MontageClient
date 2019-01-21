@@ -1,17 +1,41 @@
 {
-  "defaultSeverity": "error",
-  "extends": "tslint:recommended",
-  "linterOptions": {
-    "exclude": ["./node_modules/**"]
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "strict": true,
+    "jsx": "preserve",
+    "importHelpers": true,
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "allowJs": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "types": [
+      "webpack-env",
+      "jest"
+    ],
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    },
+    "lib": [
+      "esnext",
+      "dom",
+      "dom.iterable",
+      "scripthost"
+    ]
   },
-  "jsRules": {},
-  "rules": {
-      "quotemark": [true, "single"],
-      "indent": [true, "spaces", 2],
-      "interface-name": false,
-      "ordered-imports": false,
-      "object-literal-sort-keys": false,
-      "no-consecutive-blank-lines": false
-  },
-  "rulesDirectory": []
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "tests/**/*.ts",
+    "tests/**/*.tsx"
+  ],
+  "exclude": [
+    "*/node_modules/**/*"
+  ]
 }
