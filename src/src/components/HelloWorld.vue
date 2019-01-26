@@ -7,6 +7,18 @@
 <script>
   import { ALL_USERS } from '../constants/query';
   import { gql } from 'apollo-boost';
+  const hello_query_cache = gql`
+        query{
+          hello @client {
+            msg
+          }
+        }`;
+  const hello_mutation_cache = gql`
+            mutation($msg: String!) {
+              updateHello(message: $msg) @client
+            }
+          `;
+
   export default {
     data: () => ({
       users: [],
@@ -14,21 +26,12 @@
     }),
     apollo: {
       users: ALL_USERS,
-      hello: gql`
-        query{
-          hello @client {
-            msg
-          }
-        }`,
+      hello: hello_query_cache,
     },
     mounted() {
       this.$apollo
         .mutate({
-          mutation: gql`
-            mutation($msg: String!) {
-              updateHello(message: $msg) @client
-            }
-          `,
+          mutation: hello_mutation_cache,
           variables: {
             msg: 'hello from link-state!',
           },
