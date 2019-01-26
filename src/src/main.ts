@@ -17,14 +17,15 @@ const cache = new InMemoryCache();
 
 const resolvers = {
   Mutation: {
-    updateHello(_: any, { message }: {message: any}, { cache }: { cache: any }) {
+    updateHello(_: any, { message }: {message: any}) {
       const data = {
         hello: {
           __typename: 'Hello',
           msg: message,
         },
       };
-      return cache.writeData({ data });
+      cache.writeData({ data });
+      return null;
     },
   },
 };
@@ -35,7 +36,7 @@ const link = withClientState({
   defaults: {
     hello: {
       __typename: 'Hello',
-      msg: 'world',
+      msg: 'world!',
     },
   },
 });
