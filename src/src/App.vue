@@ -1,10 +1,6 @@
 <template lang="pug">
   div
-    Header
-    followButton
     HelloWorld
-    Home
-    montage_footer
 </template>
 
 <script>
