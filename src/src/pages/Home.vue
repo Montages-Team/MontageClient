@@ -15,7 +15,6 @@
           .vertical_spacer
             .heading ログイン・新規登録
             .buttons_area
-              // TODO: is-primaryはbulmaの色指定になっているのでbuefyへ変更する必要
               a.button.is-primary.is-fullwidth.mb10
                 span.icon
                   img.icon(src='https://1.bp.blogspot.com/-Oj1kdRN-f3A/Wzm6njg1V4I/AAAAAAAABYk/AQiC2wwyvBMeAraoqoDReXymOLVlKZJGgCLcBGAs/s320/default.png')

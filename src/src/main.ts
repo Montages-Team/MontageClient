@@ -4,10 +4,10 @@ import router from './router';
 import store from './store';
 import './registerServiceWorker';
 import { createProvider } from './vue-apollo';
-import Buefy from 'buefy';
-import 'buefy/dist/buefy.css';
+import '../semantic/dist/semantic.min.css';
+import SuiVue from 'semantic-ui-vue';
 
-Vue.use(Buefy);
+Vue.use(SuiVue);
 
 Vue.config.productionTip = false;
 
