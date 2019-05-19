@@ -1,27 +1,22 @@
 <template lang="pug">
-  div
+  div(id="app" class='wrapper')
     Header
-    followButton
-    HelloWorld
-    Home
-    montage_footer
+    router-view
+    router-link(to='/login/') Go to Login Page
+    br
+    br
+    Footer
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
-import Header from './components/Header';
-import montage_footer from './components/montage_footer';
-import Home from './pages/Home';
-import followButton from './components/elements/followButton';
+import Header from './components/organisms/Header';
+import Footer from './components/organisms/Footer';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld,
     Header,
-    followButton,
-    montage_footer,
-    Home,
+    Footer,
   },
   data() {
     return {
@@ -34,7 +29,7 @@ export default {
 <style lang="stylus">
 body
   font-family 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif !important
-  background #FAFAFA
+  background #F8F8F8 !important
   min-height 100vh
   margin 0
   padding 0
