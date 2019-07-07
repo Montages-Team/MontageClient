@@ -10,15 +10,21 @@ mutation ($followingUserId: Int, $followedUserId: Int) {
        following{
           id
           username
-          asAtsign
         }
         followed{
           id
           username
-          asAtsign
         }
       }
       ok
   }
 }
 `;
+
+export const DeleteRelation = gql`
+  mutation ($id: Int){
+      deleteRelation(id: $id){
+        ok
+      }
+    }
+    `;

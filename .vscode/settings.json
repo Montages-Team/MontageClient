@@ -1,3 +1,14 @@
 {
-  "git.ignoreLimitWarning": true
+  "git.ignoreLimitWarning": true,
+  "files.watcherExclude": {
+          "**/.git/objects/**": true,
+          "**/.git/subtree-cache/**": true,
+          "**/.rvm/**":true,
+          "**/node_modules/**": true,
+          "**/Library/**":true,
+          "**/GoogleDrive/**":true,
+          "**/Dropbox/**":true,
+          "**/.cocoapods/**":true,
+          "**/Pictures/**":true,
+  },
 }
