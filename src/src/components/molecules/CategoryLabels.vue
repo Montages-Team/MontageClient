@@ -11,10 +11,10 @@ import { Component, Vue, Emit, Prop } from 'vue-property-decorator';
 @Component({})
 export default class CategoryLabels extends Vue {
   @Prop({ type: Object })
-  private categories: object;
+  private categories!: object;
 
   @Prop({ type: Object })
-  private user: object;
+  private user!: object;
 
 }
 </script>

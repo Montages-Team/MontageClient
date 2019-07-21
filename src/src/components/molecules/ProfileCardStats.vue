@@ -12,7 +12,7 @@ import { Component, Vue, Emit, Prop } from 'vue-property-decorator';
 @Component({})
 export default class ProfileCardStats extends Vue {
   @Prop({ type: Object })
-  private stats: object;
+  private stats!: object;
 }
 </script>
 

@@ -16,11 +16,11 @@ import Button from '../atoms/Button.vue';
 @Component({
   components: {
    Button,
-  }
+  },
 })
 export default class QuestionCard extends Vue {
   @Prop({ type: Object})
-  private question: object;
+  private question!: object;
 }
 </script>
 <style lang="stylus" scoped>

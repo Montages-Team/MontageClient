@@ -21,7 +21,7 @@ import { Component, Vue, Emit, Prop } from 'vue-property-decorator';
 })
 export default class TopMenu extends Vue {
   @Prop({type: Object})
-  private items: object[];
+  private items!: object[];
 }
 </script>
 
