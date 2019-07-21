@@ -1,7 +1,7 @@
 <template lang='pug'>
     div.flex-category-box
       ul.flex-category-box-inline
-        sui-label(v-for='cat in categories', :color='cat.color')
+        sui-label(v-for='cat in categories', :key="cat.id", :color='cat.color')
           router-link(:to="{ name: 'questions', params: { userName: user.userName, categoryType: cat.link, categoryName: cat.category }}")
             | {{ cat.category }}
 </template>
