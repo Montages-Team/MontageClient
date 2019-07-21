@@ -118,8 +118,9 @@ export default class Impressions extends Vue {
   public watchScroll() {
     window.onscroll = () => {
       const scrollingPosition: number = document.documentElement.scrollTop + window.innerHeight;
-      const bottomPosition: any = document.getElementById('app').offsetHeight;
-      if (scrollingPosition === bottomPosition ) {
+      const bottomPosition: HTMLElement | null = document.getElementById('app');
+      if (bottomPosition == null) { return; }
+      if (scrollingPosition === bottomPosition.offsetHeight) {
         this.getMoreImpressions();
       }
     };

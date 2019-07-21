@@ -21,5 +21,4 @@ RUN sudo apt-get install -y nodejs
 RUN npm install vue
 RUN npm i -global @vue/cli
 
-EXPOSE 8000
 EXPOSE 8080

@@ -31,7 +31,7 @@ export default class FollowButton extends Vue {
         id: 32,
       },
     });
-  };
+  }
 }
 </script>
 

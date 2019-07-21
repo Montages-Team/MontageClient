@@ -10,7 +10,7 @@ import { Component, Vue, Emit, Prop } from 'vue-property-decorator';
 @Component({})
 export default class Button extends Vue {
   @Prop({ type: String})
-  private content: string;
+  private content!: string;
 }
 </script>
 

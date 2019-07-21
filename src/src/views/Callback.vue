@@ -5,7 +5,6 @@
 
 <script lang="ts">
 import { Component, Vue, Emit } from 'vue-property-decorator';
-import { createdVueApollo } from '../Apollo';
 import gql from 'graphql-tag';
 import TwitterAuthButton from '../components/atoms/TwitterAuthButton.vue';
 

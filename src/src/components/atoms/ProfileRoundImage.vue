@@ -9,11 +9,11 @@ import { Component, Vue, Emit, Prop } from 'vue-property-decorator';
 @Component({})
 export default class ProfileRoundImage extends Vue {
   @Prop({type: Object})
-  private user: object;
+  private user!: object;
 
   // ProfileRoundImage(:size="impressionImgSize")のようにしてサイズを指定
   @Prop({type: String})
-  private size: string;
+  private size!: string;
 }
 </script>
 
