@@ -1,7 +1,7 @@
 <template lang='pug'>
     div
       sui-menu(vertical style="width: inherit; margin 16px")
-        router-link(color='red' v-for='item in items' :content='item.label' is='sui-menu-item' :to="{ name: item.url }")
+        router-link(color='red' v-for='item in items', :key="item.id" :content='item.label' is='sui-menu-item' :to="{ name: item.url }")
 </template>
 
 <script lang='ts'>

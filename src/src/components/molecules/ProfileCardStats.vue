@@ -1,7 +1,7 @@
 <template lang='pug'>
     div
       sui-statistics-group
-        sui-statistic(in-group='' v-for="(num, label) of stats" horizontal='', size='tiny')
+        sui-statistic(in-group='' v-for="(num, label) of stats", :key="num" horizontal='', size='tiny')
           sui-statistic-label {{num}}
           sui-statistic-label.label(v-if="label === 'following'") フォロー
           sui-statistic-label.label(v-if="label === 'follower'") フォロワー
