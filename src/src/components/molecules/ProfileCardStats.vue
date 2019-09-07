@@ -19,4 +19,4 @@ export default class ProfileCardStats extends Vue {
 <style lang="stylus" scoped>
 .label
   color: #FFF; !important
-<style>
+</style>

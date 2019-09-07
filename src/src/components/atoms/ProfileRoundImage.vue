@@ -18,4 +18,4 @@ export default class ProfileRoundImage extends Vue {
 </script>
 
 <style lang='stylus' scoped>
-<style>
+</style>

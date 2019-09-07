@@ -26,4 +26,4 @@ export default class TopMenu extends Vue {
 </script>
 
 <style lang='stylus' scoped>
-<style>
+</style>

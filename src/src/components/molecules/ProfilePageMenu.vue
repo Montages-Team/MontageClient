@@ -21,4 +21,3 @@ export default class ProfilePageMenu extends Vue {
 .margin-off
   margin 0 !important
 
-<style>

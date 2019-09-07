@@ -12,10 +12,11 @@ export default class GrayCenterText extends Vue {
 }
 </script>
 
-<style lang='stylus' scoped>
+<style lang="stylus" scoped>
 .centered-text
   text-align -webkit-center
   text-align center
   color #AAA
   font-size 12px
-<style>
+
+</style>

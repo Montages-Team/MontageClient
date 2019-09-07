@@ -20,4 +20,4 @@ export default class Button extends Vue {
   margin 0px auto !important
   background #B464A3
 
-<style>
+</style>
