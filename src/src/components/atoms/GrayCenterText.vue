@@ -1,6 +1,6 @@
 <template lang='pug'>
     div
-      div.centered-text カテゴリごとに質問を選ぼう!
+      div.centered-text.font-size__smal カテゴリごとに質問を選ぼう!
 </template>
 
 <script lang='ts'>
@@ -16,7 +16,6 @@ export default class GrayCenterText extends Vue {
 .centered-text
   text-align center
   color #AAA
-  font-size 12px
   margin: 4px 0px 24px
 
 </style>

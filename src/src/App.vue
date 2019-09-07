@@ -82,6 +82,18 @@ body
   clear both
   display block
 
+.font-size__large
+  font-size 24px
+
+.font-size__medium
+  font-size 16px
+
+.font-size__small
+  font-size 13px
+
+.font-size__mini
+  font-size 10px
+
 @media screen and (max-width 770px)
   div.desktop display:none
 

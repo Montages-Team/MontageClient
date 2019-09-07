@@ -4,9 +4,9 @@
       sui-image.picture-area(:src="user.profileImgUrl" fluid alt='プロフィール画像')
       div.name-area
         div.displayname {{user.displayName}}
-        div.username @{{user.username}}
+        div.username.font-size__small @{{user.username}}
       //- FollowButton
-      ProfileCardStats.follow-area(:stats="{following:  22, follower: 33}")
+      ProfileCardStats.follow-area.font-size__small(:stats="{following:  22, follower: 33}")
 </template>
 
 <script lang='ts'>
@@ -54,13 +54,10 @@ export default class ProfileImageTop extends Vue {
 .follow-area
   position absolute
   text-shadow 1px 2px 3px #080808
-
-  font-size 13px !important
   bottom 8px
   right 16px
 
 .username
-  font-size 14px
   line-height normal
 
 .displayname

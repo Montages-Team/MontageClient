@@ -69,19 +69,4 @@ export default class Profile extends Vue {
   background-position 50%
   z-index -1
 
-.profile-image-top-text
-  position absolute
-  color #fff left 23px
-  bottom 13%
-  margin 0
-  font-size 24px
-  font-weight 900
-  text-shadow 0px 0px 10px #00000
-
-.staticsic
-  position relative
-  font-size 13px !important
-  bottom 24px
-  left 13p
-  color #FFF
 </style>
