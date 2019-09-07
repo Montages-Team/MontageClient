@@ -1,6 +1,6 @@
 <template lang='pug'>
     div
-      sui-button.button-style(:content='content' animated="fade")
+      sui-button.buttonstyle(:content='content')
 </template>
 
 <script lang='ts'>
@@ -14,10 +14,10 @@ export default class Button extends Vue {
 }
 </script>
 
-<style lang='stylus' scoped>
-.button-style
+<style lang="stylus" scoped>
+.buttonstyle
+  background #B464A3 !important
+  margin 0px 14% !important
   width 72% !important
-  margin 0px auto !important
-  background #B464A3
-
+  color #fff !important
 </style>
