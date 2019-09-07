@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueApollo from 'vue-apollo'
 import { createApolloClient, restartWebsockets } from 'vue-cli-plugin-apollo/graphql-client'
+import { InMemoryCache } from 'apollo-cache-inmemory';
 
 // Install the vue plugin
 Vue.use(VueApollo)
@@ -38,8 +39,9 @@ const defaultOptions = {
   // httpLinkOptions property of defaultOptions.
   // link: myLink
 
-  // Override default cache
-  // cache: myCache
+  // アプデで不具合あったので下記を追加
+  // see: https://github.com/Akryum/vue-apollo/issues/63
+  cache: new InMemoryCache(),
 
   // Override the way the Authorization header is set
   // getAuth: (tokenName) => ...
