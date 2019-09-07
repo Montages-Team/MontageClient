@@ -51,6 +51,15 @@ const defaultOptions = {
 
   // Client local data (see apollo-link-state)
   // clientState: { resolvers: { ... }, defaults: { ... } }
+  getAuth: tokenName => {
+    // header内にauthorizationヘッダがない場合,ローカルストレージから再取得し続ける
+    const token = localStorage.getItem('Authorization')
+    if (token) {
+      return 'Bearer ' + token
+    } else {
+      return ''
+    }
+  },
 }
 
 // Call this in the Vue app file

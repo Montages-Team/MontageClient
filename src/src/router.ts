@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './components/pages/Home.vue';
+import Auth0Callback from './components/pages/Auth0Callback.vue';
 import Login from './components/pages/Login.vue';
 import TopPage from './components/pages/TopPage.vue';
 import Callback from './views/Callback.vue';
@@ -10,11 +11,11 @@ import Questions from './components/organisms/Questions.vue';
 import Terms from './components/organisms/Terms.vue';
 import Privacy from './components/organisms/Privacy.vue';
 import Faq from './components/organisms/Faq.vue';
-
+import auth from './auth/authService';
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   // デフォルトの挙動ではURLに#が含まれるが、
   // mode:historyを指定することでURLからhashを取り除くことができる。
   mode: 'history',
@@ -46,16 +47,20 @@ export default new Router({
         },
        ],
     },
-
     {
       path: '/login/',
       name: 'login',
       component: Login,
     },
     {
-      path: '/auth/twitter/callback/',
+      path: '/callback',
       name: 'callback',
       component: Callback,
+    },
+    {
+      path: '/auth0_callback',
+      name: 'auth0_callback',
+      component: Auth0Callback,
     },
     {
       path: '/profile/:userName',
@@ -73,6 +78,14 @@ export default new Router({
         },
       ],
     },
-
   ],
 });
+
+router.beforeEach((to, from, next) => {
+  if (to.path === '/' || to.path === '/callback' || auth.isAuthenticated()) {
+    return next();
+  }
+  auth.login({ target: to.fullPath });
+});
+
+export default router;
