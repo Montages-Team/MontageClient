@@ -72,7 +72,7 @@ const router = new Router({
           component: Impressions,
         },
         {
-          path: 'questions/:categoryType',
+          path: 'q/:categoryName',
           name: 'questions',
           component: Questions,
         },

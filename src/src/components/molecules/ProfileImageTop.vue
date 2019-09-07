@@ -1,11 +1,12 @@
 <template lang='pug'>
   div
-    div.hoge
-      sui-image.fuga(:src="user.profileImage" fluid alt='プロフィール画像')
-        p.piyo
-          | @{{user.username}}
-      FollowButton.poyo
-      ProfileCardStats(:stats="{following:  22, follower: 33}")
+    div.overlay-area
+      sui-image.picture-area(:src="user.profileImgUrl" fluid alt='プロフィール画像')
+      div.name-area
+        div.displayname {{user.displayName}}
+        div.username @{{user.username}}
+      //- FollowButton
+      ProfileCardStats.follow-area(:stats="{following:  22, follower: 33}")
 </template>
 
 <script lang='ts'>
@@ -22,36 +23,47 @@ import ProfileCardStats from './ProfileCardStats.vue';
 })
 export default class ProfileImageTop extends Vue {
   @Prop({ type: Object })
-  private user: any;
+  private user!: object;
 }
 </script>
 
 <style lang="stylus" scoped>
-.hoge
+.overlay-area
   position relative
-  width 80%
   background -webkit-gradient(linear,left top,left bottom, color-stop(-30%,transparent),to(#181818))
   background linear-gradient(#00000000 90%, #f0f0f0)
 
-.fuga
+.picture-area
   width -webkit-fill-available !important
   background-size cover !important
   background-position 50% !important
   z-index -1 !important
 
-.piyo
+.name-area
   position absolute
   color #fff
-  left 23px
-  bottom 13%
+  left 16px
+  bottom 0px
   margin 0
-  font-size 24px
   font-weight 900
-  text-shadow 0px 0px 10px #00000
+  text-shadow 1px 2px 3px #080808
+  padding 16px 8px 8px
+  height 20%
+  width 50%
 
-.poyo
-  position relative
+.follow-area
+  position absolute
+  text-shadow 1px 2px 3px #080808
+
   font-size 13px !important
-  bottom 24px
-  left 12px
+  bottom 8px
+  right 16px
+
+.username
+  font-size 14px
+  line-height normal
+
+.displayname
+  font-size 24px
+  line-height normal
 </style>

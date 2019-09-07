@@ -1,6 +1,6 @@
 <template lang="pug">
   div
-    CategoryLabels(:categories="categories", :user="user")
+    CategoryLabels(:categories="categories" :username="user.username")
     GrayCenterText
     p(v-for="question in categoryQuestions")
       QuestionCard(:question="question")
@@ -28,7 +28,7 @@ const QuestionsPageSize: any = 2;
       variables() {
         if (this.$route && this.$route.params) {
           return {
-            userId: 32,
+            userId: 4,
             categoryName: this.$route.params.categoryName,
             page: 0,
             size: QuestionsPageSize,
@@ -39,6 +39,10 @@ const QuestionsPageSize: any = 2;
   },
 })
 export default class Questions extends Vue {
+
+  @Prop()
+  public user!: object;
+
   public categories: object[] = [
       { category: 'あなたについて', link: 'you', color: 'brown'},
       { category: 'love', link: 'love', color: 'brown'},
@@ -88,26 +92,6 @@ export default class Questions extends Vue {
 </script>
 
 <style lang="stylus" scoped>
-
-
-
-
-.flex-category-box
-    padding-bottom: 8px;
-    display: flex;
-    white-space: nowrap;
-    margin: 0 24px;
-
-.flex-category-box-inline
-    display inline-block
-    list-style none
-    padding 0
-    overflow-x: auto;
-    overflow-y: hidden;
-    white-space: nowrap;
-    margin: 25px 0 0;
-    -webkit-overflow-scrolling: touch;
-
 ul > li
     margin-right 10px
     display inline-block
