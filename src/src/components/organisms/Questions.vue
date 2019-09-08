@@ -44,9 +44,9 @@ export default class Questions extends Vue {
   public user!: object;
 
   public categories: object[] = [
-      { category: 'あなたについて', link: 'you', color: 'brown'},
-      { category: 'love', link: 'love', color: 'brown'},
-      { category: '趣味', link: 'hobby', color: 'brown'},
+      { category: 'あなたについて', link: 'you', color: '#F0EBD8'},
+      { category: 'love', link: 'love', color: '#F0EBD8'},
+      { category: '趣味', link: 'hobby', color: '#F0EBD8'},
   ];
   public page: number = 0;
   public loading: number = 0;

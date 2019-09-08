@@ -1,7 +1,7 @@
 <template lang='pug'>
     div.flex-category-box
       ul.flex-category-box-inline
-        sui-label(v-for='cat in categories', :key="cat.id", :color='cat.color')
+        sui-label.category-label(v-for='cat in categories', :key="cat.id", :style="{background: cat.color}")
           router-link(:to="{ name: 'questions', params: { userName: username, categoryType: cat.link, categoryName: cat.category }}")
             | {{ cat.category }}
 </template>
@@ -19,6 +19,9 @@ export default class CategoryLabels extends Vue {
 </script>
 
 <style lang="stylus" scoped>
+.category-label
+  font-weight normal !important
+
 .flex-category-box
     padding-bottom 8px
     display flex
