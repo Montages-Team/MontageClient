@@ -6,7 +6,7 @@ import './registerServiceWorker';
 import { createProvider } from './vue-apollo';
 import { ApolloClient } from 'apollo-client';
 import { HttpLink } from 'apollo-link-http';
-// import { onError } from "apollo-link-error";
+import { onError } from 'apollo-link-error';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 
 import '../semantic/dist/semantic.min.css';
@@ -14,12 +14,17 @@ import SuiVue from 'semantic-ui-vue';
 import AuthPlugin from './plugins/auth';
 
 Vue.config.productionTip = false;
-// TODO: errorLinkの実装
-// const errorLink = onError(({ networkError }) => {
-//   if (networkError.statusCode === 401) {
-//     console.log('errorです');
-//   }
-// });
+const errorLink = onError(({ graphQLErrors, networkError }) => {
+    if (graphQLErrors) {
+      graphQLErrors.map(({ message, locations, path }) =>
+        console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`),
+      );
+    }
+
+    if (networkError) {
+       console.log(`[Network error]: ${networkError}`);
+    }
+});
 
 // HTTP connexion to the API
 const httpLink = new HttpLink({
@@ -38,10 +43,12 @@ const apolloClient = new ApolloClient({
 
 const apolloProvider = createProvider({
     defaultClient: apolloClient,
+    defaultOption: errorLink,
 });
 
 Vue.use(SuiVue);
 Vue.use(AuthPlugin);
+
 new Vue({
   router,
   store,
