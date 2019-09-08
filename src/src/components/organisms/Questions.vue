@@ -16,7 +16,7 @@ import QuestionCard from '../molecules/QuestionCard.vue';
 import GrayCenterText from '../atoms/GrayCenterText.vue';
 import ModalForm from '../organisms/ModalForm.vue';
 
-const QuestionsPageSize: any = 2;
+const QuestionsPageSize: any = 10;
 
 @Component({
   components: {

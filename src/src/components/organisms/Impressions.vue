@@ -29,7 +29,7 @@ import { Component, Vue, Emit, Prop } from 'vue-property-decorator';
 import gql from 'graphql-tag';
 import ProfileRoundImage from '../atoms/ProfileRoundImage.vue';
 
-const pageSize: any = 2;
+const pageSize: any = 10;
 const impressionQuery: any = gql`
 query getUserImpressions($name: String, $page: Int, $size: Int){
   userImpressions(username: $name, page: $page, size: $size){
