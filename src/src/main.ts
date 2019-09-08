@@ -9,7 +9,7 @@ import { HttpLink } from 'apollo-link-http';
 import { onError } from 'apollo-link-error';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 
-import '../semantic/dist/semantic.min.css';
+import '../semantic/dist/semantic.css';
 import SuiVue from 'semantic-ui-vue';
 import AuthPlugin from './plugins/auth';
 

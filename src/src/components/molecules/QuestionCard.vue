@@ -4,10 +4,7 @@
       h6.questions-card-header(is='sui-header', icon='', text-align='center')
         sui-image.montage-icon-for-card(src='https://semantic-ui-vue.github.io/static/images/avatar/small/elliot.jpg', shape='circular', size='mini', centered='')
         sui-header-content.font-size__medium {{question.about}}
-      Button.questions-card-bottom(content="回答する")
-      //- div.questions-card-bottom
-      //-   sui-button.answer-button(primary='', content='回答する', fluid='')
-</template>
+      Button.questions-card-bottom(content="回答する" :placeholder="question.about" :questionId="question.id" @onModalClick="$listeners['onModal']") </template>
 
 <script lang='ts' scoped>
 import { Component, Vue, Emit, Prop } from 'vue-property-decorator';

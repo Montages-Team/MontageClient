@@ -3,7 +3,8 @@
     CategoryLabels(:categories="categories" :username="user.username")
     GrayCenterText
     p(v-for="question in categoryQuestions")
-      QuestionCard(:question="question")
+      QuestionCard(:question="question" @onModal="modalToggle")
+    ModalForm(v-if="showModal" :placeholder="placeholder" :selectedQuestionId="selectedQuestionId" @offModal="modalToggle")
 </template>
 
 <script lang="ts">
@@ -13,6 +14,7 @@ import { categoryQuestionsQuery } from '../../constants/category-questions-query
 import CategoryLabels from '../molecules/CategoryLabels.vue';
 import QuestionCard from '../molecules/QuestionCard.vue';
 import GrayCenterText from '../atoms/GrayCenterText.vue';
+import ModalForm from '../organisms/ModalForm.vue';
 
 const QuestionsPageSize: any = 2;
 
@@ -21,6 +23,7 @@ const QuestionsPageSize: any = 2;
     CategoryLabels,
     QuestionCard,
     GrayCenterText,
+    ModalForm,
   },
   apollo: {
     categoryQuestions: {
@@ -51,8 +54,18 @@ export default class Questions extends Vue {
   public page: number = 0;
   public loading: number = 0;
   public loadEnable: boolean = true;
+  public showModal: boolean = false;
+  public placeholder: string = '';
+  public selectedQuestionId!: number;
   public mounted() {
     this.watchScroll();
+  }
+
+  @Emit()
+  public modalToggle(placeholder: string, selectedQuetionId: string) {
+    this.placeholder = placeholder || '';
+    this.selectedQuestionId = Number(selectedQuetionId);
+    this.showModal = !this.showModal;
   }
 
   @Emit()
@@ -98,4 +111,8 @@ ul > li
     width 220px
     border 1px solid #ddd
     background #fff
+
+.modal-fixed
+  position fixed
+  width 100%
 </style>

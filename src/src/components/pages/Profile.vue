@@ -14,7 +14,6 @@ import { userQuery } from '../../constants/user_query';
 import ProfileCard from '../../components/molecules/ProfileCard.vue';
 import ProfileImageTop from '../../components/molecules/ProfileImageTop.vue';
 import ProfilePageMenu from '../../components/molecules/ProfilePageMenu.vue';
-
 import gql from 'graphql-tag';
 
 @Component({
