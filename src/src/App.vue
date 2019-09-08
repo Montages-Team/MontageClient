@@ -2,9 +2,16 @@
   div(id="app" class='wrapper')
     Header
     router-view
-    router-link(to='/login/') Go to Login Page
-    br
-    br
+    li
+      router-link(to='/') Home
+    li(v-if='!isAuthenticated')
+      a(href='#', @click.prevent='login') Login
+    // new link to /profile - only show if authenticated
+    li(v-if='isAuthenticated')
+      router-link(:to="`/profile/RAGUNA2`") Profile
+    // /profile
+    li(v-if='isAuthenticated')
+      a(href='#', @click.prevent='logout') Log out
     Footer
 </template>
 
@@ -20,8 +27,28 @@ export default {
   },
   data() {
     return {
-      //
+      isAuthenticated: false,
+      profile: this.$auth.profile,
     };
+  },
+  async created() {
+    try {
+      await this.$auth.renewTokens();
+    } catch (e) {
+      console.log(e);
+    }
+  },
+  methods: {
+    login() {
+      this.$auth.login();
+    },
+    logout() {
+      this.$auth.logOut();
+    },
+    handleLoginEvent(data) {
+      this.isAuthenticated = data.loggedIn;
+      this.profile = data.profile;
+    },
   },
 };
 </script>
@@ -54,6 +81,18 @@ body
   content " "
   clear both
   display block
+
+.font-size__large
+  font-size 24px
+
+.font-size__medium
+  font-size 16px
+
+.font-size__small
+  font-size 13px
+
+.font-size__mini
+  font-size 10px
 
 @media screen and (max-width 770px)
   div.desktop display:none

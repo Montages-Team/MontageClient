@@ -19,4 +19,4 @@ export default class Login extends Vue {
 </script>
 
 <style lang='stylus' scoped>
-<style>
+</style>

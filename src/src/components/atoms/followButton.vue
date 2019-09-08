@@ -1,8 +1,8 @@
 <template lang="pug">
-  div.follow-button(v-if="1 + 1 ==2")
+  div <!-- TODO: followボタンの切替え -->
     sui-button(active='', content='Follow', icon='user', size='mini', @click='follow')
-    div.follow-button(v-if="1 + 1 ==3")
-      sui-button(active='', content='解除', icon='user', size='mini', @click='unfollow')
+  div
+    sui-button(active='', content='解除', icon='user', size='mini', @click='unfollow')
 </template>
 
 <script lang='ts'>
@@ -20,6 +20,7 @@ export default class FollowButton extends Vue {
         followingUserId: 2,
         followedUserId: 3,
       },
+      fetchPolicy: 'no-cache',
     });
   }
 
@@ -30,15 +31,12 @@ export default class FollowButton extends Vue {
       variables: {
         id: 32,
       },
+      fetchPolicy: 'no-cache',
     });
   }
 }
 </script>
 
 <style lang="stylus" scoped>
-.follow-button
-  position absolute
-  right 8px
-  top 24px
 
 </style>

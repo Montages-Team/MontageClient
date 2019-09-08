@@ -1,23 +1,33 @@
 <template lang='pug'>
     div
-      sui-button.button-style(:content='content' animated="fade")
+      sui-button.buttonstyle__normal(:content='content' @click="emitToggle")
 </template>
 
 <script lang='ts'>
-// style="background: #B464A3; color: #FFF; margin: 0px auto; ;"
 import { Component, Vue, Emit, Prop } from 'vue-property-decorator';
 
 @Component({})
 export default class Button extends Vue {
   @Prop({ type: String})
   private content!: string;
+
+  @Prop({ type: String})
+  private placeholder!: string;
+
+  @Prop({ type: String})
+  private questionId!: string;
+
+  @Emit()
+  public emitToggle() {
+    this.$emit('onModalClick', this.placeholder, this.questionId);
+  }
 }
 </script>
 
-<style lang='stylus' scoped>
-.button-style
+<style lang="stylus" scoped>
+.buttonstyle__normal
+  background #B464A3 !important
+  margin 0px 14% !important
   width 72% !important
-  margin 0px auto !important
-  background #B464A3
-
-<style>
+  color #fff !important
+</style>

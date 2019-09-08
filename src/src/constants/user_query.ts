@@ -1,11 +1,12 @@
 import gql from 'graphql-tag';
 
 export const userQuery: any = gql`
-query getProfileUser($name: String){
-  user(username: $name){
+query user($userName: String){
+  user(username: $userName){
     id
     username
-    email
-    profileImage
+    identifierId
+    displayName
+    profileImgUrl
   }
 }`;

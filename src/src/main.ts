@@ -6,61 +6,48 @@ import './registerServiceWorker';
 import { createProvider } from './vue-apollo';
 import { ApolloClient } from 'apollo-client';
 import { HttpLink } from 'apollo-link-http';
-// import { onError } from "apollo-link-error";
-import { setContext } from 'apollo-link-context';
+import { onError } from 'apollo-link-error';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 
-import '../semantic/dist/semantic.min.css';
+import '../semantic/dist/semantic.css';
 import SuiVue from 'semantic-ui-vue';
-
-Vue.use(SuiVue);
+import AuthPlugin from './plugins/auth';
 
 Vue.config.productionTip = false;
+const errorLink = onError(({ graphQLErrors, networkError }) => {
+    if (graphQLErrors) {
+      graphQLErrors.map(({ message, locations, path }) =>
+        console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`),
+      );
+    }
 
-const authLink = setContext((_, { headers }) => {
-  // もし存在すればauthentication tokenをローカルストレージから取得する
-  // const token = localStorage.getItem('token');
-  // httpLinkがコンテキストを読み込んだらヘッダーに返す
-  const hoge = 'JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFt\
-  ZSI6InJhZ3VuYTkyMyIsImV4cCI6MTU0MTMxNjQxNywib3JpZ0lhdCI6MTU0MTMx\
-  NjExN30.hjbm6Yhdip03_Y5LBUNxDQsSQ2InUDi4sF48lkK-DhA';
-  const token = localStorage.getItem('token');
-  return {
-    credentials: 'include', // Send the cookies
-    compress: true,
-    headers: {
-      'Content-Type': 'application/json',
-      // 'authorization': hoge,
-      'authorization': token ? `Bearer ${token}` : '',
-    },
-  };
+    if (networkError) {
+       console.log(`[Network error]: ${networkError}`);
+    }
 });
-// const errorLink = onError(({ networkError }) => {
-//   if (networkError.statusCode === 401) {
-//     console.log('errorです');
-//   }
-// });
 
 // HTTP connexion to the API
 const httpLink = new HttpLink({
-  // You should use an absolute URL here
-  uri: 'https://montage-graphql-api.herokuapp.com/gql/',
-  // uri: 'localhost:8000/gql/',
-  fetchOptions: {
-    mode: 'no-cors',
-  },
+  // uri: 'https://montage-graphql-api.herokuapp.com/gql/',
+  uri: 'localhost:8000/gql/',
 });
 
 // Cache implementation
 const cache = new InMemoryCache();
+// const link = authLink.concat(httpLink);
+const link = httpLink;
 const apolloClient = new ApolloClient({
-  link: authLink.concat(httpLink),
+  link,
   cache,
 });
 
 const apolloProvider = createProvider({
     defaultClient: apolloClient,
-  });
+    defaultOption: errorLink,
+});
+
+Vue.use(SuiVue);
+Vue.use(AuthPlugin);
 
 new Vue({
   router,

@@ -5,9 +5,10 @@
         sui-card-content
           sui-card-header(style='margin-bottom: 10px;')
           | Q. {{imp.question.about}}
-          ProfileRoundImage.user-icon(:user="user", :size="impressionImgSize")
-          sui-label.baloon(pointing='left', size='medium' style="background: #f5f5f5")
-            p(style="color: #555555") {{imp.content}}
+          div(style="display: flex;")
+            ProfileRoundImage.user-icon(v-if="user" :url="user.profileImgUrl", :size="impressionImgSize")
+            sui-label.baloon(pointing='left', size='medium' style="background: #f5f5f5")
+              p(style="color: #555555") {{imp.content}}
         sui-button-group(icons size="small" style="padding: 0px 4px 0px 28px")
           sui-button.icon-button-group(icon='like' content="4")
           sui-button.icon-button-group(icon='twitter')
@@ -24,21 +25,11 @@
 
 
 <script lang="ts">
-import { Component, Vue, Emit } from 'vue-property-decorator';
+import { Component, Vue, Emit, Prop } from 'vue-property-decorator';
 import gql from 'graphql-tag';
 import ProfileRoundImage from '../atoms/ProfileRoundImage.vue';
 
-const userQuery: any = gql`
-query getProfileUser($name: String){
-  user(username: $name){
-    id
-    username
-    email
-    asAtsign
-    profileImage
-  }
-}`;
-const pageSize: any = 2;
+const pageSize: any = 10;
 const impressionQuery: any = gql`
 query getUserImpressions($name: String, $page: Int, $size: Int){
   userImpressions(username: $name, page: $page, size: $size){
@@ -55,17 +46,6 @@ query getUserImpressions($name: String, $page: Int, $size: Int){
   },
   apollo: {
     $loadingKey: 'loading',
-    user: {
-      query: userQuery,
-      variables() {
-        // 動的ルートマッチングを利用する場合はthis.$routeのありなしでvariablesを決める
-        if (this.$route && this.$route.params) {
-          return {
-            name: this.$route.params.userName,
-          };
-        }
-      },
-    },
     userImpressions: {
       query: impressionQuery,
       variables() {
@@ -80,9 +60,11 @@ query getUserImpressions($name: String, $page: Int, $size: Int){
       },
     },
   },
-
 })
 export default class Impressions extends Vue {
+
+  @Prop({ type: Object })
+  public user!: object;
 
   public page: number = 0;
   public impressionImgSize: string = 'mini';
@@ -91,6 +73,8 @@ export default class Impressions extends Vue {
   public mounted() {
     this.watchScroll();
   }
+
+
 
   @Emit()
   public getMoreImpressions() {

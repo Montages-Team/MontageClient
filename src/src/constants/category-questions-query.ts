@@ -11,6 +11,7 @@ query getCategoryQuestions(
     categoryName: $categoryName,
     page: $page,
     size: $size){
+    id
     about
   }
 }`;

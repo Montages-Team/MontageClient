@@ -1,9 +1,10 @@
 <template lang="pug">
   div
-    CategoryLabels(:categories="categories", :user="user")
+    CategoryLabels(:categories="categories" :username="user.username")
     GrayCenterText
     p(v-for="question in categoryQuestions")
-      QuestionCard(:question="question")
+      QuestionCard(:question="question" @onModal="modalToggle")
+    ModalForm(v-if="showModal" :placeholder="placeholder" :selectedQuestionId="selectedQuestionId" @offModal="modalToggle")
 </template>
 
 <script lang="ts">
@@ -13,14 +14,16 @@ import { categoryQuestionsQuery } from '../../constants/category-questions-query
 import CategoryLabels from '../molecules/CategoryLabels.vue';
 import QuestionCard from '../molecules/QuestionCard.vue';
 import GrayCenterText from '../atoms/GrayCenterText.vue';
+import ModalForm from '../organisms/ModalForm.vue';
 
-const QuestionsPageSize: any = 2;
+const QuestionsPageSize: any = 10;
 
 @Component({
   components: {
     CategoryLabels,
     QuestionCard,
     GrayCenterText,
+    ModalForm,
   },
   apollo: {
     categoryQuestions: {
@@ -28,7 +31,7 @@ const QuestionsPageSize: any = 2;
       variables() {
         if (this.$route && this.$route.params) {
           return {
-            userId: 32,
+            userId: 4,
             categoryName: this.$route.params.categoryName,
             page: 0,
             size: QuestionsPageSize,
@@ -39,16 +42,30 @@ const QuestionsPageSize: any = 2;
   },
 })
 export default class Questions extends Vue {
+
+  @Prop()
+  public user!: object;
+
   public categories: object[] = [
-      { category: 'あなたについて', link: 'you', color: 'brown'},
-      { category: 'love', link: 'love', color: 'brown'},
-      { category: '趣味', link: 'hobby', color: 'brown'},
+      { category: 'あなたについて', link: 'you', color: '#F0EBD8'},
+      { category: 'love', link: 'love', color: '#F0EBD8'},
+      { category: '趣味', link: 'hobby', color: '#F0EBD8'},
   ];
   public page: number = 0;
   public loading: number = 0;
   public loadEnable: boolean = true;
+  public showModal: boolean = false;
+  public placeholder: string = '';
+  public selectedQuestionId!: number;
   public mounted() {
     this.watchScroll();
+  }
+
+  @Emit()
+  public modalToggle(placeholder: string, selectedQuetionId: string) {
+    this.placeholder = placeholder || '';
+    this.selectedQuestionId = Number(selectedQuetionId);
+    this.showModal = !this.showModal;
   }
 
   @Emit()
@@ -88,30 +105,14 @@ export default class Questions extends Vue {
 </script>
 
 <style lang="stylus" scoped>
-
-
-
-
-.flex-category-box
-    padding-bottom: 8px;
-    display: flex;
-    white-space: nowrap;
-    margin: 0 24px;
-
-.flex-category-box-inline
-    display inline-block
-    list-style none
-    padding 0
-    overflow-x: auto;
-    overflow-y: hidden;
-    white-space: nowrap;
-    margin: 25px 0 0;
-    -webkit-overflow-scrolling: touch;
-
 ul > li
     margin-right 10px
     display inline-block
     width 220px
     border 1px solid #ddd
     background #fff
+
+.modal-fixed
+  position fixed
+  width 100%
 </style>
