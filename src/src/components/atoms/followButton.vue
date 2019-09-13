@@ -1,8 +1,9 @@
 <template lang="pug">
-  div <!-- TODO: followボタンの切替え -->
-    sui-button(active='', content='Follow', icon='user', size='mini', @click='follow')
   div
-    sui-button(active='', content='解除', icon='user', size='mini', @click='unfollow')
+    div <!-- TODO: followボタンの切替え -->
+      sui-button(active='', content='Follow', icon='user', size='mini', @click='follow')
+    div
+      sui-button(active='', content='解除', icon='user', size='mini', @click='unfollow')
 </template>
 
 <script lang='ts'>
