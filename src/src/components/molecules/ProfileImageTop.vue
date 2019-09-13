@@ -2,11 +2,11 @@
   div
     div.overlay-area
       sui-image.picture-area(:src="user.profileImgUrl" fluid alt='プロフィール画像')
-      div.name-area
-        div.displayname {{user.displayName}}
-        div.username.font-size__small @{{user.username}}
-      //- FollowButton
-      ProfileCardStats.follow-area.font-size__small(:stats="{following:  22, follower: 33}")
+      div.float-area
+        div(style="width: 50%;")
+          div.displayname {{user.displayName}}
+          div.username.font-size__small @{{user.username}}
+        ProfileCardStats.font-size__small.follow-area(:stats="{following:  22, follower: 33}")
 </template>
 
 <script lang='ts'>
@@ -39,23 +39,21 @@ export default class ProfileImageTop extends Vue {
   background-position 50% !important
   z-index -1 !important
 
-.name-area
+.float-area
   position absolute
+  display flex
   color #fff
-  left 16px
   bottom 0px
   margin 0
   font-weight 900
   text-shadow 1px 2px 3px #080808
-  padding 16px 8px 8px
-  height 20%
-  width 50%
+  padding 0% 8%
+  width 100%
+  height 18%
 
 .follow-area
-  position absolute
-  text-shadow 1px 2px 3px #080808
-  bottom 8px
-  right 16px
+  width 50%
+  margin-left 10%
 
 .username
   line-height normal
