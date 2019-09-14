@@ -1,26 +1,28 @@
 <template lang="pug">
   div
-    div(v-for="imp in userImpressions").feed-content
-      sui-card.raised.qa-card
-        sui-card-content
-          sui-card-header(style='margin-bottom: 10px;')
-          | Q. {{imp.question.about}}
-          div(style="display: flex;")
-            ProfileRoundImage.user-icon(v-if="user" :url="user.profileImgUrl", :size="impressionImgSize")
-            sui-label.baloon(pointing='left', size='medium' style="background: #f5f5f5")
-              p(style="color: #555555") {{imp.content}}
-        sui-button-group(icons size="small" style="padding: 0px 4px 0px 28px")
-          sui-button.icon-button-group(icon='like' content="4")
-          sui-button.icon-button-group(icon='twitter')
-          sui-button.icon-button-group(icon='sync')
-          sui-button.icon-button-group(icon='paint brush')
-
-    div(v-if='loadEnable')
-      sui-segment(v-if="$apollo.loading")
-        sui-dimmer(active='', inverted='')
-        sui-loader(content='Loading...')
-    div(v-else='loadEnable')
-      div | もうないよ
+    div(v-if="userImpressions.length")
+      div(v-for="imp in userImpressions").feed-content
+        sui-card.raised.qa-card
+          sui-card-content
+            sui-card-header(style='margin-bottom: 10px;')
+            | Q. {{imp.question.about}}
+            div(style="display: flex;")
+              ProfileRoundImage.user-icon(v-if="user" :url="user.profileImgUrl", :size="impressionImgSize")
+              sui-label.baloon(pointing='left', size='medium' style="background: #f5f5f5")
+                p(style="color: #555555") {{imp.content}}
+          sui-button-group(icons size="small" style="padding: 0px 4px 0px 28px")
+            sui-button.icon-button-group(icon='like' content="4")
+            sui-button.icon-button-group(icon='twitter')
+            sui-button.icon-button-group(icon='sync')
+            sui-button.icon-button-group(icon='paint brush')
+      div(v-if='loadEnable')
+        sui-segment(v-if="$apollo.loading")
+          sui-dimmer(active='', inverted='')
+          sui-loader(content='Loading...')
+      div(else)
+        NoImpressionCard.no-impression(:displayName="user.displayName")
+    div(v-else="userImpressions.length")
+      NoImpressionCard.no-impression(:displayName="user.displayName")
 </template>
 
 
@@ -28,6 +30,7 @@
 import { Component, Vue, Emit, Prop } from 'vue-property-decorator';
 import gql from 'graphql-tag';
 import ProfileRoundImage from '../atoms/ProfileRoundImage.vue';
+import NoImpressionCard from '../molecules/NoImpressionCard.vue';
 
 const pageSize: any = 10;
 const impressionQuery: any = gql`
@@ -43,6 +46,7 @@ query getUserImpressions($name: String, $page: Int, $size: Int){
 @Component({
   components: {
     ProfileRoundImage,
+    NoImpressionCard,
   },
   apollo: {
     $loadingKey: 'loading',
@@ -132,4 +136,7 @@ export default class Impressions extends Vue {
 
 .icon-button-group
   background #FFF !important
+
+.no-NoImpressionCard
+  background red !important
 </style>
