@@ -5,8 +5,19 @@
         .modal-wrapper
           .modal-container
             .modal-header
-              ConfirmButton(content="キャンセル" backgroundColor="#dddddd" style="margin-right: 10px;" @cancelImpression="$listeners['offModal']")
-              ConfirmButton(content="投稿する" backgroundColor="#B464A3" @emitPost="postMutation")
+              ConfirmButton(content="キャンセル",
+                            backgroundColor="#dddddd",
+                            style="margin-left: auto;",
+                            @cancelImpression="$listeners['offModal']")
+              ConfirmButton(v-if="!isImpression",
+                            content="投稿する",
+                            backgroundColor="#B464A3",
+                            @emitPost="postMutation")
+              ConfirmButton(v-if="isImpression",
+                            content="Collage",
+                            backgroundColor="#B464A3",
+                            @emitPost="postMutation",
+                            :showImpressionModal="showImpressionModal")
             .modal-body
               textarea.modalform__body.font-size__small(v-model="impression" :placeholder="placeholder")
 </template>
@@ -31,8 +42,14 @@ export default class ModalForm extends Vue {
   @Prop({ type: String })
   private placeholder!: string;
 
+  @Prop({ type: Boolean })
+  private isImpression!: boolean;
+
+  @Prop({ type: Boolean })
+  private showImpressionModal!: boolean;
+
   @Emit()
-  public postMutation() {
+  public postMutation(isCollage: boolean) {
     const mutation = this.$apollo.mutate({
       mutation: CreateImpressionMutation,
       variables: {
@@ -47,16 +64,15 @@ export default class ModalForm extends Vue {
 
     mutation
       .then(({ data: { result } }) => {
-        console.log('ここまできてる');
-        console.log(result);
         return result;
       })
       .then(({ ok, impression, errors }) => {
-        console.log(ok);
-        console.log(impression);
         if (ok) {
-          console.log('success');
-          this.$router.push(`/profile/${this.$route.params.userName}`);
+          if (isCollage) {
+            this.$emit('toggle');
+          } else {
+            this.$router.push(`/profile/${this.$route.params.userName}`);
+          }
         } else {
           console.log('fail');
         }
@@ -73,7 +89,7 @@ export default class ModalForm extends Vue {
   left 0
   width 100%
   height 100%
-  background-color: rgba(0, 0, 0, .5)
+  background-color rgba(0, 0, 0, 0.1)
   display table
   transition opacity .3s ease
 
@@ -94,7 +110,7 @@ export default class ModalForm extends Vue {
 .modal-header
   display flex
   background #F8F8F8
-  padding 16px 0px 16px 50%
+  padding 16px 8px !important
 
 .modal-body
   height 100%

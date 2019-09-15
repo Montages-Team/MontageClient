@@ -1,7 +1,22 @@
 <template lang='pug'>
     div
-      sui-button.buttonstyle__modal(v-if="content === 'キャンセル'" :content='content' size="small" compact=true @click="emitCancel" :style="{background: backgroundColor}")
-      sui-button.buttonstyle__modal(v-if="content === '投稿する'" :content='content' size="small" compact=true @click="emitPost" :style="{background: backgroundColor}")
+      sui-button.buttonstyle__modal(v-if="content === 'キャンセル'",
+                                    :content='content' size="tiny",
+                                    compact=true,
+                                    @click="emitCancel",
+                                    :style="{background: backgroundColor}")
+      sui-button.buttonstyle__modal(v-if="content === '投稿する'",
+                                    :content='content',
+                                    size="tiny",
+                                    compact=true,
+                                    @click="emitPost",
+                                    :style="{background: backgroundColor}")
+      sui-button.buttonstyle__modal(v-if="content === 'Collage'",
+                                    :content='content',
+                                    size="tiny",
+                                    compact=truei,
+                                    @click="emitPost",
+                                    :style="{background: backgroundColor}")
 </template>
 
 <script lang='ts'>
@@ -9,6 +24,8 @@ import { Component, Vue, Emit, Prop } from 'vue-property-decorator';
 
 @Component({})
 export default class ConfirmButton extends Vue {
+  public isCollage: boolean = false;
+
   @Prop({type: String})
   private content!: string;
 
@@ -22,7 +39,10 @@ export default class ConfirmButton extends Vue {
 
   @Emit()
   private emitPost() {
-    this.$emit('emitPost');
+    if (this.content === 'Collage') {
+      this.isCollage = true;
+    }
+    this.$emit('emitPost', this.isCollage);
   }
 }
 </script>

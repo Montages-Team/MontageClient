@@ -3,8 +3,8 @@
     CategoryLabels(:categories="categories" :username="user.username")
     GrayCenterText
     p(v-for="question in categoryQuestions")
-      QuestionCard(:question="question" @onModal="modalToggle")
-    ModalForm(v-if="showModal" :placeholder="placeholder" :selectedQuestionId="selectedQuestionId" @offModal="modalToggle")
+      QuestionCard(:question="question" @onModal="modalQuestionToggle")
+    ModalForm(v-if="showQuestionModal" :placeholder="placeholder" :selectedQuestionId="selectedQuestionId" :isImpression="isImpression" @offModal="modalQuestionToggle")
 </template>
 
 <script lang="ts">
@@ -54,18 +54,19 @@ export default class Questions extends Vue {
   public page: number = 0;
   public loading: number = 0;
   public loadEnable: boolean = true;
-  public showModal: boolean = false;
+  public showQuestionModal: boolean = false;
   public placeholder: string = '';
   public selectedQuestionId!: number;
+  public isImpression: boolean = false;
   public mounted() {
     this.watchScroll();
   }
 
   @Emit()
-  public modalToggle(placeholder: string, selectedQuetionId: string) {
+  public modalQuestionToggle(placeholder: string, selectedQuetionId: string) {
     this.placeholder = placeholder || '';
     this.selectedQuestionId = Number(selectedQuetionId);
-    this.showModal = !this.showModal;
+    this.showQuestionModal = !this.showQuestionModal;
   }
 
   @Emit()
