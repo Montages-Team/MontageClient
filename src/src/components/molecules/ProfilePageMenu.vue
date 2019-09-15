@@ -1,9 +1,9 @@
 <template lang='pug'>
   div
     sui-menu.margin-off(:widths='2')
-      sui-menu-item(:class="{'active-menu': chosenMenu}" @click="toggleMenu('profile');")
+      sui-menu-item(:class="{'active-menu': chosenMenu}" @click="toggleMenuProfile")
         router-link.column-link(:to="{ name: 'profile', params: { userName: username}}") プロフィール
-      sui-menu-item(:class="{'active-menu': !chosenMenu}" @click="toggleMenu('question');" style="padding: 0px;")
+      sui-menu-item(:class="{'active-menu': !chosenMenu}" @click="toggleMenuQuestions")
         router-link.column-link(:to="{name: 'questions', params: { userName: username, categoryType: 'you', categoryName: 'あなたについて'}}") Questions
 </template>
 
@@ -12,18 +12,28 @@ import { Component, Vue, Emit, Prop } from 'vue-property-decorator';
 
 @Component({})
 export default class ProfilePageMenu extends Vue {
+
+  private chosenMenu: boolean = true;
+
   @Prop({ type: String })
   private username!: string;
 
-  private chosenMenu: boolean = true;
-  private choice: string = 'profile';
+  private created() {
+    if (this.$route.path ===  '/profile/' + this.$route.params.userName + '/') {
+      this.chosenMenu = true;
+    } else {
+      this.chosenMenu = false;
+    }
+  }
 
   @Emit()
-  public toggleMenu(title: string) {
-    if (title !== this.choice) {
-      this.choice = this.choice === 'profile' ? 'question' : 'profile' ;
-      this.chosenMenu = !this.chosenMenu;
-    }
+  private toggleMenuProfile() {
+    this.chosenMenu = true;
+  }
+
+  @Emit()
+  private toggleMenuQuestions() {
+    this.chosenMenu = false;
   }
 }
 </script>>

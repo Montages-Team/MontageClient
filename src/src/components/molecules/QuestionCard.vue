@@ -2,7 +2,7 @@
   div
     sui-card(style="width: inherit;")
       h6.questions-card-header(is='sui-header', icon='', text-align='center')
-        sui-image.montage-icon-for-card(src='https://semantic-ui-vue.github.io/static/images/avatar/small/elliot.jpg', shape='circular', size='mini', centered='')
+        sui-image.montage-icon-for-card(src='https://res.cloudinary.com/hugc8unfj/image/upload/v1568433502/public/montage-icon-Circle.jpg', shape='circular', size='tiny', centered='')
         sui-header-content.font-size__medium {{question.about}}
       Button.questions-card-bottom(content="回答する" :placeholder="question.about" :questionId="question.id" @onModalClick="$listeners['onModal']") </template>
 
