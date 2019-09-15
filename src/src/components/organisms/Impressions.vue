@@ -1,27 +1,29 @@
 <template lang="pug">
   div
-    div(v-if="userImpressions.length")
+    div(v-if="impressionsCount > 0")
       div(v-for="imp in userImpressions").feed-content
         sui-card.raised.qa-card
           sui-card-content
-            sui-card-header(style='margin-bottom: 10px;')
-            | Q. {{imp.question.about}}
+            sui-card-header(style='margin-bottom: 10px;')| Q. {{imp.question.about}}
             div(style="display: flex;")
               ProfileRoundImage.user-icon(v-if="user" :url="user.profileImgUrl", :size="impressionImgSize")
               sui-label.baloon(pointing='left', size='medium' style="background: #f5f5f5")
                 p(style="color: #555555") {{imp.content}}
-          sui-button-group(icons size="small" style="padding: 0px 4px 0px 28px")
-            sui-button.icon-button-group(icon='like' content="4")
-            sui-button.icon-button-group(icon='twitter')
-            sui-button.icon-button-group(icon='sync')
-            sui-button.icon-button-group(icon='paint brush')
+          ReactionIconGroup(@modalToggle="modalImpressionToggle(imp.question.about, imp.question.id)")
+        ModalForm(v-if="showImpressionModal",
+                  :placeholder="placeholder",
+                  :selectedQuestionId="selectedQuestionId",
+                  :isImpression="isImpression",
+                  :showImpressionModal="showImpressionModal",
+                  @offModal="modalImpressionToggle",
+                  @toggle="toggleImpressionModal")
       div(v-if='loadEnable')
         sui-segment(v-if="$apollo.loading")
           sui-dimmer(active='', inverted='')
           sui-loader(content='Loading...')
       div(else)
         NoImpressionCard.no-impression(:displayName="user.displayName")
-    div(v-else="userImpressions.length")
+    div(v-else="impressionsCount === 0")
       NoImpressionCard.no-impression(:displayName="user.displayName")
 </template>
 
@@ -31,14 +33,23 @@ import { Component, Vue, Emit, Prop } from 'vue-property-decorator';
 import gql from 'graphql-tag';
 import ProfileRoundImage from '../atoms/ProfileRoundImage.vue';
 import NoImpressionCard from '../molecules/NoImpressionCard.vue';
+import ModalForm from '../organisms/ModalForm.vue';
+import ReactionIconGroup from '../molecules/ReactionIconGroup.vue';
 
 const pageSize: any = 10;
 const impressionQuery: any = gql`
 query getUserImpressions($name: String, $page: Int, $size: Int){
   userImpressions(username: $name, page: $page, size: $size){
+    id
     content
     question{
+      id
       about
+      appearedAt
+      category{
+        id
+        name
+      }
     }
   }
 }`;
@@ -47,6 +58,8 @@ query getUserImpressions($name: String, $page: Int, $size: Int){
   components: {
     ProfileRoundImage,
     NoImpressionCard,
+    ModalForm,
+    ReactionIconGroup,
   },
   apollo: {
     $loadingKey: 'loading',
@@ -74,11 +87,20 @@ export default class Impressions extends Vue {
   public impressionImgSize: string = 'mini';
   public loading: number = 0;
   public loadEnable: boolean = true;
+  public showImpressionModal: boolean = false;
+  public placeholder: string = '';
+  public selectedQuestionId!: number;
+  public isImpression: boolean = true;
+  public userImpressions: object = [];
+
   public mounted() {
     this.watchScroll();
   }
 
-
+  get impressionsCount() {
+    // json内のarrayの数を数える場合はObject.keysを用いる
+    return Object.keys(this.userImpressions).length;
+  }
 
   @Emit()
   public getMoreImpressions() {
@@ -113,6 +135,18 @@ export default class Impressions extends Vue {
       }
     };
   }
+
+  @Emit()
+  public toggleImpressionModal() {
+    this.showImpressionModal = false;
+  }
+
+  @Emit()
+  private modalImpressionToggle(placeholder: string, selectedQuetionId: string) {
+    this.placeholder = placeholder || '';
+    this.selectedQuestionId = Number(selectedQuetionId);
+    this.showImpressionModal = !this.showImpressionModal;
+  }
 }
 </script>
 
@@ -133,9 +167,6 @@ export default class Impressions extends Vue {
   margin 6px !important
   padding 8px !important
   color #555555 !important
-
-.icon-button-group
-  background #FFF !important
 
 .no-NoImpressionCard
   background red !important
