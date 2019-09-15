@@ -31,7 +31,7 @@ const QuestionsPageSize: any = 10;
       variables() {
         if (this.$route && this.$route.params) {
           return {
-            userId: 4,
+            userId: this.user.id,
             categoryName: this.$route.params.categoryName,
             page: 0,
             size: QuestionsPageSize,

@@ -8,7 +8,7 @@
       a(href='#', @click.prevent='login') Login
     // new link to /profile - only show if authenticated
     li(v-if='isAuthenticated')
-      router-link(:to="`/profile/RAGUNA2`") Profile
+      router-link(:to="`/profile/${userName}`") Profile
     // /profile
     li(v-if='isAuthenticated')
       a(href='#', @click.prevent='logout') Log out
@@ -29,6 +29,7 @@ export default {
     return {
       isAuthenticated: false,
       profile: this.$auth.profile,
+      userName: this.$auth.profile[`https://montage.bio/screen_name`],
     };
   },
   async created() {
