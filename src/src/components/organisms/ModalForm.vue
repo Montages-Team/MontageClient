@@ -27,6 +27,7 @@ import { Component, Vue, Emit, Prop } from 'vue-property-decorator';
 import ConfirmButton from '../atoms/ConfirmButton.vue';
 import router from '../../router';
 import { CreateImpressionMutation } from '../../constants/create_impression_query';
+import { impressionQuery } from '../../constants/get-user-impression-query';
 
 @Component({
   components: {
@@ -49,7 +50,7 @@ export default class ModalForm extends Vue {
   private showImpressionModal!: boolean;
 
   @Emit()
-  public postMutation(isCollage: boolean) {
+  private postMutation(isCollage: boolean) {
     const mutation = this.$apollo.mutate({
       mutation: CreateImpressionMutation,
       variables: {
@@ -57,14 +58,15 @@ export default class ModalForm extends Vue {
         userName:  this.$route.params.userName,
         questionId: this.selectedQuestionId,
       },
-      fetchPolicy: 'no-cache',
-      // TODO: updateを追加してmutation後にprofile画面に遷移したときにimpressionを更新するようにする
-      // refs: https://learn.hasura.io/graphql/vue/optimistic-update-mutations/2-mutation-cache
     });
 
     mutation
-      .then(({ data: { result } }) => {
-        return result;
+      .then(({ data }) => {
+        if (!data) {
+          throw new Error('data is undefined');
+        }
+        const res = data.createImpression;
+        return res;
       })
       .then(({ ok, impression, errors }) => {
         if (ok) {

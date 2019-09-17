@@ -30,29 +30,13 @@
 
 <script lang="ts">
 import { Component, Vue, Emit, Prop } from 'vue-property-decorator';
-import gql from 'graphql-tag';
 import ProfileRoundImage from '../atoms/ProfileRoundImage.vue';
 import NoImpressionCard from '../molecules/NoImpressionCard.vue';
 import ModalForm from '../organisms/ModalForm.vue';
 import ReactionIconGroup from '../molecules/ReactionIconGroup.vue';
+import { impressionQuery } from '../../constants/get-user-impression-query';
 
 const pageSize: any = 10;
-const impressionQuery: any = gql`
-query getUserImpressions($name: String, $page: Int, $size: Int){
-  userImpressions(username: $name, page: $page, size: $size){
-    id
-    content
-    question{
-      id
-      about
-      appearedAt
-      category{
-        id
-        name
-      }
-    }
-  }
-}`;
 
 @Component({
   components: {
@@ -139,6 +123,10 @@ export default class Impressions extends Vue {
   @Emit()
   public toggleImpressionModal() {
     this.showImpressionModal = false;
+    this.$apollo.queries.userImpressions.setVariables(
+      { name: this.$route.params.userName, page: 0, size: pageSize },
+    );
+    this.$apollo.queries.userImpressions.refetch();
   }
 
   @Emit()
