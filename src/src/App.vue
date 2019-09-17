@@ -6,9 +6,6 @@
       router-link(to='/') Home
     li(v-if='!isAuthenticated')
       a(href='#', @click.prevent='login') Login
-    // new link to /profile - only show if authenticated
-    li(v-if='isAuthenticated')
-      router-link(:to="`/profile/${userName}`") Profile
     // /profile
     li(v-if='isAuthenticated')
       a(href='#', @click.prevent='logout') Log out
