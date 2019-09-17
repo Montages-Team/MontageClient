@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 
 export const CreateImpressionMutation = gql`
-mutation ($content: String!, $userName: String!, $questionId: Int!) {
-  result: createImpression(content: $content, username: $userName, questionId: $questionId,){
+mutation createImpression($content: String!, $userName: String!, $questionId: Int!) {
+  createImpression(content: $content, username: $userName, questionId: $questionId,){
       ok
       impression{
         id
