@@ -26,7 +26,6 @@ export default {
     return {
       isAuthenticated: false,
       profile: this.$auth.profile,
-      userName: this.$auth.profile[`https://montage.bio/screen_name`],
     };
   },
   async created() {
