@@ -58,11 +58,6 @@ const router = new Router({
       component: Callback,
     },
     {
-      path: '/auth0_callback',
-      name: 'auth0_callback',
-      component: Auth0Callback,
-    },
-    {
       path: '/profile/:userName',
       component: Profile,
       children: [
@@ -81,11 +76,22 @@ const router = new Router({
   ],
 });
 
+// router.beforeEach((to, from, next) => {
+//   if (to.path === '/' || to.path === '/callback' || auth.isAuthenticated()) {
+//     return next();
+//   }
+//   auth.login({ target: to.fullPath });
+// });
+
 router.beforeEach((to, from, next) => {
+  console.log('before each');
+  console.log(auth.isAuthenticated());
   if (to.path === '/' || to.path === '/callback' || auth.isAuthenticated()) {
     return next();
   }
-  auth.login({ target: to.fullPath });
+
+  // 認証後に返されるパスをcustomStateパラメータとして指定する。
+  auth.login({ target: to.path });
 });
 
 export default router;

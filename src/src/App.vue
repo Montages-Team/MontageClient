@@ -6,6 +6,8 @@
       router-link(to='/') Home
     li(v-if='!isAuthenticated')
       a(href='#', @click.prevent='login') Login
+    li(v-if='isAuthenticated')
+      router-link(to='/profile/RAGUNA2') Profile
     // /profile
     li(v-if='isAuthenticated')
       a(href='#', @click.prevent='logout') Log out
@@ -15,6 +17,7 @@
 <script>
 import Header from './components/organisms/Header';
 import Footer from './components/organisms/Footer';
+import { AuthService } from './auth/authService';
 
 export default {
   name: 'App',
@@ -28,10 +31,12 @@ export default {
       profile: this.$auth.profile,
     };
   },
+
   async created() {
     try {
       await this.$auth.renewTokens();
     } catch (e) {
+      console.log('App.vue の renewTokenでエラー');
       console.log(e);
     }
   },
@@ -43,6 +48,8 @@ export default {
       this.$auth.logOut();
     },
     handleLoginEvent(data) {
+      console.log('data.loggedIn');
+      console.log(data.loggedIn);
       this.isAuthenticated = data.loggedIn;
       this.profile = data.profile;
     },

@@ -38,6 +38,13 @@ import gql from 'graphql-tag';
   },
 })
 export default class Profile extends Vue {
+  public profile!: any;
+
+  @Emit()
+  public handleLoginEvent(data: any) {
+    console.log('handle in Profile');
+    this.profile = data.profile;
+  }
 }
 </script>
 
