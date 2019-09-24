@@ -2,11 +2,6 @@
   div(id="app" class='wrapper')
     Header(v-on:login="login")
     router-view
-    li
-      router-link(to='/') Home
-    li(v-if='!isAuthenticated')
-      a(href='#', @click.prevent='login') Login
-    // /profile
     li(v-if='isAuthenticated')
       a(href='#', @click.prevent='logout') Log out
     Footer
@@ -15,6 +10,7 @@
 <script>
 import Header from './components/organisms/Header';
 import Footer from './components/organisms/Footer';
+import { AuthService } from './auth/authService';
 
 export default {
   name: 'App',
@@ -28,6 +24,7 @@ export default {
       profile: this.$auth.profile,
     };
   },
+
   async created() {
     try {
       await this.$auth.renewTokens();

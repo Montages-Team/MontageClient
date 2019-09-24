@@ -11,7 +11,7 @@ const AUTH_TOKEN = 'apollo-token'
 
 // Http endpoint
 // const httpEndpoint = process.env.VUE_APP_GRAPHQL_HTTP || 'http://localhost:8000/gql'
-const httpEndpoint = process.env.VUE_APP_GRAPHQL_HTTP || 'https://montage-graphql-api.herokuapp.com/gql'
+const httpEndpoint = process.env.VUE_APP_GRAPHQL_HTTP || 'https://montage-graphql-api.herokuapp.com/gql/'
 // Files URL root
 export const filesRoot = process.env.VUE_APP_FILES_ROOT || httpEndpoint.substr(0, httpEndpoint.indexOf('/graphql'))
 

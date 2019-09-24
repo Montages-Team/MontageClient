@@ -1,8 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './components/pages/Home.vue';
-import Auth0Callback from './components/pages/Auth0Callback.vue';
-import Login from './components/pages/Login.vue';
 import TopPage from './components/pages/TopPage.vue';
 import Callback from './views/Callback.vue';
 import Profile from './components/pages/Profile.vue';
@@ -48,19 +46,9 @@ const router = new Router({
        ],
     },
     {
-      path: '/login/',
-      name: 'login',
-      component: Login,
-    },
-    {
       path: '/callback',
       name: 'callback',
       component: Callback,
-    },
-    {
-      path: '/auth0_callback',
-      name: 'auth0_callback',
-      component: Auth0Callback,
     },
     {
       path: '/profile/:userName',
@@ -85,7 +73,9 @@ router.beforeEach((to, from, next) => {
   if (to.path === '/' || to.path === '/callback' || auth.isAuthenticated()) {
     return next();
   }
-  auth.login({ target: to.fullPath });
+
+  // 認証後に返されるパスをcustomStateパラメータとして指定する。
+  auth.login({ target: to.path });
 });
 
 export default router;
