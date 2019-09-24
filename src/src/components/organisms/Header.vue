@@ -1,24 +1,46 @@
 <template lang="pug">
 sui-container.header-container
   .header
-    router-link.header-link(to='/') montage
+    .header-wrapper
+      .left-wrapper
+        router-link.header-link(to='/')
+          img(src='@/assets/icon.svg')
+      .right-wrapper
+        AuthButton(label='ログイン・登録')
 </template>
 
-<!-- a.header-link.header-link-image(href="/") -->
-<!--   sui-image.montage_logo_image(src='http://www.family.co.jp/content/dam/img/logo/logo_fm.png', alt='montage') -->
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator';
+import AuthButton from '../atoms/AuthButton.vue';
+
+@Component({
+  components: {
+    AuthButton,
+  },
+})
+export default class Header extends Vue {}
+</script>
 
 <style lang="stylus" scoped>
   .header
-    display flex
-    position: fixed;
-    width: 100%;
-    height: 56px;
-    left: -1px;
-    top: 0px;
+    display block
+    position fixed
+    width 100%
+    height 56px
+    left -1px
+    top: 0px
     z-index 100
-    background: linear-gradient(180deg, rgba(180, 100, 163, 0.47) 0%, rgba(255, 255, 255, 0) 100%), #807DBA;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-
+    background linear-gradient(180deg, rgba(180, 100, 163, 0.47) 0%, rgba(255, 255, 255, 0) 100%), #807DBA;
+    box-shadow 0px 4px 4px rgba(0, 0, 0, 0.25);
+    .header-wrapper
+      margin 12px 5% 0 5%
+      .left-wrapper
+        margin-top -4px
+        display block
+        float left
+      .right-wrapper
+        display block
+        float right
   #logo
     display inline-block
     font-size 3vh
@@ -58,12 +80,4 @@ sui-container.header-container
     y: 0px;
     width: 200px;
     height: 40px;
-
-  .header-link
-    margin 0 auto
-    color #fff
-    margin auto
-
-  .header-link-image
-    height inherit
 </style>
