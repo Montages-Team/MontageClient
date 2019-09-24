@@ -17,6 +17,7 @@ button
     color white
     border white 1px solid
     background none
+    font-size 90%
     padding 7px 10px
     border-radius 5px
 </style>

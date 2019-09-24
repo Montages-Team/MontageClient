@@ -33,9 +33,9 @@ export default class Header extends Vue {}
     background linear-gradient(180deg, rgba(180, 100, 163, 0.47) 0%, rgba(255, 255, 255, 0) 100%), #807DBA;
     box-shadow 0px 4px 4px rgba(0, 0, 0, 0.25);
     .header-wrapper
-      margin 12px 5% 0 5%
+      margin 14px 5% 0 5%
       .left-wrapper
-        margin-top -4px
+        margin-top -5px
         display block
         float left
       .right-wrapper
