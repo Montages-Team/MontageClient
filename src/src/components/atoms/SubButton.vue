@@ -1,12 +1,12 @@
 <template lang='pug'>
-    button {{this.label}}
+    button {{ label }}
 </template>
 
 <script lang='ts'>
 import { Component, Vue, Prop } from 'vue-property-decorator';
 
 @Component({})
-export default class AuthButton extends Vue {
+export default class SubButton extends Vue {
   @Prop({ type: String }) private label!: string;
 }
 </script>

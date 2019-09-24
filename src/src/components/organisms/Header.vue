@@ -6,16 +6,16 @@ sui-container.header-container
         router-link.header-link(to='/')
           img(src='@/assets/icon.svg')
       .right-wrapper
-        AuthButton(label='ログイン・登録')
+        SubButton(label='ログイン・登録')
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import AuthButton from '../atoms/AuthButton.vue';
+import SubButton from '../atoms/SubButton.vue';
 
 @Component({
   components: {
-    AuthButton,
+    SubButton,
   },
 })
 export default class Header extends Vue {}
