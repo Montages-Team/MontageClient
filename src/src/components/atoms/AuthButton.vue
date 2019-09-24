@@ -9,7 +9,6 @@ import { Component, Vue, Prop } from 'vue-property-decorator';
 export default class AuthButton extends Vue {
   @Prop({ type: String }) private label!: string;
 }
-
 </script>
 
 <style lang="stylus" scoped>
