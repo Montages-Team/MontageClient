@@ -6,7 +6,7 @@ sui-container.header-container
         router-link.header-link(to='/')
           img(src='@/assets/icon.svg')
       .right-wrapper
-        SubButton(label='ログイン・登録' @click.native="login" v-if="this.$parent.isAuthenticated == false")
+        SubButton(label='ログイン・登録' @click.native="$emit('login')" v-if="this.$parent.isAuthenticated == false")
 </template>
 
 <script lang="ts">
@@ -18,9 +18,7 @@ import SubButton from '../atoms/SubButton.vue';
     SubButton,
   },
 })
-export default class Header extends Vue {
-  @Prop({type: Function}) login: Function;
-}
+export default class Header extends Vue {}
 </script>
 
 <style lang="stylus" scoped>
