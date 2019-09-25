@@ -1,6 +1,6 @@
 <template lang="pug">
   div(id="app" class='wrapper')
-    Header
+    Header(v-on:login="login")
     router-view
     li
       router-link(to='/') Home
