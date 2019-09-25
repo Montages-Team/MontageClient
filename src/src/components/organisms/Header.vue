@@ -6,11 +6,11 @@ sui-container.header-container
         router-link.header-link(to='/')
           img(src='@/assets/icon.svg')
       .right-wrapper
-        SubButton(label='ログイン・登録')
+        SubButton(label='ログイン・登録' @click.native="login" v-if="this.$parent.isAuthenticated == false")
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Prop } from 'vue-property-decorator';
 import SubButton from '../atoms/SubButton.vue';
 
 @Component({
@@ -18,7 +18,9 @@ import SubButton from '../atoms/SubButton.vue';
     SubButton,
   },
 })
-export default class Header extends Vue {}
+export default class Header extends Vue {
+  @Prop({type: Function}) login: Function;
+}
 </script>
 
 <style lang="stylus" scoped>
