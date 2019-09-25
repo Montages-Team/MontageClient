@@ -10,7 +10,7 @@ sui-container.header-container
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator';
+import { Component, Vue} from 'vue-property-decorator';
 import SubButton from '../atoms/SubButton.vue';
 
 @Component({
