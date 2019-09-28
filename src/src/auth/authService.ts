@@ -1,12 +1,11 @@
 import auth0 from 'auth0-js';
 import { EventEmitter } from 'events';
-// import authConfig from '../../auth_config.json';
 
 const webAuth = new auth0.WebAuth({
-  domain: 'montage.auth0.com', // auth0の認証サーバ
+  domain: process.env.VUE_APP_AUTH0_DOMAIN || '', // auth0の認証サーバ
   // リクエストID取得後にリダイレクトされるURL
   redirectUri: `${window.location.origin}/callback`,
-  clientID: 'RGVd2YKMt0igpii0SWSGPmYV2MiPtT7Z', // auth0のクライアントID
+  clientID: process.env.VUE_APP_AUTH0_CLIENT_ID || '', // auth0のクライアントID
   responseType: 'token id_token', // token id_tokenと書くことでaccess_tokenとid_token両方を要求
   scope: 'openid profile email',
 });
