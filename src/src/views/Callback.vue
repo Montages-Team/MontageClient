@@ -8,20 +8,21 @@
 <script lang="ts">
 import { Component, Vue, Emit } from 'vue-property-decorator';
 
+
 @Component({
-  created() {
-    this.$auth.handleAuthentication();
-  },
 })
 export default class Callback extends Vue {
+  public screenName: string = '';
+
+  public created() {
+    this.$auth.handleAuthentication();
+  }
 
   @Emit()
   public handleLoginEvent(data: any) {
-    if (data.error) {
-      this.$router.push('/');
-    } else {
-      this.$router.push(data.state.target || '/auth0_callback/');
-    }
+    this.screenName = data.profile[`https://montage.bio/screen_name`];
+    this.$router.push(data.state.target || `/profile/${this.screenName}`);
   }
+
 }
 </script>

@@ -1,12 +1,11 @@
 import auth0 from 'auth0-js';
 import { EventEmitter } from 'events';
-import authConfig from '../../auth_config.json';
 
 const webAuth = new auth0.WebAuth({
-  domain: authConfig.domain, // auth0の認証サーバ
+  domain: process.env.VUE_APP_AUTH0_DOMAIN || '', // auth0の認証サーバ
   // リクエストID取得後にリダイレクトされるURL
   redirectUri: `${window.location.origin}/callback`,
-  clientID: authConfig.clientId, // auth0のクライアントID
+  clientID: process.env.VUE_APP_AUTH0_CLIENT_ID || '', // auth0のクライアントID
   responseType: 'token id_token', // token id_tokenと書くことでaccess_tokenとid_token両方を要求
   scope: 'openid profile email',
 });
@@ -14,23 +13,28 @@ const webAuth = new auth0.WebAuth({
 const localStorageKey = 'loggedIn';
 const loginEvent = 'loginEvent';
 
-class AuthService extends EventEmitter {
-  idToken = null;
-  profile = null; // 取得される情報はprofileにまとめて取得される
-  tokenExpiry = null;
-  accessToken = null;
-  accessTokenExpiry = null;
+export class AuthService extends EventEmitter {
+  public idToken!: any;
+  public profile!: any; // 取得される情報はprofileにまとめて取得される
+  public tokenExpiry!: any;
+  public accessToken!: any;
+  public accessTokenExpiry!: any;
 
-  login(customState) {
+  public login(customState: any) {
     // ログイン時に認証処理を行う。
     webAuth.authorize({
       appState: customState,
+      connection: 'twitter',
     });
   }
 
-  logOut() {
+  public logOut() {
     // ログアウト時にセッション情報の削除などを行う。
     localStorage.removeItem(localStorageKey);
+    localStorage.removeItem('expires_at');
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('id_token');
+    localStorage.removeItem('Authorization');
 
     this.idToken = null;
     this.tokenExpiry = null;
@@ -43,53 +47,49 @@ class AuthService extends EventEmitter {
     this.emit(loginEvent, { loggedIn: false });
   }
 
-  handleAuthentication() {
+  public handleAuthentication() {
     /**
+     * auth0からのcallbackリクエストをハンドルする関数
      * CallbackURLへ遷移されてcreatedされたときに呼ばれる
+     * 認証情報はCallbackURL内にhashとして格納され、このメソッドではそのハッシュの処理を担当する
      */
     return new Promise((resolve, reject) => {
-      webAuth.parseHash((err, authResult) => {
+      webAuth.parseHash((err: any, authResult: any) => {
         if (err) {
-          this.emit(loginEvent, {
-            loggedIn: false,
-            error: err,
-            errorMsg: err.statusText,
-          });
+          console.log(err);
           reject(err);
         } else {
           this.localLogin(authResult);
           resolve(authResult.idToken);
-          // localStorage.setItem('id_token', authResult.idToken);
-          localStorage.setItem('Authorization', authResult.idToken);
-          localStorage.setItem('access_token', authResult.accessToken);
         }
       });
     });
   }
 
-  isAuthenticated() {
+  public isAuthenticated() {
     /**
-     * 認証されているかをトークンの有効期限を検証して確認する.
+     * 認証されているかをローカルストレージフラグがTrueかどうかで確認
+     * また、トークンの有効期限を確認する.
      */
-    return (
-      Date.now() < this.tokenExpiry &&
-      localStorage.getItem(localStorageKey) === 'true'
-    );
+    if (this.tokenExpiry === undefined) {
+      this.tokenExpiry = localStorage.getItem('expires_at');
+    }
+    return(Date.now() < Date.parse(this.tokenExpiry) && localStorage.getItem(localStorageKey) === 'true');
   }
 
-  isIdTokenValid() {
+  public isIdTokenValid() {
     /**
      * トークンの存在確認と有効期限の検証
      */
     return this.idToken && this.tokenExpiry && Date.now() < this.tokenExpiry;
   }
 
-  getIdToken() {
+  public getIdToken() {
     return new Promise((resolve, reject) => {
       if (this.isIdTokenValid()) {
         resolve(this.idToken);
       } else if (this.isAuthenticated()) {
-        this.renewTokens().then( (authResult) => {
+        this.renewTokens().then( (authResult: any) => {
               resolve(authResult.idToken);
             }, reject);
       } else {
@@ -98,7 +98,11 @@ class AuthService extends EventEmitter {
     });
   }
 
-  localLogin(authResult) {
+  public localLogin(authResult: any) {
+    /**
+     * ユーザーのIDトークンと、IDトークンの有効期限を設定します。
+     * 有効期限はミリ秒に変換されるため、ネイティブのJavaScript Dateオブジェクトを使用できます。
+     */
     this.idToken = authResult.idToken;
     this.profile = authResult.idTokenPayload;
     this.tokenExpiry = new Date(this.profile.exp * 1000);
@@ -106,6 +110,10 @@ class AuthService extends EventEmitter {
     this.accessTokenExpiry = new Date(Date.now() + authResult.expiresIn * 1000);
 
     localStorage.setItem(localStorageKey, 'true');
+    localStorage.setItem('expires_at', this.tokenExpiry);
+    localStorage.setItem('id_token', authResult.idToken);
+    localStorage.setItem('Authorization', authResult.idToken);
+    localStorage.setItem('access_token', authResult.accessToken);
 
     this.emit(loginEvent, {
       loggedIn: true,
@@ -114,13 +122,22 @@ class AuthService extends EventEmitter {
     });
   }
 
-  renewTokens() {
+  public renewTokens() {
+    /**
+     * auth0.jsのcheckSessionメソッドを使用してユーザーの認証ステータスを更新し、
+     * ログインセッションがまだ有効な場合にlocalLoginを呼び出します
+     */
     return new Promise((resolve, reject) => {
       if (localStorage.getItem(localStorageKey) !== 'true') {
         return reject('Not logged in');
       }
 
-      webAuth.checkSession({}, (err, authResult) => {
+      webAuth.checkSession({}, (err: any, authResult: any) => {
+        /**
+         * socialログインのときにAuth0が提供するdev key
+         * を使っているとcheckSessionはlogin_requiredとなって失敗する。
+         * また、ブラウザ機能のenable 3rd-party cookiesをONにしていないと失敗する
+         */
         if (err) {
           reject(err);
         } else {
@@ -131,7 +148,7 @@ class AuthService extends EventEmitter {
     });
   }
 
-  isAccessTokenValid() {
+  public isAccessTokenValid() {
     return (
       this.accessToken &&
       this.accessTokenExpiry &&
@@ -139,12 +156,12 @@ class AuthService extends EventEmitter {
     );
   }
 
-  getAccessToken() {
+  public getAccessToken() {
     return new Promise((resolve, reject) => {
       if (this.isAccessTokenValid()) {
         resolve(this.accessToken);
       } else {
-        this.renewTokens().then(authResult => {
+        this.renewTokens().then(( authResult: any ) => {
           resolve(authResult.accessToken);
         }, reject);
       }
@@ -152,8 +169,4 @@ class AuthService extends EventEmitter {
   }
 }
 
-const service = new AuthService();
-
-service.setMaxListeners(5);
-
-export default service;
+export default new AuthService();

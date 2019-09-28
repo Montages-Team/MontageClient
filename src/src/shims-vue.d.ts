@@ -10,4 +10,3 @@ declare module 'vue/types/vue' {
     $auth: any;
   }
 }
-

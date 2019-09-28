@@ -3,13 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "serve": "vue-cli-service serve --mode development",
+    "stgserve": "vue-cli-service serve --mode staging",
+    "prodserve": "vue-cli-service serve --mode production",
+    "build": "vue-cli-service build --mode development",
+    "stgbuild": "vue-cli-service build --mode staging",
+    "prodbuild": "vue-cli-service build --mode staging",
     "lint": "vue-cli-service lint",
     "test:e2e": "vue-cli-service test:e2e",
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "@types/auth0-js": "^9.10.6",
     "@types/graphql": "^14.5.0",
     "@types/semantic-ui": "^2.2.7",
     "apollo-cache-inmemory": "^1.6.3",

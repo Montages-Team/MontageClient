@@ -28,8 +28,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 
 // HTTP connexion to the API
 const httpLink = new HttpLink({
-  // uri: 'https://montage-graphql-api.herokuapp.com/gql/',
-  uri: 'localhost:8000/gql/',
+  uri: process.env.VUE_APP_GRAPHQL_HTTP || '',
 });
 
 // Cache implementation

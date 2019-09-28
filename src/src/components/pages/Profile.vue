@@ -15,6 +15,8 @@ import ProfileCard from '../../components/molecules/ProfileCard.vue';
 import ProfileImageTop from '../../components/molecules/ProfileImageTop.vue';
 import ProfilePageMenu from '../../components/molecules/ProfilePageMenu.vue';
 import gql from 'graphql-tag';
+import axios from 'axios';
+import { createNewUserMutation } from '../../constants/create-new-user-query';
 
 @Component({
   components: {
@@ -34,10 +36,75 @@ import gql from 'graphql-tag';
           };
         }
       },
+      skip() {
+          // 最初はskipされる
+          return this.skipQuery;
+      },
     },
   },
 })
 export default class Profile extends Vue {
+  public profile: object = this.$auth.profile;
+  public userId: string = '';
+  public displayName: string = '';
+  public firstLogin: boolean = false;
+  public skipQuery: boolean = true;
+
+  public created() {
+    this.callApi();
+  }
+  @Emit()
+  public async callApi() {
+    const accessToken = await this.$auth.getAccessToken();
+    this.userId = this.$auth.profile.sub;
+    this.displayName = this.$auth.profile[`https://montage.bio/screen_name`];
+    const url = `https://montage.auth0.com/userinfo`;
+
+    try {
+      await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }).then((response) => {
+        const { data } = response;
+        const meta = data[`https://montage:auth0:com/user_metadata`];
+        this.firstLogin = meta.first_login;
+        if (this.firstLogin === false) {
+          this.$apollo.queries.user.skip = false;
+        } else {
+          this.handleOnbordingEvent();
+        }
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  public handleOnbordingEvent() {
+    if (this.firstLogin === true) {
+      // ユーザ作成
+      this.createUser();
+    }
+  }
+
+  @Emit()
+  public createUser() {
+    const mutation = this.$apollo.mutate({
+      mutation: createNewUserMutation,
+      fetchPolicy: 'no-cache',
+    });
+    mutation
+      .then(({ data: { createUser } }) => {
+        return createUser;
+      })
+      .then(({ user, errors }) => {
+        if (user) {
+          this.$apollo.queries.user.skip = false;
+        } else {
+          this.$router.push('/');
+        }
+      });
+  }
 }
 </script>
 
