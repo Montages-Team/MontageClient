@@ -1,53 +1,71 @@
 <template lang='pug'>
   div
-    sui-menu.margin-off(:widths='2')
-      sui-menu-item(:class="{'active-menu': chosenMenu}" @click="toggleMenuProfile")
-        router-link.column-link(:to="{ name: 'profile', params: { userName: username}}") プロフィール
-      sui-menu-item(:class="{'active-menu': !chosenMenu}" @click="toggleMenuQuestions")
-        router-link.column-link(:to="{name: 'questions', params: { userName: username, categoryType: 'you', categoryName: 'あなたについて'}}") Questions
+    sui-menu(:widths='2' tabular labeled icon)
+      sui-menu-item(
+        :class="{'active-menu': isProfile}"
+        :active="isProfile"
+        @click="select(`Profile`)")
+        router-link.column-link(:to="{ name: 'profile', params: { userName: username}}")
+          i.user.circle.icon
+          span プロフィール
+      sui-menu-item(
+        :class="{'active-menu': !isProfile}"
+        :active="!isProfile"
+        @click="select(`Questions`)")
+        router-link.column-link(:to="{name: 'questions', params: { userName: username, categoryType: 'you', categoryName: 'あなたについて'}}")
+          i.question.circle.icon
+          span Question
 </template>
 
 <script lang='ts'>
-import { Component, Vue, Emit, Prop } from 'vue-property-decorator';
+import { Component, Vue, Emit, Prop, Watch } from 'vue-property-decorator';
 
 @Component({})
 export default class ProfilePageMenu extends Vue {
-
-  private chosenMenu: boolean = true;
+  private isProfile: boolean | null = null;
+  private active: string | null = null;
 
   @Prop({ type: String })
   private username!: string;
 
   private created() {
-    if (this.$route.path ===  '/profile/' + this.$route.params.userName + '/') {
-      this.chosenMenu = true;
+    if (this.$route.path.endsWith(`/profile/${this.username}`)) {
+      this.isProfile = true;
     } else {
-      this.chosenMenu = false;
+      this.isProfile = false;
+    }
+  }
+  /**
+   * メニューをクリックすると、それぞれのメニュー名がselect()でセットされ、activeの値が変更される.
+   * activeが変更されると、watchで検知され、isProfileの値が変更される.
+   * メニューの下線はisActiveでisProfileの値を見てどちらのメニューにつくか決定される.
+   */
+  @Watch('active')
+  private onChangeMenuStatus() {
+    if (this.active === 'Profile') {
+      this.isProfile = true;
+    } else if (this.active === 'Questions') {
+      this.isProfile = false;
     }
   }
 
   @Emit()
-  private toggleMenuProfile() {
-    this.chosenMenu = true;
+  private isActive(name: string) {
+    this.isProfile = (this.active === name);
   }
 
   @Emit()
-  private toggleMenuQuestions() {
-    this.chosenMenu = false;
+  private select(name: string) {
+    this.active = name;
   }
 }
 </script>>
 
 <style lang='stylus' scoped>
-.margin-off
-  margin 0 !important
-  height 40px
-
 .column-link
   color #656565 !important
   font-weight bold !important
   width 100%
-  padding 12px 0px
 
 .active-menu:after
   content ""
