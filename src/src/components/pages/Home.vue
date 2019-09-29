@@ -1,26 +1,52 @@
-<template lang='pug'>
-  div
-    TopMenu(:items='items' v-if='this.$route.name !== "home"')
-    router-view
+<template lang="pug">
+  div.wrapper
+    div.content-wrapper(is='sui-container' textAlign='center')
+      img.logo(src='@/assets/icon.svg')
+      h5.catch_copy(is='sui-header') 友達も、好きな人も、自由にイジろう
+      DimButton(label='はじめる')
+      div
+        i.angle.double.down.icon(style="color: #ffffff;")
+      h5.catch_copy(is='sui-header') Montageとは?
+      FeatureColumnGroup.flex-column
+      DimButton(label='はじめる')
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import { Component, Vue, Emit, Prop } from 'vue-property-decorator';
-import TopMenu from '../molecules/TopMenu.vue';
+import DimButton from '../atoms/DimButton.vue';
+import Footer from '../organisms/Footer.vue';
+import FeatureColumnGroup from '../organisms/FeatureColumnGroup.vue';
 
 @Component({
   components: {
-    TopMenu,
+    DimButton,
+    FeatureColumnGroup,
+    Footer,
   },
 })
-export default class Home extends Vue {
-  public items: object = [
-    {label: '利用規約', url: 'terms'},
-    {label: 'プライバシーポリシー', url: 'privacy_policy'},
-  ];
-}
+export default class Home extends Vue {}
 </script>
 
-<style lang='stylus' scoped>
+<style lang="stylus" scoped>
+.wrapper
+  width 100vw
+  background linear-gradient(#B464A3,#807DBA)
+  margin unset !important
 
-<style>
+.content-wrapper
+  padding-top 150px !important
+
+.logo
+  width 232px
+  height auto
+  margin-left 20px
+
+.catch_copy
+  margin 4px 0px !important
+  color #FFFFFF !important
+  font-weight unset !important
+
+@media screen and (min-width:1100px)
+  .flex-column
+    display flex
+</style>
