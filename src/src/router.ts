@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './components/pages/Home.vue';
-import TopPage from './components/pages/TopPage.vue';
 import Callback from './views/Callback.vue';
 import Profile from './components/pages/Profile.vue';
 import Impressions from './components/organisms/Impressions.vue';
@@ -22,28 +21,21 @@ const router = new Router({
       path: '/',
       name: 'home',
       component: Home,
-      children: [
-        {
-          path: '/top',
-          name: 'top',
-          component: TopPage,
-        },
-        {
-          path: '/terms',
-          name: 'terms',
-          component: Terms,
-        },
-        {
-          path: '/privacy_policy',
-          name: 'privacy_policy',
-          component: Privacy,
-        },
-        {
-          path: '/help',
-          name: 'faq',
-          component: Faq,
-        },
-       ],
+    },
+    {
+      path: '/terms',
+      name: 'terms',
+      component: Terms,
+    },
+    {
+      path: '/privacy_policy',
+      name: 'privacy_policy',
+      component: Privacy,
+    },
+    {
+      path: '/help',
+      name: 'faq',
+      component: Faq,
     },
     {
       path: '/callback',

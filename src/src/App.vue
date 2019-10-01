@@ -1,8 +1,8 @@
 <template lang="pug">
   div(id="app" class='wrapper')
-    Header(v-on:login="login")
+    Header(v-show="pathName !== 'home'" v-on:login="login")
     router-view
-    li(v-if='isAuthenticated')
+    li(v-if='isAuthenticated' v-show="pathName !== 'home'")
       a(href='#', @click.prevent='logout') Log out
     Footer
 </template>
@@ -22,6 +22,7 @@ export default {
     return {
       isAuthenticated: false,
       profile: this.$auth.profile,
+      pathName: this.$route.name,
     };
   },
 

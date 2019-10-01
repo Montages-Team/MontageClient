@@ -7,9 +7,15 @@
       a.gray-link(is='sui-list-item', href='/privacy_policy/', content='プライバシーポリシー')
       a.gray-link(is='sui-list-item', href='/help/', content='ヘルプ')
 
-
-
 </template>
+
+<script lang='ts'>
+import { Component, Vue, Prop } from 'vue-property-decorator';
+
+@Component({})
+export default class Footer extends Vue {
+}
+</script>
 
 <style lang="stylus" scoped>
   .footer-link-box
