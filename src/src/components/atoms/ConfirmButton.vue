@@ -14,7 +14,7 @@
       sui-button.buttonstyle__modal(v-if="content === 'Collage'",
                                     :content='content',
                                     size="tiny",
-                                    compact=truei,
+                                    compact=true,
                                     @click="emitPost",
                                     :style="{background: backgroundColor}")
 </template>
