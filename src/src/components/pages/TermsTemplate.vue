@@ -1,7 +1,7 @@
 <template lang='pug'>
   div
     div(is='sui-container')
-      TopMenu
+      TopMenu(isTerms=true)
       h2.terms-title-style サービス利用規約
       p.preface-style この利用規約（以下，「本規約」といいます。）は，Montage運営者（以下，「運営者」といいます。）が「Montage」の名称で提供するすべてのウェブサイト、ソフトウェア、アプリケーション、プロダクト、ドキュメントその他一切の製品およびサービス（以下，「本サービス」といいます。）の利用条件を定めるものです。登録ユーザーの皆さま（以下，「ユーザー」といいます。）には，本規約に従って，本サービスをご利用いただきます。
       div(v-for="block in blocks")

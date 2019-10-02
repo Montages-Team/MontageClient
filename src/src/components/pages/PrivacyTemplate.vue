@@ -1,7 +1,7 @@
 <template lang='pug'>
   div
     div(is='sui-container')
-      TopMenu
+      TopMenu(isTerms=false)
       h2.terms-title-style プライバシーポリシー
       p.privacy-preface-style Montage運営者(以下「運営者」といいます)は、お客様の個人情報保護の重要性について認識し、個人情報の保護に関する法律(以下「個人情報保護法」といいます)を遵守すると共に、以下のプライバシーポリシー(以下「本プライバシーポリシー」といいます)に従い、「Montage」の名前で運営者から提供されるサービス(以下「本サービス」といいます)の利用にあたってお客様から取得する個人情報の適切な取扱い及び保護に努めます。
       div(v-for="block in blocks")
