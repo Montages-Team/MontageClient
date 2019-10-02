@@ -1,29 +1,32 @@
 <template lang='pug'>
     div
-      sui-menu(vertical style="width: inherit; margin 16px")
-        router-link(color='red' v-for='item in items', :key="item.id" :content='item.label' is='sui-menu-item' :to="{ name: item.url }")
+      div.top-menu-margin
+        router-link(to="/terms/")
+          sui-segment(attached='top') サービス利用規約
+        router-link(to="/privacy_policy")
+          sui-segment(attached='bottom') プライバシーポリシー
 </template>
 
 <script lang='ts'>
 import { Component, Vue, Emit, Prop } from 'vue-property-decorator';
 
-@Component({
-// TODO リンクをactiveにする処理
-//   mounted() {
-//     if (this.$route.name === 'terms'){
-//         this.items[0].isActive = true;
-//         this.items[1].isActive = false;
-//     } else {
-//         this.items[0].isActive = false;
-//         this.items[1].isActive = true;
-//     }
-//   },
-})
+@Component({})
 export default class TopMenu extends Vue {
-  @Prop({type: Object})
-  private items!: object[];
+  private isActive!: boolean;
+
+  private mounted() {
+    if (this.$route.name === 'terms') {
+        this.isActive = true;
+        this.isActive = false;
+    } else {
+        this.isActive = false;
+        this.isActive = true;
+    }
+  }
 }
 </script>
 
 <style lang='stylus' scoped>
+.top-menu-margin
+  margin 16px 0px
 </style>

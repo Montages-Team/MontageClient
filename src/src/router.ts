@@ -3,10 +3,10 @@ import Router from 'vue-router';
 import Home from './components/pages/Home.vue';
 import Callback from './views/Callback.vue';
 import Profile from './components/pages/Profile.vue';
+import TermsTemplate from './components/pages/TermsTemplate.vue';
+import PrivacyTemplate from './components/pages/PrivacyTemplate.vue';
 import Impressions from './components/organisms/Impressions.vue';
 import Questions from './components/organisms/Questions.vue';
-import Terms from './components/organisms/Terms.vue';
-import Privacy from './components/organisms/Privacy.vue';
 import Faq from './components/organisms/Faq.vue';
 import auth from './auth/authService';
 
@@ -25,12 +25,12 @@ const router = new Router({
     {
       path: '/terms',
       name: 'terms',
-      component: Terms,
+      component: TermsTemplate,
     },
     {
       path: '/privacy_policy',
       name: 'privacy_policy',
-      component: Privacy,
+      component: PrivacyTemplate,
     },
     {
       path: '/help',
