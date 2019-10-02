@@ -4,7 +4,7 @@
     router-view
     li(v-if='isAuthenticated' v-show="pathName !== 'home'")
       a(href='#', @click.prevent='logout') Log out
-    Footer
+    Footer(v-show="pathName !== 'settings'")
 </template>
 
 <script>
