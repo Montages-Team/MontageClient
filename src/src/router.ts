@@ -35,7 +35,9 @@ const router = new Router({
     {
       path: '/account',
       name: 'account',
-      component: AccountSettings,
+      components: {
+        settings: AccountSettings,
+      },
     },
     {
       path: '/change_password',
