@@ -16,7 +16,7 @@ import QuestionCard from '../molecules/QuestionCard.vue';
 import GrayCenterText from '../atoms/GrayCenterText.vue';
 import ModalForm from '../organisms/ModalForm.vue';
 
-const QuestionsPageSize: any = 10;
+const QuestionsPageSize: number = 10;
 
 @Component({
   components: {
@@ -97,7 +97,7 @@ export default class Questions extends Vue {
       const scrollingPosition: number = document.documentElement.scrollTop + window.innerHeight;
       const bottomPosition: HTMLElement | null = document.getElementById('app');
       if (bottomPosition == null) { return; }
-      if (scrollingPosition === bottomPosition.offsetHeight) {
+      if (scrollingPosition > bottomPosition.offsetHeight) {
         this.getMoreQuestions();
       }
     };
