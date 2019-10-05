@@ -24,7 +24,7 @@ export default class Header extends Vue {}
 <style lang="stylus" scoped>
   .header
     display block
-    position fixed
+    position absolute
     width 100%
     height 56px
     left -1px
