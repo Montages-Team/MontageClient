@@ -42,12 +42,16 @@ const router = new Router({
     {
       path: '/change_password',
       name: 'change_password',
-      component: ChangePasswordForm,
+      components: {
+        settings: ChangePasswordForm,
+      },
     },
     {
       path: '/change_mail',
       name: 'change_mail',
-      component: ChangeMailForm,
+      components: {
+        settings: ChangeMailForm,
+      },
     },
     {
       path: '/deactivate',
