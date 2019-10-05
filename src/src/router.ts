@@ -52,7 +52,9 @@ const router = new Router({
     {
       path: '/deactivate',
       name: 'deactivate',
-      component: DeactivateForm,
+      components: {
+        settings: DeactivateForm,
+      },
     },
     {
       path: '/terms',
