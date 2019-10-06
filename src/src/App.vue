@@ -1,6 +1,6 @@
 <template lang="pug">
   div(id="app" class='wrapper')
-    Header(v-show="pathName !== 'home'" v-on:login="login")
+    Header(v-show="pathName !== 'home'" v-on:login="login" :profile="profile")
     router-view
     li(v-if='isAuthenticated' v-show="pathName !== 'home'")
       a(href='#', @click.prevent='logout') Log out

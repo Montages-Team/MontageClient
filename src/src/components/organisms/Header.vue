@@ -7,18 +7,27 @@ sui-container.header-container
           img(src='@/assets/icon.svg')
       .right-wrapper
         SubButton(label='ログイン・登録' @click.native="$emit('login')" v-if="this.$parent.isAuthenticated == false")
+        ProfileRoundImage(:size='profileImageSize' :url='profile.picture' @click.native="toggleSideMenu" v-else)
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Prop } from 'vue-property-decorator';
 import SubButton from '../atoms/SubButton.vue';
+import ProfileRoundImage from '../atoms/ProfileRoundImage.vue';
 
 @Component({
   components: {
     SubButton,
+    ProfileRoundImage,
   },
 })
-export default class Header extends Vue {}
+export default class Header extends Vue {
+  @Prop({ type: Object }) private profile!: object;
+  private profileImageSize: string =  'mini';
+  private toggleSideMenu() {
+    alert('Here is to be Sidemenu');
+  }
+}
 </script>
 
 <style lang="stylus" scoped>
@@ -28,16 +37,19 @@ export default class Header extends Vue {}
     width 100%
     height 56px
     left -1px
-    top: 0px
+    top 0px
     z-index 100
-    background linear-gradient(180deg, rgba(180, 100, 163, 0.47) 0%, rgba(255, 255, 255, 0) 100%), #807DBA;
-    box-shadow 0px 4px 4px rgba(0, 0, 0, 0.25);
+    background linear-gradient(180deg, rgba(180, 100, 163, 0.47) 0%, rgba(255, 255, 255, 0) 100%), #807DBA
+    box-shadow 0px 4px 4px rgba(0, 0, 0, 0.25)
+
     .header-wrapper
       margin 14px 5% 0 5%
+
       .left-wrapper
         margin-top -5px
         display block
         float left
+
       .right-wrapper
         display block
         float right
@@ -49,7 +61,7 @@ export default class Header extends Vue {}
     color white
     text-align left
     line-height 50px
-    &:hover
+    &hover
       color #444
 
   .logotype
@@ -75,9 +87,9 @@ export default class Header extends Vue {}
     width 100%
     height 56px
 
-  .svg-logo
-    x: 0px;
-    y: 0px;
-    width: 200px;
-    height: 40px;
+ .svg-logo
+    x 0px
+    y 0px
+    width 200px
+    height 40px
 </style>
