@@ -1,0 +1,95 @@
+<template lang='pug'>
+div.body
+    .menu-wrapper
+        .header-menu(v-for='i in menuItems')
+            a(:href='i.link')
+                .menu-item 
+                    i.icon.column-icon(:class="i.icon" style="color: #807DBA;" v-if="i.icon")
+                    | {{ i.itemName }}
+                    .sub-item(v-if="i.subItem") {{ i.subItem }}
+</template>
+
+<script lang='ts'>
+import { Component, Vue, Emit, Prop } from 'vue-property-decorator';
+
+@Component({})
+export default class HeaderMenu extends Vue {
+    @Prop({ type: String }) private userName!: string;
+    @Prop({ type: String }) private userId!: string;
+    private menuItems: any = [
+        {
+            itemName: '<',
+            link: 'https://www.google.com/',
+            icon: null,
+        },
+        {
+            itemName: this.userName,
+            subItem: this.userId,
+            link: 'https://www.google.com/',
+            icon: null,
+        },
+        {
+            itemName: 'Profile',
+            link: 'https://www.google.com/',
+            icon: 'user',
+         },
+        {
+            itemName: '設定',
+            link: 'https://www.google.com/',
+            icon: 'cog',
+        },
+        {
+            itemName: '使い方ガイド',
+            link: 'https://www.google.com/',
+            icon: 'info',
+        },
+        {
+            itemName: 'ログアウト',
+            link: 'https://www.google.com/',
+            icon: 'logout',
+        },
+    ];
+    private closeModal(e: any) {
+        if (e.target.className === this.$el.className) {
+            this.$emit('toggleHeaderMenu');
+        }
+    }
+    private created() {
+        window.addEventListener('click', this.closeModal);
+    }
+    private beforeDestroy() {
+        window.removeEventListener('click', this.closeModal);
+    }
+}
+</script>
+
+<style lang='stylus' scoped>
+a:link, a:visited
+    color #333
+.body
+    position absolute
+    top 0
+    margin 0
+    overflow hidden
+    background-color rgba(0, 0, 0, 0.3)
+    width 100vw
+    height 100vh
+
+.menu-wrapper
+    position absolute
+    right 0
+    font-size 120%
+    width 60vw
+    height 100vh
+    background #fafafa
+    .menu-item
+        display block
+        padding 12px
+        border-bottom 1px #ddd solid
+        pointer cursor
+        .column-icon
+            margin-right 10px
+        .sub-item
+            color #999
+            padding-top 5px
+</style>
