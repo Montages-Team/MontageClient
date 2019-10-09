@@ -2,11 +2,10 @@
 div.body
     .menu-wrapper
         .header-menu(v-for='i in menuItems')
-            a(:href='i.link')
-                .menu-item 
-                    i.icon.column-icon(:class="i.icon" style="color: #807DBA;" v-if="i.icon")
-                    | {{ i.itemName }}
-                    .sub-item(v-if="i.subItem") {{ i.subItem }}
+            .menu-item(@click="goto(i.link)")
+                i.icon.column-icon(:class="i.icon" style="color: #807DBA;" v-if="i.icon")
+                | {{ i.itemName }}
+                .sub-item(v-if="i.subItem") {{ i.subItem }}
 </template>
 
 <script lang='ts'>
@@ -18,34 +17,34 @@ export default class HeaderMenu extends Vue {
     @Prop({ type: String }) private userId!: string;
     private menuItems: any = [
         {
-            itemName: '<',
-            link: 'https://www.google.com/',
-            icon: null,
-        },
-        {
             itemName: this.userName,
             subItem: this.userId,
-            link: 'https://www.google.com/',
+            link: null,
             icon: null,
         },
         {
             itemName: 'Profile',
-            link: 'https://www.google.com/',
+            link: `/profile/${this.userId}`,
             icon: 'user',
          },
         {
             itemName: '設定',
-            link: 'https://www.google.com/',
+            link: '/settings',
             icon: 'cog',
         },
         {
-            itemName: '使い方ガイド',
-            link: 'https://www.google.com/',
+            itemName: '利用規約',
+            link: '/terms',
             icon: 'info',
         },
         {
+            itemName: 'プライバシーポリシー',
+            link: '/privacy_policy',
+            icon: 'privacy',
+        },
+        {
             itemName: 'ログアウト',
-            link: 'https://www.google.com/',
+            link: 'logout',
             icon: 'logout',
         },
     ];
@@ -53,6 +52,17 @@ export default class HeaderMenu extends Vue {
         if (e.target.className === this.$el.className) {
             this.$emit('toggleHeaderMenu');
         }
+    }
+    private goto(link: string) {
+        if (link === null) {
+            return;
+        }
+        if (link === 'logout') {
+            this.$auth.logOut();
+            return;
+        }
+        this.$emit('toggleHeaderMenu');
+        this.$router.push(link);
     }
     private created() {
         window.addEventListener('click', this.closeModal);
@@ -77,6 +87,7 @@ a:link, a:visited
 
 .menu-wrapper
     position absolute
+    margin 0
     right 0
     font-size 120%
     width 60vw

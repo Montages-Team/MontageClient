@@ -40,7 +40,7 @@ export default class Header extends Vue {
     position absolute
     width 100%
     height 56px
-    left -1px
+    left 0px
     top 0px
     z-index 100
     background linear-gradient(180deg, rgba(180, 100, 163, 0.47) 0%, rgba(255, 255, 255, 0) 100%), #807DBA
