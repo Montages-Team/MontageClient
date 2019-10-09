@@ -7,25 +7,29 @@ sui-container.header-container
           img(src='@/assets/icon.svg')
       .right-wrapper
         SubButton(label='ログイン・登録' @click.native="$emit('login')" v-if="this.$parent.isAuthenticated == false")
-        ProfileRoundImage(:size='profileImageSize' :url='profile.picture' @click.native="toggleSideMenu" v-else)
+        ProfileRoundImage(:size='profileImageSize' :url='profile.picture' @click.native="toggleHeaderMenu" v-else)
+    HeaderMenu(v-if='headerMenuFlag' v-on:toggleHeaderMenu='toggleHeaderMenu' :userName='profile.name' :userId='profile["https://montage.bio/screen_name"]')
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import SubButton from '../atoms/SubButton.vue';
 import ProfileRoundImage from '../atoms/ProfileRoundImage.vue';
+import HeaderMenu from './HeaderMenu.vue';
 
 @Component({
   components: {
     SubButton,
     ProfileRoundImage,
+    HeaderMenu,
   },
 })
 export default class Header extends Vue {
   @Prop({ type: Object }) private profile!: object;
   private profileImageSize: string =  'mini';
-  private toggleSideMenu() {
-    alert('Here is to be Sidemenu');
+  private headerMenuFlag: boolean = false;
+  private toggleHeaderMenu() {
+    this.headerMenuFlag = !this.headerMenuFlag;
   }
 }
 </script>
@@ -36,7 +40,7 @@ export default class Header extends Vue {
     position absolute
     width 100%
     height 56px
-    left -1px
+    left 0px
     top 0px
     z-index 100
     background linear-gradient(180deg, rgba(180, 100, 163, 0.47) 0%, rgba(255, 255, 255, 0) 100%), #807DBA
