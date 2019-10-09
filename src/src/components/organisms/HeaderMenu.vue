@@ -3,7 +3,7 @@ div.body
     .menu-wrapper
         .header-menu(v-for='i in menuItems')
             .menu-item(@click="goto(i.link)")
-                i.icon.column-icon(:class="i.icon" style="color: #807DBA;" v-if="i.icon")
+                i.icon.column-icon(:class="i.icon" v-if="i.icon")
                 | {{ i.itemName }}
                 .sub-item(v-if="i.subItem") {{ i.subItem }}
 </template>
@@ -99,6 +99,7 @@ a:link, a:visited
         border-bottom 1px #ddd solid
         pointer cursor
         .column-icon
+            color: #807DBA
             margin-right 10px
         .sub-item
             color #999
