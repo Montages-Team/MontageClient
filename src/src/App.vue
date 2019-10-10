@@ -2,7 +2,8 @@
   div(id="app" class='wrapper')
     Header(v-show="pathName !== 'home'" v-on:login="login" :profile="profile")
     router-view
-    Footer(v-show="pathName !== 'settings'")
+    router-view(name="settings" :userEmail="profile.email" :displayName="profile.name")
+    Footer(v-if="displayFooter" v-show="pathName !== 'settings'")
 </template>
 
 <script>
@@ -21,9 +22,18 @@ export default {
       isAuthenticated: false,
       profile: this.$auth.profile,
       pathName: this.$route.name,
+      displayFooter: null,
     };
   },
-
+  mounted() {
+    if (this.$route.name === 'settings' || this.$route.name === 'account' || this.$route.name === 'deactivate') {
+      this.displayFooter = false;
+      return this.displayFooter;
+    } else {
+      this.displayFooter = true;
+      return this.displayFooter;
+    }
+  },
   async created() {
     try {
       await this.$auth.renewTokens();

@@ -14,14 +14,12 @@
 <script lang='ts'>
 import { Component, Vue, Emit, Prop } from 'vue-property-decorator';
 import DimButton from '../atoms/DimButton.vue';
-import Footer from '../organisms/Footer.vue';
 import FeatureColumnGroup from '../organisms/FeatureColumnGroup.vue';
 
 @Component({
   components: {
     DimButton,
     FeatureColumnGroup,
-    Footer,
   },
 })
 export default class Home extends Vue {}

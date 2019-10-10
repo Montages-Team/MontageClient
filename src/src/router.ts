@@ -37,22 +37,30 @@ const router = new Router({
     {
       path: '/account',
       name: 'account',
-      component: AccountSettings,
+      components: {
+        settings: AccountSettings,
+      },
     },
     {
       path: '/change_password',
       name: 'change_password',
-      component: ChangePasswordForm,
+      components: {
+        settings: ChangePasswordForm,
+      },
     },
     {
       path: '/change_mail',
       name: 'change_mail',
-      component: ChangeMailForm,
+      components: {
+        settings: ChangeMailForm,
+      },
     },
     {
       path: '/deactivate',
       name: 'deactivate',
-      component: DeactivateForm,
+      components: {
+        settings: DeactivateForm,
+      },
     },
     {
       path: '/terms',
