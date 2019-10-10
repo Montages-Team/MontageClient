@@ -1,11 +1,9 @@
 <template lang="pug">
   div(id="app" class='wrapper')
-    Header(v-show="pathName !== 'home'" v-on:login="login")
+    Header(v-show="pathName !== 'home'" v-on:login="login" :profile="profile")
     router-view
     router-view(name="settings" :userEmail="profile.email" :displayName="profile.name")
-    li(v-if='isAuthenticated' v-show="pathName !== 'home'")
-      a(href='#', @click.prevent='logout') Log out
-    Footer(v-if="displayFooter")
+    Footer(v-if="displayFooter" v-show="pathName !== 'settings'")
 </template>
 
 <script>
