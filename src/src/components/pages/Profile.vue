@@ -1,9 +1,12 @@
 <template lang='pug'>
-  //- userが読み込まれるまでv-ifで非表示しないとundefined property
-  div(v-if="user")
-    ProfileImageTop(:user="user")
-    ProfilePageMenu(:username="user.username")
-    router-view(:user="user")
+  div
+    //- userが読み込まれるまでv-ifで非表示しないとundefined property
+    div(v-if="user")
+      ProfileImageTop(:user="user")
+      ProfilePageMenu(:username="user.username")
+      router-view(:user="user")
+    div(v-else)
+      Loading
 
 </template>
 
@@ -17,12 +20,14 @@ import ProfilePageMenu from '../../components/molecules/ProfilePageMenu.vue';
 import gql from 'graphql-tag';
 import axios from 'axios';
 import { createNewUserMutation } from '../../constants/create-new-user-query';
+import Loading from '../organisms/Loading.vue';
 
 @Component({
   components: {
     ProfileCard,
     ProfileImageTop,
     ProfilePageMenu,
+    Loading,
   },
   apollo: {
     $loadingKey: 'loading',
@@ -44,17 +49,18 @@ import { createNewUserMutation } from '../../constants/create-new-user-query';
   },
 })
 export default class Profile extends Vue {
-  public profile: object = this.$auth.profile;
-  public userId: string = '';
-  public displayName: string = '';
-  public firstLogin: boolean = false;
-  public skipQuery: boolean = true;
+  private profile: object = this.$auth.profile;
+  private userId: string = '';
+  private displayName: string = '';
+  private firstLogin: boolean = false;
+  private skipQuery: boolean = true;
 
-  public created() {
+  private created() {
     this.callApi();
   }
+
   @Emit()
-  public async callApi() {
+  private async callApi() {
     const accessToken = await this.$auth.getAccessToken();
     this.userId = this.$auth.profile.sub;
     this.displayName = this.$auth.profile[`https://montage.bio/screen_name`];
@@ -80,7 +86,7 @@ export default class Profile extends Vue {
     }
   }
 
-  public handleOnbordingEvent() {
+  private handleOnbordingEvent() {
     if (this.firstLogin === true) {
       // ユーザ作成
       this.createUser();
@@ -88,7 +94,7 @@ export default class Profile extends Vue {
   }
 
   @Emit()
-  public createUser() {
+  private createUser() {
     const mutation = this.$apollo.mutate({
       mutation: createNewUserMutation,
       fetchPolicy: 'no-cache',

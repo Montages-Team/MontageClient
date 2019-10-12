@@ -19,7 +19,7 @@ export default {
   },
   data() {
     return {
-      isAuthenticated: false,
+      isAuthenticated: undefined,
       profile: this.$auth.profile,
       pathName: this.$route.name,
       displayFooter: null,
