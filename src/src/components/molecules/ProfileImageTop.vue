@@ -6,7 +6,7 @@
         div(style="width: 50%;")
           div.displayname {{user.displayName}}
           div.username.font-size__small @{{user.username}}
-        ProfileCardStats.font-size__small.follow-area(:stats="{following:  22, follower: 33}")
+        //- ProfileCardStats.font-size__small.follow-area(:stats="{following:  22, follower: 33}")
 </template>
 
 <script lang='ts'>
