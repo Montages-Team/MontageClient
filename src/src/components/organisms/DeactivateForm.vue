@@ -1,7 +1,7 @@
 <template lang='pug'>
     div
       div(is="sui-container" style="padding-top: 30px")
-        h2(is='sui-header') アカウントを削除した場合:
+        h3(is='sui-header') アカウントを削除した場合:
         sui-list(inverted)
           sui-list-item.list-items(v-for="item in listItems" :key="item.id") {{item}}
         sui-divider(inverted=true)
