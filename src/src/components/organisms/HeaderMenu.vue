@@ -1,11 +1,16 @@
 <template lang='pug'>
-div.body
-    .menu-wrapper
-        .header-menu(v-for='i in menuItems')
-            .menu-item(@click="goto(i.link)")
-                i.icon.column-icon(:class="i.icon" v-if="i.icon")
-                | {{ i.itemName }}
-                .sub-item(v-if="i.subItem") {{ i.subItem }}
+  div.body
+    div.menu-wrapper
+      div.header-menu
+        div.menu-item
+          span {{userName}}
+          .sub-item @{{userId}}
+        div.menu-item(v-if="!excluded.includes(routeName)" @click="goto(`/profile/${userId}`)")
+          sui-icon.column-icon(name="user")
+          span Profile
+        div.menu-item(v-for='i in menuItems' v-if="i.itemName !== 'Profile'" @click="goto(i.link)")
+          sui-icon.column-icon(:name="i.icon" v-if="i.icon")
+          span {{ i.itemName }}
 </template>
 
 <script lang='ts'>
@@ -13,20 +18,11 @@ import { Component, Vue, Emit, Prop } from 'vue-property-decorator';
 
 @Component({})
 export default class HeaderMenu extends Vue {
+    private routeName: string | undefined = undefined;
+    private excluded: string[] = ['profile', 'questions'];
     @Prop({ type: String }) private userName!: string;
     @Prop({ type: String }) private userId!: string;
     private menuItems: any = [
-        {
-            itemName: this.userName,
-            subItem: this.userId,
-            link: null,
-            icon: null,
-        },
-        {
-            itemName: 'Profile',
-            link: `/profile/${this.userId}`,
-            icon: 'user',
-         },
         {
             itemName: '設定',
             link: '/settings',
@@ -54,9 +50,6 @@ export default class HeaderMenu extends Vue {
         }
     }
     private goto(link: string) {
-        if (link === null) {
-            return;
-        }
         if (link === 'logout') {
             this.$auth.logOut();
             return;
@@ -71,6 +64,7 @@ export default class HeaderMenu extends Vue {
     }
     private created() {
         window.addEventListener('click', this.closeModal);
+        this.routeName = this.$route.name;
     }
     private beforeDestroy() {
         window.removeEventListener('click', this.closeModal);
@@ -108,5 +102,6 @@ a:link, a:visited
             margin-right 10px
         .sub-item
             color #999
-            padding-top 5px
+            padding-top 4px
+            font-size 13px
 </style>
