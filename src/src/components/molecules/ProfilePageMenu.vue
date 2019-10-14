@@ -69,7 +69,7 @@ export default class ProfilePageMenu extends Vue {
 
 .active-menu:after
   content ""
-  background -webkit-linear-gradient(180deg, #B464A3 0%, 100%), #807DBA
+  background linear-gradient(#B464A3,#807DBA)
   display block
   height 5px
   width -webkit-fill-available

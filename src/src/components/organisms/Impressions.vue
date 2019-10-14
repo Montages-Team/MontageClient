@@ -77,7 +77,7 @@ export default class Impressions extends Vue {
   public isImpression: boolean = true;
   public userImpressions: object = [];
 
-  public mounted() {
+  private mounted() {
     this.watchScroll();
   }
 
@@ -87,7 +87,7 @@ export default class Impressions extends Vue {
   }
 
   @Emit()
-  public getMoreImpressions() {
+  private getMoreImpressions() {
     this.page++;
     this.$apollo.queries.userImpressions.fetchMore({
       variables: {
@@ -96,6 +96,7 @@ export default class Impressions extends Vue {
         size: pageSize,
       },
       updateQuery: (previousResult, { fetchMoreResult }) => {
+        if (!fetchMoreResult) { return previousResult; }
         const pre = previousResult.userImpressions;
         const result = fetchMoreResult.userImpressions;
         if (result.length < pageSize) {
@@ -109,8 +110,13 @@ export default class Impressions extends Vue {
   }
 
   @Emit()
-  public watchScroll() {
+  private watchScroll() {
     window.onscroll = () => {
+      /**
+       *  profileページに行った後はwatchScrollがマウントされているので
+       * 不要な部分でgetMoreImpressionsが作動してしまうことを防ぐ目的
+       */
+      if (this.$route.name !== 'profile') { return; }
       const scrollingPosition: number = document.documentElement.scrollTop + window.innerHeight;
       const bottomPosition: HTMLElement | null = document.getElementById('app');
       if (bottomPosition == null) { return; }
@@ -121,7 +127,7 @@ export default class Impressions extends Vue {
   }
 
   @Emit()
-  public toggleImpressionModal() {
+  private toggleImpressionModal() {
     this.showImpressionModal = false;
     this.$apollo.queries.userImpressions.setVariables(
       { name: this.$route.params.userName, page: 0, size: pageSize },
