@@ -1,8 +1,5 @@
 <template lang='pug'>
   div
-    //- div.loading-wrapper
-    //- div.loading-content-wrapper(is='sui-container' textAlign='center')
-    //-   img.loading-logo(src='@/assets/icon.svg')
     sui-segment.loading-wrapper
       sui-dimmer.loading-content-wrapper(active='', inverted='')
         sui-loader(content='Loading...')
@@ -21,7 +18,6 @@ export default class Loading extends Vue {
 .loading-wrapper
   width -webkit-fill-available !important
   height 100%
-  // background linear-gradient(#B464A3, #807DBA) !important
   margin unset !important
   z-index 1000 !important
   position absolute !important
