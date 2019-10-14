@@ -15,6 +15,9 @@ import About from './components/pages/About.vue';
 
 Vue.use(Router);
 
+// ログインしてなくてもアクセスできるページのパス
+const UNLOGINDED_ALLOWED_PAGES = ['home', 'terms', 'privacy_policy', 'help', 'callback'];
+
 const router = new Router({
   // デフォルトの挙動ではURLに#が含まれるが、
   // mode:historyを指定することでURLからhashを取り除くことができる。
@@ -80,8 +83,11 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.path === '/' || to.path === '/callback' || auth.isAuthenticated()) {
-    return next();
+  const nextPath = to.name as string;
+
+  // 未ログインでアクセス許可されていないページに遷移しようとしたらトップページへリダイレクトする
+  if (!auth.isAuthenticated() && !UNLOGINDED_ALLOWED_PAGES.includes(nextPath)) {
+    return next({name: 'home'});
   }
 
   // 認証後に返されるパスをcustomStateパラメータとして指定する。

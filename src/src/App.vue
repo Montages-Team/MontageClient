@@ -1,6 +1,6 @@
 <template lang="pug">
   div(id="app" class='wrapper')
-    Header(v-show="pathName !== 'home'" v-on:login="login" :profile="profile")
+    Header(v-show="this.$route.path !== '/'" v-on:login="login" :profile="profile")
     router-view(v-if="pathName !== 'settings'")
     router-view(v-else :userName="this.profile['https://montage.bio/screen_name']")
     Footer(v-if="displayFooter" v-show="pathName !== 'settings'")
