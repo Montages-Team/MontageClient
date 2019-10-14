@@ -1,15 +1,17 @@
 <template lang='pug'>
   div
-    sui-segment
-      sui-dimmer(active='')
-        sui-loader
+    Loading
 </template>
 
 <script lang="ts">
 import { Component, Vue, Emit } from 'vue-property-decorator';
+import Loading from '../components/organisms/Loading.vue';
 
 
 @Component({
+  components: {
+    Loading,
+  },
 })
 export default class Callback extends Vue {
   public screenName: string = '';

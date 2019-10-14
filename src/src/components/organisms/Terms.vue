@@ -14,4 +14,4 @@ export default class Terms extends Vue {
 </script>
 
 <style lang='stylus' scoped>
-<style>
+</style>
