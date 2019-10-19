@@ -3,7 +3,7 @@ sui-container.header-container
   .header
     .header-wrapper
       .left-wrapper
-        router-link.header-link(:to="{name: 'profile', params: { userName: userName }}")
+        router-link.header-link(:to="{name: 'profile', params: { userName: getUserName }}")
           img(src='@/assets/icon.svg')
       .right-wrapper(v-if="this.$parent.isAuthenticated !== undefined")
         SubButton(label='ログイン・登録' @click.native="$emit('login')" v-if="this.$parent.isAuthenticated == false")
