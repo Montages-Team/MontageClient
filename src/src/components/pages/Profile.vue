@@ -45,6 +45,10 @@ import Loading from '../organisms/Loading.vue';
           // 最初はskipされる
           return this.skipQuery;
       },
+     error(error) {
+      this.$apollo.queries.user.skip = true;
+      this.createUser();
+     },
     },
   },
 })
@@ -61,35 +65,34 @@ export default class Profile extends Vue {
 
   @Emit()
   private async callApi() {
-    const accessToken = await this.$auth.getAccessToken();
+    const accessToken = await this.$auth.getAccessToken()
+                        .catch( ( error: any ) => {
+                          console.log('access token 取得エラーです');
+                          return;
+                        });
     this.userId = this.$auth.profile.sub;
     this.displayName = this.$auth.profile[`https://montage.bio/screen_name`];
     const url = `https://montage.auth0.com/userinfo`;
 
-    try {
-      await axios.get(url, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }).then((response) => {
-        const { data } = response;
-        const meta = data[`https://montage:auth0:com/user_metadata`];
+    const header = { Authorization: `Bearer ${accessToken}`};
+    axios
+      .get(url, { headers: header})
+      .then(( response ) => {
+        const meta = response.data[`https://montage:auth0:com/user_metadata`];
         this.firstLogin = meta.first_login;
-        if (this.firstLogin === false) {
-          this.$apollo.queries.user.skip = false;
-        } else {
-          this.handleOnbordingEvent();
-        }
+        this.handleOnbordingEvent();
+      })
+      .catch(( error ) => {
+        console.log(error);
+        this.$router.push('/');
       });
-    } catch (e) {
-      console.log(e);
-    }
   }
 
   private handleOnbordingEvent() {
     if (this.firstLogin === true) {
-      // ユーザ作成
       this.createUser();
+    } else {
+      this.$apollo.queries.user.skip = false;
     }
   }
 
