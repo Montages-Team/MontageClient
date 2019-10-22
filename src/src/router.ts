@@ -30,7 +30,7 @@ const router = new Router({
       component: AccountSettings,
     },
     {
-      path: '/deactivate',
+      path: '/deactivate/:userId',
       name: 'deactivate',
       component: DeactivateForm,
     },

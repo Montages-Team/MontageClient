@@ -20,7 +20,7 @@
             label アカウント削除
             sui-list
               sui-list-item.input-status-info 一度アカウントを削除すると、二度と元に戻せません。十分ご注意ください。
-          router-link(to="/deactivate")
+          router-link(:to="{ name: 'deactivate', params: { userId: user.username }}")
             sui-button.danger-button(color="red" size="mini" content='退会申請ページへ進む')
 </template>
 
@@ -49,7 +49,9 @@ export default class AccountSettings extends Vue {
 <style lang='stylus' scoped>
 .account-setting-segment
   padding-top 30px !important
-  height 100vh !important
+  height 70vh !important
+  border None !important
+  box-shadow None !important
 
 .upload-link
   height 20px
