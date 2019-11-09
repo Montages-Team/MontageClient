@@ -2,13 +2,11 @@
   div
     div.footer-link-box
       div
-        router-link.link-style(to="/") ヘルプ
-        router-link.link-style(to="/") このサイトについて
+        router-link.link-style(to="/help") ヘルプ
+        router-link.link-style(to="/about") このサイトについて
         router-link.link-style(to="/terms/") 利用規約
         router-link.link-style(to="/privacy_policy/") プライバシーポリシー
-        router-link.link-style(to="/") Collageボタンについて
         a.link-style(href="https://form.run/@montage") お問い合わせ
-        router-link.link-style(to="/") 運営について
         a.link-style(href="https://twitter.com/montage_bio") 公式Twitter
       router-link.cp-style(to="/")
         i.creative.commons.icon
