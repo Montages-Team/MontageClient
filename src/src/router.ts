@@ -9,8 +9,9 @@ import Impressions from './components/organisms/Impressions.vue';
 import Questions from './components/organisms/Questions.vue';
 import AccountSettings from './components/organisms/AccountSettings.vue';
 import DeactivateForm from './components/organisms/DeactivateForm.vue';
-import Faq from './components/organisms/Faq.vue';
+import Faq from './components/pages/Faq.vue';
 import auth from './auth/authService';
+import About from './components/pages/About.vue';
 
 Vue.use(Router);
 
@@ -30,7 +31,7 @@ const router = new Router({
       component: AccountSettings,
     },
     {
-      path: '/deactivate',
+      path: '/deactivate/:userId',
       name: 'deactivate',
       component: DeactivateForm,
     },
@@ -48,6 +49,11 @@ const router = new Router({
       path: '/help',
       name: 'faq',
       component: Faq,
+    },
+    {
+      path: '/about',
+      name: 'about',
+      component: About,
     },
     {
       path: '/callback',
