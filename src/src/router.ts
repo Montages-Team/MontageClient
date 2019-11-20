@@ -84,8 +84,6 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   const nextPath = to.name as string;
-  console.log(nextPath);
-  console.log(auth.isAuthenticated());
   // 未ログインでアクセス許可されていないページに遷移しようとしたらトップページへリダイレクトする
   if (!auth.isAuthenticated() && !UNLOGINDED_ALLOWED_PAGES.includes(nextPath)) {
     return next({ name: 'home' });
@@ -93,8 +91,6 @@ router.beforeEach((to, from, next) => {
 
   return next();
 
-  // 認証後に返されるパスをcustomStateパラメータとして指定する。
-  // return auth.login({ target: to.path });
 });
 
 export default router;
