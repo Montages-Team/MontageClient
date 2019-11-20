@@ -13,24 +13,6 @@ const webAuth = new auth0.WebAuth({
 const localStorageKey = 'loggedIn';
 const loginEvent = 'loginEvent';
 
-export interface IAuth {
-  idToken: any;
-  profile: any;
-  tokenExpiry: any;
-  accessToken: any;
-  accessTokenExpiry: any;
-  login: any;
-  logOut: any;
-  handleAuthentication: any;
-  isAuthenticated: any;
-  isIdTokenValid: any;
-  getIdToken: any;
-  localLogin: any;
-  renewTokens: any;
-  isAccessTokenValid: any;
-  getAccessToken: any;
-}
-
 export class AuthService extends EventEmitter {
   public idToken!: any;
   public profile!: any; // 取得される情報はprofileにまとめて取得される
@@ -38,7 +20,7 @@ export class AuthService extends EventEmitter {
   public accessToken!: any;
   public accessTokenExpiry!: any;
 
-  public login(customState?: any) {
+  public login(customState: any) {
     // ログイン時に認証処理を行う。
     webAuth.authorize({
       appState: customState,
