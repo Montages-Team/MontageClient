@@ -16,7 +16,7 @@ import About from './components/pages/About.vue';
 Vue.use(Router);
 
 // ログインしてなくてもアクセスできるページのパス
-const UNLOGINDED_ALLOWED_PAGES = ['home', 'terms', 'privacy_policy', 'help', 'callback'];
+const UNLOGINDED_ALLOWED_PAGES = ['home', 'terms', 'privacy_policy', 'help', 'callback','about', 'faq'];
 
 const router = new Router({
   // デフォルトの挙動ではURLに#が含まれるが、
@@ -49,7 +49,7 @@ const router = new Router({
       component: PrivacyTemplate,
     },
     {
-      path: '/help',
+      path: '/faq',
       name: 'faq',
       component: Faq,
     },
