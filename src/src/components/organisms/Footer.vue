@@ -2,7 +2,7 @@
   div
     div.footer-link-box
       div
-        router-link.link-style(to="/help") ヘルプ
+        router-link.link-style(to="/faq") ヘルプ
         router-link.link-style(to="/about") このサイトについて
         router-link.link-style(to="/terms/") 利用規約
         router-link.link-style(to="/privacy_policy/") プライバシーポリシー
