@@ -1,12 +1,10 @@
-// このファイルはVueでtypescriptを使うときの独自の型定義です
-import Vue from 'vue';
-
-declare module '*.vue' {
-  export default Vue;
-}
-
-declare module 'vue/types/vue' {
+declare module 'vue/type/vue' {
+  // @ts-ignore
+  import Vue from 'vue';
+  // @ts-ignore
+  import VueRouter from 'vue-router';
   interface Vue {
-    $auth: any;
+    $router: VueRouter;
+    $apollo: any;
   }
 }

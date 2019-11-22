@@ -3,7 +3,7 @@ sui-container.header-container
   .header
     .header-wrapper
       .left-wrapper
-        router-link.header-link(to='/')
+        router-link.header-link(:to="{name: 'profile', params: { userName: getUserName }}")
           img(src='@/assets/icon.svg')
       .right-wrapper(v-if="this.$parent.isAuthenticated !== undefined")
         SubButton(label='ログイン・登録' @click.native="$emit('login')" v-if="this.$parent.isAuthenticated == false")
@@ -30,6 +30,14 @@ export default class Header extends Vue {
   private headerMenuFlag: boolean = false;
   private toggleHeaderMenu() {
     this.headerMenuFlag = !this.headerMenuFlag;
+  }
+  get getUserName() {
+    if (this.profile === undefined) {
+      return null;
+    } else {
+      const profile: any = this.profile;
+      return profile['https://montage.bio/screen_name'];
+    }
   }
 }
 </script>
