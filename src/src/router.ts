@@ -1,17 +1,18 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Home from './components/pages/Home.vue';
-import Callback from './views/Callback.vue';
-import Profile from './components/pages/Profile.vue';
-import TermsTemplate from './components/pages/TermsTemplate.vue';
-import PrivacyTemplate from './components/pages/PrivacyTemplate.vue';
-import Impressions from './components/organisms/Impressions.vue';
-import Questions from './components/organisms/Questions.vue';
-import AccountSettings from './components/organisms/AccountSettings.vue';
-import DeactivateForm from './components/organisms/DeactivateForm.vue';
-import Faq from './components/pages/Faq.vue';
 import auth from './auth/authService';
-import About from './components/pages/About.vue';
+
+const Home = () => import(/* webpackChunkName: "home" */ './components/pages/Home.vue');
+const Callback = () => import(/* webpackChunkName: "callback" */ './views/Callback.vue');
+const Profile = () => import(/* webpackChunkName: "profile" */ './components/pages/Profile.vue');
+const TermsTemplate = () => import(/* webpackChunkName: "terms" */ './components/pages/TermsTemplate.vue');
+const PrivacyTemplate = () => import(/* webpackChunkName: "privacy" */ './components/pages/PrivacyTemplate.vue');
+const Impressions = () => import(/* webpackChunkName: "impressions" */ './components/organisms/Impressions.vue');
+const Questions = () => import(/* webpackChunkName: "questions" */ './components/organisms/Questions.vue');
+const AccountSettings = () => import(/* webpackChunkName: "settings" */ './components/organisms/AccountSettings.vue');
+const DeactivateForm = () => import(/* webpackChunkName: "deactivate" */ './components/organisms/DeactivateForm.vue');
+const Faq = () => import(/* webpackChunkName: "faq" */ './components/pages/Faq.vue');
+const About = () => import(/* webpackChunkName: "about" */ './components/pages/About.vue');
 
 Vue.use(Router);
 

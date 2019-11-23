@@ -11,9 +11,13 @@
 
 <script lang='ts'>
 import { Component, Vue, Emit, Prop } from 'vue-property-decorator';
-import FollowButton from '../atoms/followButton.vue';
-import ProfileCardStats from './ProfileCardStats.vue';
 
+const FollowButton = () => import(
+  /* webpackChunkName: "follow-button" */
+  '../atoms/followButton.vue');
+const ProfileCardStats = () => import(
+  /* webpackChunkName: "profile-card-stats" */
+  './ProfileCardStats.vue');
 
 @Component({
   components: {

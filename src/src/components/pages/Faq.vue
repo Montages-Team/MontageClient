@@ -33,7 +33,9 @@
 
 <script lang="ts">
 import { Component, Vue, Emit, Prop } from 'vue-property-decorator';
-import FeatureColumn from '../molecules/FeatureColumn.vue';
+const FeatureColumn = () => import(
+  /* webpackChunkName: "feature-column" */
+  '../molecules/FeatureColumn.vue');
 
 @Component({
   components: {

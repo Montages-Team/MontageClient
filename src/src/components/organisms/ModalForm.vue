@@ -24,10 +24,13 @@
 
 <script lang="ts">
 import { Component, Vue, Emit, Prop } from 'vue-property-decorator';
-import ConfirmButton from '../atoms/ConfirmButton.vue';
 import router from '../../router';
 import { CreateImpressionMutation } from '../../constants/create_impression_query';
 import { impressionQuery } from '../../constants/get-user-impression-query';
+
+const ConfirmButton = () => import(
+  /* webpackChunkName: "confirm-button" */
+  '../atoms/ConfirmButton.vue');
 
 @Component({
   components: {

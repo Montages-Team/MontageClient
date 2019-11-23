@@ -7,9 +7,16 @@
 </template>
 
 <script>
-import Header from './components/organisms/Header';
-import Footer from './components/organisms/Footer';
 import { AuthService } from './auth/authService';
+
+const Header = () => import(
+  /* webpackChunkName: "header" */
+  './components/organisms/Header');
+
+const Footer = () => import(
+  /* webpackChunkName: "footer" */
+  './components/organisms/Footer');
+
 
 export default {
   name: 'App',

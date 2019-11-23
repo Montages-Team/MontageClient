@@ -11,10 +11,22 @@
 import { Component, Vue, Emit, Prop } from 'vue-property-decorator';
 import { CreateCategory } from '../../constants/create_category-query';
 import { categoryQuestionsQuery } from '../../constants/category-questions-query';
-import CategoryLabels from '../molecules/CategoryLabels.vue';
-import QuestionCard from '../molecules/QuestionCard.vue';
-import GrayCenterText from '../atoms/GrayCenterText.vue';
-import ModalForm from '../organisms/ModalForm.vue';
+
+const CategoryLabels = () => import(
+  /* webpackChunkName: "profile-round-image" */
+  '../molecules/CategoryLabels.vue');
+
+const QuestionCard = () => import(
+  /* webpackChunkName: "question-card" */
+  '../molecules/QuestionCard.vue');
+
+const GrayCenterText = () => import(
+  /* webpackChunkName: "gray-center-text" */
+  '../atoms/GrayCenterText.vue');
+
+const ModalForm = () => import(
+  /* webpackChunkName: "modal-form" */
+  '../organisms/ModalForm.vue');
 
 const QuestionsPageSize: number = 10;
 

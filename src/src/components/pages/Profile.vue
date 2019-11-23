@@ -13,14 +13,22 @@
 <script lang="ts">
 import { Component, Vue, Emit } from 'vue-property-decorator';
 import { userQuery } from '../../constants/user_query';
-
-import ProfileCard from '../../components/molecules/ProfileCard.vue';
-import ProfileImageTop from '../../components/molecules/ProfileImageTop.vue';
-import ProfilePageMenu from '../../components/molecules/ProfilePageMenu.vue';
+import { createNewUserMutation } from '../../constants/create-new-user-query';
 import gql from 'graphql-tag';
 import axios from 'axios';
-import { createNewUserMutation } from '../../constants/create-new-user-query';
-import Loading from '../organisms/Loading.vue';
+
+const ProfileCard = () => import(
+  /* webpackChunkName: "profilecard" */
+  '../../components/molecules/ProfileCard.vue');
+const ProfileImageTop = () => import(
+  /* webpackChunkName: "topimage" */
+  '../../components/molecules/ProfileImageTop.vue');
+const ProfilePageMenu = () => import(
+  /* webpackChunkName: "pagemenu" */
+  '../../components/molecules/ProfilePageMenu.vue');
+const Loading = () => import(
+  /* webpackChunkName: "loading" */
+  '../organisms/Loading.vue');
 
 @Component({
   components: {

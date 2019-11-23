@@ -13,8 +13,14 @@
 
 <script lang='ts'>
 import { Component, Vue, Emit, Prop } from 'vue-property-decorator';
-import DimButton from '../atoms/DimButton.vue';
-import FeatureColumnGroup from '../organisms/FeatureColumnGroup.vue';
+
+const DimButton = () => import(
+  /* webpackChunkName: "dim-button" */
+  '../atoms/DimButton.vue');
+
+const FeatureColumnGroup = () => import(
+  /* webpackChunkName: "feature-column-group" */
+  '../organisms/FeatureColumnGroup.vue');
 
 @Component({
   components: {

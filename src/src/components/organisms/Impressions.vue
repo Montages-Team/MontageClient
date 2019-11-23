@@ -30,11 +30,23 @@
 
 <script lang="ts">
 import { Component, Vue, Emit, Prop } from 'vue-property-decorator';
-import ProfileRoundImage from '../atoms/ProfileRoundImage.vue';
-import NoImpressionCard from '../molecules/NoImpressionCard.vue';
-import ModalForm from '../organisms/ModalForm.vue';
-import ReactionIconGroup from '../molecules/ReactionIconGroup.vue';
 import { impressionQuery } from '../../constants/get-user-impression-query';
+
+const ProfileRoundImage = () => import(
+  /* webpackChunkName: "profile-round-image" */
+  '../atoms/ProfileRoundImage.vue');
+
+const NoImpressionCard = () => import(
+  /* webpackChunkName: "no-impression-card" */
+  '../molecules/NoImpressionCard.vue');
+
+const ModalForm = () => import(
+  /* webpackChunkName: "modal-form" */
+  '../organisms/ModalForm.vue');
+
+const ReactionIconGroup = () => import(
+  /* webpackChunkName: "reaction-icon-group" */
+  '../molecules/ReactionIconGroup.vue');
 
 const pageSize: any = 10;
 

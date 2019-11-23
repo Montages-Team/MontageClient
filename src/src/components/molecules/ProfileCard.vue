@@ -9,8 +9,13 @@
 
 <script lang='ts'>
 import { Component, Vue, Emit, Prop } from 'vue-property-decorator';
-import ProfileCardStats from './ProfileCardStats.vue';
-import ProfileRoundImage from '../atoms/ProfileRoundImage.vue';
+
+const ProfileCardStats = () => import(
+  /* webpackChunkName: "profile-card-stats" */
+  './ProfileCardStats.vue');
+const ProfileRoundImage = () => import(
+  /* webpackChunkName: "profile-round-image" */
+  '../atoms/ProfileRoundImage.vue');
 
 @Component({
   components: {
