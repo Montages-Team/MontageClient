@@ -13,9 +13,18 @@ sui-container.header-container
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
-import SubButton from '../atoms/SubButton.vue';
-import ProfileRoundImage from '../atoms/ProfileRoundImage.vue';
-import HeaderMenu from './HeaderMenu.vue';
+
+const SubButton = () => import(
+  /* webpackChunkName: "sub-button" */
+  '../atoms/SubButton.vue');
+
+const ProfileRoundImage = () => import(
+  /* webpackChunkName: "profile-round-image" */
+  '../atoms/ProfileRoundImage.vue');
+
+const HeaderMenu = () => import(
+  /* webpackChunkName: "header-menu" */
+  './HeaderMenu.vue');
 
 @Component({
   components: {

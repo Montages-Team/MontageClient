@@ -16,9 +16,11 @@
 
 <script lang='ts'>
 import { Component, Vue, Emit, Prop } from 'vue-property-decorator';
-import Button from '../atoms/Button.vue';
 import { UserDeleteMutation } from '../../constants/delete_user_query';
 
+const Button = () => import(
+  /* webpackChunkName: "button" */
+  '../atoms/Button.vue');
 
 @Component({
   components: {

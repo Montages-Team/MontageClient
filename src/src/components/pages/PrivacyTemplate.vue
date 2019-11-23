@@ -19,8 +19,14 @@
 
 <script lang="ts">
 import { Component, Vue, Emit, Prop } from 'vue-property-decorator';
-import TermsBlock from '../molecules/TermsBlock.vue';
-import TopMenu from '../molecules/TopMenu.vue';
+
+const TermsBlock = () => import(
+  /* webpackChunkName: "terms-block" */
+  '../molecules/TermsBlock.vue');
+
+const TopMenu = () => import(
+  /* webpackChunkName: "top-menu" */
+  '../molecules/TopMenu.vue');
 
 @Component({
   components: {

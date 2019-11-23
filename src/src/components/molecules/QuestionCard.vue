@@ -8,7 +8,10 @@
 
 <script lang='ts' scoped>
 import { Component, Vue, Emit, Prop } from 'vue-property-decorator';
-import Button from '../atoms/Button.vue';
+
+const Button = () => import(
+  /* webpackChunkName: "button" */
+  '../atoms/Button.vue');
 
 @Component({
   components: {
