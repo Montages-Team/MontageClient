@@ -1,18 +1,17 @@
 <template lang="pug">
   div(id="app" class='wrapper')
-    Header(v-show="pathName !== 'home'" v-on:login="login" :profile="profile")
+    Header(v-if="$route.name !== 'home'" v-on:login="login" :profile="profile")
     router-view(v-if="pathName !== 'settings'")
     router-view(v-else :userName="this.profile['https://montage.bio/screen_name']")
-    Footer(v-if="displayFooter" v-show="pathName !== 'settings'")
+    Footer
 </template>
 
 <script>
 import { AuthService } from './auth/authService';
-import { Header } from './components/organisms/Header';
-// import Header
-// const Header = () => import(
-//   /* webpackChunkName: "header" */
-//   );
+
+const Header = () => import(
+  /* webpackChunkName: "header" */
+  './components/organisms/Header');
 
 const Footer = () => import(
   /* webpackChunkName: "footer" */
@@ -30,17 +29,7 @@ export default {
       isAuthenticated: undefined,
       profile: this.$auth.profile,
       pathName: this.$route.name,
-      displayFooter: null,
     };
-  },
-  mounted() {
-    if (this.$route.name === 'settings' || this.$route.name === 'account' || this.$route.name === 'deactivate') {
-      this.displayFooter = false;
-      return this.displayFooter;
-    } else {
-      this.displayFooter = true;
-      return this.displayFooter;
-    }
   },
   async created() {
     try {
