@@ -23,6 +23,10 @@ const router = new Router({
   // デフォルトの挙動ではURLに#が含まれるが、
   // mode:historyを指定することでURLからhashを取り除くことができる。
   mode: 'history',
+  scrollBehavior(to, from, savedPosition) {
+    // 遷移時に画面最上部へh移動
+    return { x: 0, y: 0 };
+  },
   routes: [
     {
       path: '/',
