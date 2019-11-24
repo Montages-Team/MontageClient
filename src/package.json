@@ -7,9 +7,8 @@
     "serve": "vue-cli-service serve --mode development",
     "stgserve": "vue-cli-service serve --mode staging",
     "prodserve": "vue-cli-service serve --mode production",
-    "build": "vue-cli-service build --mode development",
-    "stgbuild": "vue-cli-service build --mode staging",
-    "prodbuild": "vue-cli-service build --mode staging",
+    "build": "vue-cli-service build --mode production",
+    "devbuild": "vue-cli-service build --mode development",
     "lint": "vue-cli-service lint",
     "test:e2e": "vue-cli-service test:e2e",
     "test:unit": "vue-cli-service test:unit"
