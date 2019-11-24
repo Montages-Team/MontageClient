@@ -3,7 +3,7 @@
     Header(v-if="$route.name !== 'home'" v-on:login="login" :profile="profile")
     router-view(v-if="pathName !== 'settings'")
     router-view(v-else :userName="this.profile['https://montage.bio/screen_name']")
-    Footer
+    Footer(:profile="profile")
 </template>
 
 <script>
