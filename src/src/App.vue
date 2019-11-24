@@ -8,10 +8,11 @@
 
 <script>
 import { AuthService } from './auth/authService';
-
-const Header = () => import(
-  /* webpackChunkName: "header" */
-  './components/organisms/Header');
+import { Header } from './components/organisms/Header';
+// import Header
+// const Header = () => import(
+//   /* webpackChunkName: "header" */
+//   );
 
 const Footer = () => import(
   /* webpackChunkName: "footer" */
