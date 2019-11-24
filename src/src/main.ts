@@ -12,6 +12,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import '../semantic/dist/semantic.css';
 import SuiVue from 'semantic-ui-vue';
 import AuthPlugin from './plugins/auth';
+import VueLazyload from 'vue-lazyload';
 
 Vue.config.productionTip = false;
 const errorLink = onError(({ graphQLErrors, networkError }) => {
@@ -47,6 +48,7 @@ const apolloProvider = createProvider({
 
 Vue.use(SuiVue);
 Vue.use(AuthPlugin);
+Vue.use(VueLazyload, { lazyComponent: true});
 
 new Vue({
   router,

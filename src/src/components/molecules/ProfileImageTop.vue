@@ -1,7 +1,8 @@
 <template lang='pug'>
   div
     div.overlay-area
-      sui-image.picture-area(:src="user.profileImgUrl" fluid alt='プロフィール画像')
+      lazy-component
+        sui-image.picture-area(:src="user.profileImgUrl" fluid alt='プロフィール画像')
       div.float-area
         div(style="width: 50%;")
           div.displayname {{user.displayName}}
