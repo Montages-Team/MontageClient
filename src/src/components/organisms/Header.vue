@@ -7,7 +7,7 @@ sui-container.header-container
           img(src='@/assets/icon.svg')
         router-link.header-link(v-else :to="{name: 'home'}")
           img(src='@/assets/icon.svg')
-      .right-wrapper
+      .right-wrapper(v-if="this.$parent.isAuthenticated !== undefined")
         ProfileRoundImage(v-if="this.$parent.isAuthenticated === true" :size='profileImageSize' :url='profile.picture' @click.native="toggleHeaderMenu" )
         SubButton(v-else label='ログイン・登録' @click.native="$emit('login')")
     HeaderMenu(v-if='headerMenuFlag' v-on:toggleHeaderMenu='toggleHeaderMenu' :userName='profile.name' :userId='profile["https://montage.bio/screen_name"]')
