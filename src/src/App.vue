@@ -55,7 +55,7 @@ export default {
 
 <style lang="stylus">
 body
-  font-family 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif !important
+  font-family 'Roboto', sans-serif
   background #F8F8F8 !important
   min-height 100vh
   margin 0
