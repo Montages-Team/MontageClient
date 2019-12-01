@@ -41,8 +41,19 @@ const NotFound = () => import(
 
 Vue.use(Router);
 
-// ログインしてなくてもアクセスできるページのパス
-const UNLOGINDED_ALLOWED_PAGES = ['home', 'terms', 'privacy_policy', 'help', 'callback', 'about', 'faq'];
+// ログインしてなくてもアクセスできるページのパス名
+const PUBLIC_ALLOWED_ACCESS = [
+    'home',
+    'terms',
+    'privacy_policy',
+    'help',
+    'about',
+    'faq',
+    'callback',
+    'profile',
+    'questions',
+    'notfound',
+  ];
 
 const router = new Router({
   // デフォルトの挙動ではURLに#が含まれるが、
@@ -120,7 +131,7 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   const nextPath = to.name as string;
   // 未ログインでアクセス許可されていないページに遷移しようとしたらトップページへリダイレクトする
-  if (!auth.isAuthenticated() && !UNLOGINDED_ALLOWED_PAGES.includes(nextPath)) {
+  if (!auth.isAuthenticated() && !PUBLIC_ALLOWED_ACCESS.includes(nextPath)) {
     return next({ name: 'home' });
   }
 
