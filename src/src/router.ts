@@ -13,6 +13,9 @@ const AccountSettings = () => import(/* webpackChunkName: "settings" */ './compo
 const DeactivateForm = () => import(/* webpackChunkName: "deactivate" */ './components/organisms/DeactivateForm.vue');
 const Faq = () => import(/* webpackChunkName: "faq" */ './components/pages/Faq.vue');
 const About = () => import(/* webpackChunkName: "about" */ './components/pages/About.vue');
+const NotFound = () => import(
+  /* webpackChunkName: "notfound" */
+  './components/pages/NotFound.vue');
 
 Vue.use(Router);
 
@@ -83,6 +86,11 @@ const router = new Router({
           component: Questions,
         },
       ],
+    },
+    {
+      path: '/profile/:userName/404',
+      name: 'notfound',
+      component: NotFound,
     },
   ],
 });
