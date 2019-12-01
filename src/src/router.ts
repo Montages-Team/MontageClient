@@ -70,12 +70,12 @@ const router = new Router({
       component: Home,
     },
     {
-      path: '/settings/:userId',
+      path: '/settings',
       name: 'settings',
       component: AccountSettings,
     },
     {
-      path: '/deactivate/:userId',
+      path: '/deactivate',
       name: 'deactivate',
       component: DeactivateForm,
     },
@@ -125,18 +125,39 @@ const router = new Router({
       name: 'notfound',
       component: NotFound,
     },
+    {
+      path: '*',
+      redirect: '/',
+    },
   ],
 });
 
-router.beforeEach((to, from, next) => {
-  const nextPath = to.name as string;
+
+
+router.beforeEach((to: any, from: any, next: any) => {
+  const toPath = to.name as string;
+
+  if (auth.isAuthenticated() && toPath === 'home') {
+    // 認証済みでhome画面へ遷移しようとした際は自身のプロフィールへ遷移する
+    return next({ name: 'callback' });
+  }
+
   // 未ログインでアクセス許可されていないページに遷移しようとしたらトップページへリダイレクトする
-  if (!auth.isAuthenticated() && !PUBLIC_ALLOWED_ACCESS.includes(nextPath)) {
+  if (!auth.isAuthenticated() && !PUBLIC_ALLOWED_ACCESS.includes(toPath)) {
     return next({ name: 'home' });
   }
 
-  return next();
+  if (toPath === 'callback') {
+    // 認証済みでhome画面へ遷移しようとした際は自身のプロフィールへ遷移する
+    if ( auth.profile === undefined ) {
+      return next();
+    }
+    return next({ name: 'profile', params: {userName: auth.profile['https://montage.bio/screen_name'] }});
+  }
 
+  return next();
 });
+
+
 
 export default router;

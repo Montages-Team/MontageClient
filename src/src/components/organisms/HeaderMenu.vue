@@ -57,7 +57,7 @@ export default class HeaderMenu extends Vue {
 
         this.$emit('toggleHeaderMenu');
         if (link === '/settings') {
-            this.$router.push({ path: `/settings/${this.userId}` });
+            this.$router.push({ path: `/settings` });
             return;
         }
         this.$router.push(link);

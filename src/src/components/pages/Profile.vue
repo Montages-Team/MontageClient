@@ -53,10 +53,17 @@ const Loading = () => import(
           // 最初はskipされる
           return this.skipQuery;
       },
-     error(error) {
-      this.$apollo.queries.user.skip = true;
-      this.createUser();
-     },
+      result({ data }: any, loading: any, networkStatus: any) {
+        console.log('We got some result!');
+        if (data.user === null) {
+          console.log('We got some user null!');
+          this.$router.push({name: 'notfound'});
+        }
+      },
+      error(error) {
+       this.$apollo.queries.user.skip = true;
+       this.createUser();
+      },
     },
   },
 })
@@ -68,22 +75,34 @@ export default class Profile extends Vue {
   private skipQuery: boolean = true;
 
   private created() {
-    this.callApi();
+    if ( this.$auth.isAuthenticated() === true ) {
+      this.callApi();
+    } else {
+      console.log('ログインしていないユーザです');
+      this.$apollo.queries.user.skip = false;
+    }
   }
 
   @Emit()
   private async callApi() {
-    const accessToken = await this.$auth.getAccessToken()
-                        .catch( ( error: any ) => {
-                          console.log('access token 取得エラーです');
-                          return;
-                        });
+    await this.$auth.getAccessToken()
+    .then( (accessToken: any) => {
+        const header = { Authorization: `Bearer ${accessToken}`};
+        this.fetch_meta_data(header);
+    })
+    .catch( ( error: any ) => {
+      console.log('access token 取得エラーです');
+      return;
+    });
     this.userId = this.$auth.profile.sub;
     this.displayName = this.$auth.profile[`https://montage.bio/screen_name`];
-    const url = `https://montage.auth0.com/userinfo`;
+  }
 
-    const header = { Authorization: `Bearer ${accessToken}`};
-    axios
+  @Emit()
+  private async fetch_meta_data(header: any) {
+    const url = `https://montage.auth0.com/userinfo`;
+    // メタデータを取得
+    await axios
       .get(url, { headers: header})
       .then(( response ) => {
         const meta = response.data[`https://montage:auth0:com/user_metadata`];

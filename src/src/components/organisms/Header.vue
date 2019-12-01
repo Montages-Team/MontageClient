@@ -3,7 +3,7 @@ sui-container.header-container
   .header
     .header-wrapper
       .left-wrapper
-        router-link.header-link(v-if="this.$parent.isAuthenticated === true" :to="{name: 'profile', params: { userName: getUserName }}")
+        router-link.header-link(v-if="this.$parent.isAuthenticated" :to="{name: 'profile', params: { userName: getUserName }}")
           img(src='@/assets/icon.svg')
         router-link.header-link(v-else :to="{name: 'home'}")
           img(src='@/assets/icon.svg')

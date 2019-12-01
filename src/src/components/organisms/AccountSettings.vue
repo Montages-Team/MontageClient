@@ -20,7 +20,7 @@
             label アカウント削除
             sui-list
               sui-list-item.input-status-info 一度アカウントを削除すると、二度と元に戻せません。十分ご注意ください。
-          router-link(:to="{ name: 'deactivate', params: { userId: user.username }}")
+          router-link(:to="{ name: 'deactivate' }")
             sui-button.danger-button(color="red" size="mini" content='退会申請ページへ進む')
 </template>
 
@@ -36,7 +36,7 @@ import { userQuery } from '../../constants/user_query';
       variables() {
         // 動的ルートマッチングを利用する場合はthis.$routeのありなしでvariablesを決める
         return {
-          userName: this.$route.params.userId,
+          userName: this.$auth.profile['https://montage.bio/screen_name'],
         };
       },
     },

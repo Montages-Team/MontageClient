@@ -45,7 +45,7 @@ export default class DeactivateForm extends Vue {
     const mutation = this.$apollo.mutate({
       mutation: UserDeleteMutation,
       variables: {
-        userName: this.$route.params.userId,
+        userName: this.$auth.profile['https://montage.bio/screen_name'],
       },
     });
 
