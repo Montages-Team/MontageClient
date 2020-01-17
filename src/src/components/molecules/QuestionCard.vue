@@ -32,6 +32,7 @@ export default class QuestionCard extends Vue {
 
 .montage-icon-for-card
     margin-bottom 16px
+    width 56px !important
 
 .answer-button
   width 50% !important
