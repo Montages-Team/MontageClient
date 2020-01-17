@@ -53,10 +53,15 @@ const Loading = () => import(
           // 最初はskipされる
           return this.skipQuery;
       },
-     error(error) {
-      this.$apollo.queries.user.skip = true;
-      this.createUser();
-     },
+      result({ data }: any, loading: any, networkStatus: any) {
+        if (data.user === null) {
+          this.$router.push({name: 'notfound'});
+        }
+      },
+      error(error) {
+       this.$apollo.queries.user.skip = true;
+       this.createUser();
+      },
     },
   },
 })
@@ -68,22 +73,47 @@ export default class Profile extends Vue {
   private skipQuery: boolean = true;
 
   private created() {
-    this.callApi();
+    if ( this.$auth.isAuthenticated() === true ) {
+      console.debug('call api when created profile component.');
+      this.callApi();
+    } else {
+      console.info('User does not logged in.');
+      this.$apollo.queries.user.skip = false;
+    }
   }
 
   @Emit()
   private async callApi() {
-    const accessToken = await this.$auth.getAccessToken()
-                        .catch( ( error: any ) => {
-                          console.log('access token 取得エラーです');
-                          return;
-                        });
+    /**
+     * 認証情報からユーザID,displayNameを取得するための大元となる関数
+     *
+     * 1. Auth0からアクセストークンを取得
+     * 2. メタデータを取得
+     * 3. 初回ログイン時であればオンボーディングでユーザが作成される
+     * 4. 既存ユーザならプロフィール情報を取得する
+     */
+    await this.$auth.getAccessToken()
+    .then( (accessToken: any) => {
+        const header = { Authorization: `Bearer ${accessToken}`};
+        this.fetch_meta_data(header);
+    })
+    .catch( ( error: any ) => {
+      console.error('fail to fetch access token.');
+      return;
+    });
     this.userId = this.$auth.profile.sub;
     this.displayName = this.$auth.profile[`https://montage.bio/screen_name`];
-    const url = `https://montage.auth0.com/userinfo`;
+  }
 
-    const header = { Authorization: `Bearer ${accessToken}`};
-    axios
+  @Emit()
+  private async fetch_meta_data(header: any) {
+    /**
+     * userinfoエンドポイントからメタデータを取得する関数
+     */
+    const baseUrl = 'https://' + process.env.VUE_APP_AUTH0_DOMAIN;
+    const url = baseUrl + '/userinfo';
+    // メタデータを取得
+    await axios
       .get(url, { headers: header})
       .then(( response ) => {
         const meta = response.data[`https://montage:auth0:com/user_metadata`];
@@ -91,12 +121,15 @@ export default class Profile extends Vue {
         this.handleOnbordingEvent();
       })
       .catch(( error ) => {
-        console.log(error);
+        console.error(error);
         this.$router.push('/');
       });
   }
 
   private handleOnbordingEvent() {
+    /**
+     * 初回ログイン時のみユーザ作成を行うことをハンドリングするオンボーディング関数
+     */
     if (this.firstLogin === true) {
       this.createUser();
     } else {
@@ -106,6 +139,9 @@ export default class Profile extends Vue {
 
   @Emit()
   private createUser() {
+    /**
+     * ユーザ作成のミューテーションをリクエストする関数
+     */
     const mutation = this.$apollo.mutate({
       mutation: createNewUserMutation,
       fetchPolicy: 'no-cache',
@@ -126,8 +162,6 @@ export default class Profile extends Vue {
 </script>
 
 <style lang="stylus" scoped>
-
-
 .active
   border-bottoms solid linear-gradient(180deg, rgba(180,100,163,0.47) 0%, rgba(255,255,255,0) 100%) 1px
 

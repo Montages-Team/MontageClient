@@ -55,8 +55,7 @@ export class AuthService extends EventEmitter {
      */
     return new Promise((resolve, reject) => {
       webAuth.parseHash((err: any, authResult: any) => {
-        if (err) {
-          console.log(err);
+        if (err || !authResult) {
           reject(err);
         } else {
           this.localLogin(authResult);
@@ -167,6 +166,8 @@ export class AuthService extends EventEmitter {
       }
     });
   }
+
+
 }
 
 export default new AuthService();

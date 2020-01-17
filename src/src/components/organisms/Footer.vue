@@ -8,7 +8,10 @@
         router-link.link-style(to="/privacy_policy/") プライバシーポリシー
         a.link-style(href="https://form.run/@montage") お問い合わせ
         a.link-style(href="https://twitter.com/montage_bio") 公式Twitter
-      router-link.cp-style(:to="{name: 'profile', params: { userName: getUserName }}")
+      router-link.cp-style(v-if="this.$parent.isAuthenticated" :to="{name: 'profile', params: { userName: getUserName }}")
+        i.creative.commons.icon
+        | 2019 Montag
+      router-link.cp-style(v-else :to="{ name: 'home'}")
         i.creative.commons.icon
         | 2019 Montage
 </template>
