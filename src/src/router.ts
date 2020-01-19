@@ -61,7 +61,9 @@ const router = new Router({
   mode: 'history',
   scrollBehavior(to, from, savedPosition) {
     // 遷移時に画面最上部へh移動
-    return { x: 0, y: 0 };
+    if (from.name !== to.name) {
+      return { x: 0, y: 0 };
+    }
   },
   routes: [
     {

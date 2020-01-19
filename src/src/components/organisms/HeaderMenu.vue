@@ -3,12 +3,17 @@
     div.menu-wrapper
       div.header-menu
         div.menu-item
-          span {{userName}}
-          .sub-item @{{userId}}
-        div.menu-item(v-if="!excluded.includes(routeName)" @click="goto(`/profile/${userId}`)")
+          span {{this.profile.name}}
+          .sub-item @{{userName}}
+        div.menu-item(
+            v-if="!isProfilePageNow"
+            @click="goto(`/profile/${userName}`)")
           sui-icon.column-icon(name="user")
           span Profile
-        div.menu-item(v-for='i in menuItems' v-if="i.itemName !== 'Profile'" @click="goto(i.link)")
+        div.menu-item(
+            v-for='i in menuItems'
+            v-if="i.itemName !== 'Profile'"
+            @click="goto(i.link)")
           sui-icon.column-icon(:name="i.icon" v-if="i.icon")
           span {{ i.itemName }}
 </template>
@@ -19,9 +24,33 @@ import { Component, Vue, Emit, Prop } from 'vue-property-decorator';
 @Component({})
 export default class HeaderMenu extends Vue {
     private routeName: string | undefined = undefined;
-    private excluded: string[] = ['profile', 'questions'];
-    @Prop({ type: String }) private userName!: string;
-    @Prop({ type: String }) private userId!: string;
+    private profilePagePaths: string[] = ['profile', 'questions'];
+
+    @Prop({ type: Object }) private profile!: object;
+
+    private get userName() {
+      /**
+       * ProfileオブジェクトからユーザIDを取得
+       */
+      if (this.profile === undefined) {
+        return null;
+      } else {
+        const profile: any = this.profile;
+        return profile['https://montage.bio/screen_name'];
+      }
+    }
+
+    private get isProfilePageNow() {
+        /**
+         * クリックする画面がプロフィールページだった場合、メニューにProfileを表示させるか
+         */
+        if (this.routeName !== undefined) {
+            return this.profilePagePaths.includes(this.routeName);
+        } else {
+          return false;
+        }
+    }
+
     private menuItems: any = [
         {
             itemName: '設定',
@@ -57,7 +86,9 @@ export default class HeaderMenu extends Vue {
 
         this.$emit('toggleHeaderMenu');
         if (link === '/settings') {
-            this.$router.push({ path: `/settings` });
+            this.$router.push(
+              { path: `/settings` },
+            );
             return;
         }
         this.$router.push(link);

@@ -5,14 +5,24 @@
         :class="{'active-menu': isProfile}"
         :active="isProfile"
         @click="select(`Profile`)")
-        router-link.column-link(:to="{ name: 'profile', params: { userName: username}}")
+        router-link.column-link(:to="{\
+          name: 'profile',\
+          params: { userName: username }\
+        }")
           i.user.circle.icon
           span プロフィール
       sui-menu-item(
         :class="{'active-menu': !isProfile}"
         :active="!isProfile"
         @click="select(`Questions`)")
-        router-link.column-link(:to="{name: 'questions', params: { userName: username, categoryType: 'you', categoryName: 'あなたについて'}}")
+        router-link.column-link(:to="{\
+          name: 'questions',\
+          params: {\
+            userName: username,\
+            categoryType: 'you',\
+            categoryName: 'あなたについて'\
+          }\
+        }")
           i.question.circle.icon
           span Question
 </template>
@@ -29,7 +39,10 @@ export default class ProfilePageMenu extends Vue {
   private username!: string;
 
   private created() {
-    if (this.$route.path.endsWith(`/profile/${this.username}`)) {
+    if (
+      this.$route.path.endsWith(this.username + '/')
+      || this.$route.path.endsWith(this.username)
+    ) {
       this.isProfile = true;
     } else {
       this.isProfile = false;
