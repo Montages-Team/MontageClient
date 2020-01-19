@@ -1,8 +1,14 @@
 <template lang="pug">
   div(id="app" class='wrapper')
-    Header(v-if="$route.name !== 'home'" v-on:login="login" :profile="profile")
-    router-view(v-if="pathName !== 'settings'")
-    router-view(v-else :userName="this.profile['https://montage.bio/screen_name']")
+    Header(
+      v-if="$route.name !== 'home'"
+      v-on:login="login"
+      :profile="profile")
+    div(v-if="isAuthenticated")
+      //- router-viewに定義するとthis.$attrsで取得可能になる
+      router-view(:userName="this.profile['https://montage.bio/screen_name']")
+    div(v-else)
+      router-view
     Footer(:profile="profile")
 </template>
 

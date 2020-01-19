@@ -2,14 +2,10 @@
     div
       sui-segment.account-setting-segment(v-if="user")
         div(is="sui-container" style="display: flex;")
-          //- sui-image(v-if="user.profileImgUrl" :src='user.profileImgUrl', size='small', circular)
-          //- sui-image(v-else, size='small', circular)
-          //- a.upload-link(href="" @click="") 写真のアップロード
         sui-form
           sui-form-field
             label プロフィール名
             input.disable-input(:value="user.displayName" disabled)
-          //- sui-button.username-button.change-button(size="tiny" compact type='submit' disabled content="保存")
           sui-form-field
             label ユーザー名
             input.disable-input(:value="user.username" disabled)
@@ -25,7 +21,7 @@
 </template>
 
 <script lang='ts'>
-import { Component, Vue, Emit, Prop } from 'vue-property-decorator';
+import { Component, Vue, Emit, Prop, Watch } from 'vue-property-decorator';
 import { userQuery } from '../../constants/user_query';
 
 @Component({
@@ -36,13 +32,42 @@ import { userQuery } from '../../constants/user_query';
       variables() {
         // 動的ルートマッチングを利用する場合はthis.$routeのありなしでvariablesを決める
         return {
-          userName: this.$auth.profile['https://montage.bio/screen_name'],
+          userName: this.userName,
         };
+      },
+      skip() {
+        return this.skipQuery;
+      },
+      error(error) {
+       // 万が一クエリの引数が設定されなかった場合はprofileページへ飛ばす
+       this.$apollo.queries.user.skip = true;
+       console.log('have a error and push profile page');
+      //  this.$router.push('profile');
       },
     },
   },
 })
 export default class AccountSettings extends Vue {
+
+  private get skipQuery() {
+    /**
+     * attrsに値が設定されたらスキップを解除する.
+     */
+    if (this.userName) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+  private get userName() {
+    /**
+     * ユーザ名をVueコンポーネントから取得
+     */
+    if (this.$attrs.userName) {
+      return this.$attrs.userName;
+    }
+    return undefined;
+  }
 }
 </script>
 

@@ -60,7 +60,7 @@ const Loading = () => import(
       },
       error(error) {
        this.$apollo.queries.user.skip = true;
-       this.createUser();
+       this.$router.push('/');
       },
     },
   },
