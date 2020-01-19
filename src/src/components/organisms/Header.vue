@@ -1,16 +1,29 @@
 <template lang="pug">
 sui-container.header-container
   .header
-    .header-wrapper
+    .header-wrapper(v-if="this.$parent.isAuthenticated" )
+      //- ログイン済みの場合
       .left-wrapper
-        router-link.header-link(v-if="this.$parent.isAuthenticated" :to="{name: 'profile', params: { userName: getUserName }}")
+        router-link.header-link(:to="{name: 'profile', params: { userName: userName }}")
           img(src='@/assets/icon.svg')
-        router-link.header-link(v-else :to="{name: 'home'}")
+      .right-wrapper
+        ProfileRoundImage(
+          :size='profileImageSize'
+          :url='profile.picture'
+          @click.native="toggleHeaderMenu")
+
+    .header-wrapper(v-else)
+      //- 未ログインの場合
+      .left-wrappe
+        router-link.header-link(:to="{name: 'home'}")
           img(src='@/assets/icon.svg')
       .right-wrapper(v-if="this.$parent.isAuthenticated !== undefined")
-        ProfileRoundImage(v-if="this.$parent.isAuthenticated === true" :size='profileImageSize' :url='profile.picture' @click.native="toggleHeaderMenu" )
-        SubButton(v-else label='ログイン・登録' @click.native="$emit('login')")
-    HeaderMenu(v-if='headerMenuFlag' v-on:toggleHeaderMenu='toggleHeaderMenu' :userName='profile.name' :userId='profile["https://montage.bio/screen_name"]')
+        SubButton(label='ログイン・登録' @click.native="$emit('login')")
+
+    HeaderMenu(
+      v-if='headerMenuFlag'
+      v-on:toggleHeaderMenu='toggleHeaderMenu'
+      :profile='profile')
 </template>
 
 <script lang="ts">
@@ -42,14 +55,16 @@ export default class Header extends Vue {
   private toggleHeaderMenu() {
     this.headerMenuFlag = !this.headerMenuFlag;
   }
-  get getUserName() {
-    if (this.profile === undefined) {
-      return null;
-    } else {
+
+  private get userName() {
+    if (this.profile) {
       const profile: any = this.profile;
       return profile['https://montage.bio/screen_name'];
     }
+
+    return null;
   }
+
 }
 </script>
 
