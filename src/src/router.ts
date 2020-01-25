@@ -116,7 +116,7 @@ const router = new Router({
           component: Impressions,
         },
         {
-          path: 'q/:categoryName',
+          path: 'category/:categoryId',
           name: 'questions',
           component: Questions,
         },

@@ -19,8 +19,7 @@
           name: 'questions',\
           params: {\
             userName: username,\
-            categoryType: 'you',\
-            categoryName: 'あなたについて'\
+            categoryId: 1,\
           }\
         }")
           i.question.circle.icon

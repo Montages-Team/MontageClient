@@ -1,20 +1,31 @@
 <template lang='pug'>
     div.flex-category-box
       ul.flex-category-box-inline
-        sui-label.category-label(v-for='cat in categories', :key="cat.id", :style="{background: cat.color}")
-          router-link(:to="{ name: 'questions', params: { userName: username, categoryType: cat.link, categoryName: cat.category }}")
-            | {{ cat.category }}
+        sui-label.category-label(
+          v-for='cat in allCategories'
+          :key="cat.id"
+          :style="{background: '#F0EBD8'}")
+          router-link(
+            :to="{\
+               name: 'questions',\
+               params: { userName: username, categoryId: cat.id }}")
+            | {{ cat.name }}
 </template>
 <script lang='ts'>
 import { Component, Vue, Emit, Prop } from 'vue-property-decorator';
+import { AllCategoriesQuery } from '../../constants/get_all-categories-query';
 
-@Component({})
+@Component({
+  apollo: {
+    allCategories: {
+      query: AllCategoriesQuery,
+      update: (data) => data.categories,
+    },
+  },
+})
 export default class CategoryLabels extends Vue {
   @Prop()
   public username!: string;
-
-  @Prop()
-  public categories!: object[];
 }
 </script>
 
