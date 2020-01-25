@@ -55,6 +55,7 @@ const QuestionsPageSize: number = 10;
           };
         }
       },
+      update: ( data ) => data.getCategoryQuestions,
     },
   },
 })
