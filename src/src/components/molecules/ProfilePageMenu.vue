@@ -3,8 +3,7 @@
     sui-menu(:widths='2' tabular labeled icon)
       sui-menu-item(
         :class="{'active-menu': isProfile}"
-        :active="isProfile"
-        @click="select(`Profile`)")
+        :active="isProfile")
         router-link.column-link(:to="{\
           name: 'profile',\
           params: { userName: username }\
@@ -13,8 +12,7 @@
           span プロフィール
       sui-menu-item(
         :class="{'active-menu': !isProfile}"
-        :active="!isProfile"
-        @click="select(`Questions`)")
+        :active="!isProfile")
         router-link.column-link(:to="{\
           name: 'questions',\
           params: {\
@@ -32,43 +30,28 @@ import { Component, Vue, Emit, Prop, Watch } from 'vue-property-decorator';
 @Component({})
 export default class ProfilePageMenu extends Vue {
   private isProfile: boolean | null = null;
-  private active: string | null = null;
 
   @Prop({ type: String })
   private username!: string;
 
+  @Prop({ type: String })
+  private whichPage!: string;
+
   private created() {
-    if (
-      this.$route.path.endsWith(this.username + '/')
-      || this.$route.path.endsWith(this.username)
-    ) {
+    this.isProfileHandler();
+  }
+
+  private isProfileHandler() {
+    if (this.whichPage === 'profile') {
       this.isProfile = true;
     } else {
       this.isProfile = false;
     }
   }
-  /**
-   * メニューをクリックすると、それぞれのメニュー名がselect()でセットされ、activeの値が変更される.
-   * activeが変更されると、watchで検知され、isProfileの値が変更される.
-   * メニューの下線はisActiveでisProfileの値を見てどちらのメニューにつくか決定される.
-   */
-  @Watch('active')
-  private onChangeMenuStatus() {
-    if (this.active === 'Profile') {
-      this.isProfile = true;
-    } else if (this.active === 'Questions') {
-      this.isProfile = false;
-    }
-  }
 
-  @Emit()
-  private isActive(name: string) {
-    this.isProfile = (this.active === name);
-  }
-
-  @Emit()
-  private select(name: string) {
-    this.active = name;
+  @Watch('whichPage')
+  private borderBottomHandler() {
+    this.isProfileHandler();
   }
 }
 </script>>
