@@ -4,12 +4,20 @@
       div(v-for="imp in userImpressions").feed-content
         sui-card.raised.qa-card
           sui-card-content
-            sui-card-header(style='margin-bottom: 10px;')| Q. {{imp.question.about}}
+            sui-card-header(
+              style='margin-bottom: 10px;')| Q. {{imp.question.about}}
             div(style="display: flex;")
-              ProfileRoundImage.user-icon(v-if="user" :url="user.profileImgUrl", :size="impressionImgSize")
-              sui-label.baloon(pointing='left', size='medium' style="background: #f5f5f5")
+              ProfileRoundImage.user-icon(
+                v-if="user"
+                :url="user.profileImgUrl"
+                :size="impressionImgSize")
+              sui-label.baloon(
+                pointing='left'
+                size='medium'
+                style="background: #f5f5f5")
                 p(style="color: #555555") {{imp.content}}
-          ReactionIconGroup(@modalToggle="modalImpressionToggle(imp.question.about, imp.question.id)")
+          ReactionIconGroup(
+            @modalToggle="modalImpressionToggle(imp.question.about, imp.question.id)")
         ModalForm(v-if="showImpressionModal",
                   :placeholder="placeholder",
                   :selectedQuestionId="selectedQuestionId",

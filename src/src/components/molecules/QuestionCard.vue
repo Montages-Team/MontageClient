@@ -5,7 +5,12 @@
         lazy-component
           sui-image.montage-icon-for-card(src='https://res.cloudinary.com/hugc8unfj/image/upload/v1568433502/public/montage-icon-Circle.jpg', shape='circular', size='tiny', centered='')
         sui-header-content.font-size__medium.content-height {{question.about}}
-      Button.questions-card-bottom(content="回答する" :placeholder="question.about" :questionId="question.id" @onModalClick="$listeners['onModal']") </template>
+      Button.questions-card-bottom(
+        content="回答する"
+        :placeholder="question.about"
+        :questionId="question.id"
+        @onModalClick="$listeners['onModal']")
+</template>
 
 <script lang='ts' scoped>
 import { Component, Vue, Emit, Prop } from 'vue-property-decorator';
