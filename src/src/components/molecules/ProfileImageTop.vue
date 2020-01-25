@@ -1,13 +1,11 @@
 <template lang='pug'>
   div
     div.overlay-area
-      lazy-component
-        sui-image.picture-area(:src="user.profileImgUrl" fluid alt='プロフィール画像')
+      sui-image.picture-area(:src="user.profileImgUrl" fluid alt='プロフィール画像')
       div.float-area
         div(style="width: 50%;")
           div.displayname {{user.displayName}}
           div.username.font-size__small @{{user.username}}
-        //- ProfileCardStats.font-size__small.follow-area(:stats="{following:  22, follower: 33}")
 </template>
 
 <script lang='ts'>
