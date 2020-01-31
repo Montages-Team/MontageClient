@@ -33,8 +33,21 @@ const TopMenu = () => import(
     TopMenu,
     TermsBlock,
   },
+  head: {
+    title: {
+      inner: 'montage.bioサービス利用規約',
+      separator: '/',
+    },
+    meta: [
+      {
+         name: 'description',
+         content: 'montage.bioの利用規約ページ。',
+      },
+    ],
+  },
 })
 export default class TermsTemplate extends Vue {
+  private title: string = '';
   private blocks: any = [
       {
         title: '第1条（規約への同意）',

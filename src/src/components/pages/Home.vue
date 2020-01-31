@@ -10,7 +10,7 @@
         router-link(to="/privacy_policy") プライバシーポリシー
       div
         i.angle.double.down.icon(style="color: #ffffff;")
-      h5.catch_copy(is='sui-header') Montageとは?
+      h5.catch_copy(is='sui-header') montage.bioとは?
       FeatureColumnGroup.flex-column
       DimButton(label='はじめる')
 </template>
@@ -31,8 +31,21 @@ const FeatureColumnGroup = () => import(
     DimButton,
     FeatureColumnGroup,
   },
+  head: {
+    title: {
+      inner: 'ホーム',
+      separator: '/',
+    },
+    meta: [
+      {
+         name: 'description',
+         content: 'montage.bioのメインページ。',
+      },
+    ],
+  },
 })
-export default class Home extends Vue {}
+export default class Home extends Vue {
+}
 </script>
 
 <style lang="stylus" scoped>

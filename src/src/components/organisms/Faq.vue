@@ -6,7 +6,20 @@
 <script lang='ts'>
 import { Component, Vue, Emit, Prop } from 'vue-property-decorator';
 
-@Component({})
+@Component({
+  head: {
+    title: {
+      inner: 'よくある質問',
+      separator: '/',
+    },
+    meta: [
+      {
+         name: 'description',
+         content: 'サービスについてのよくある質問を記載したページ',
+      },
+    ],
+  },
+})
 export default class Faq extends Vue {
 
 }

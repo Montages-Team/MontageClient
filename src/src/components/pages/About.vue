@@ -31,7 +31,20 @@
 <script lang="ts">
 import { Component, Vue, Emit, Prop } from 'vue-property-decorator';
 
-@Component({})
+@Component({
+  head: {
+    title: {
+      inner: 'このサイトについて',
+      separator: '/',
+    },
+    meta: [
+      {
+         name: 'description',
+         content: 'montage.bio はユーモア持ったユーザのための匿名プロフィールSNSです。',
+      },
+    ],
+  },
+})
 export default class About extends Vue {
 }
 </script>

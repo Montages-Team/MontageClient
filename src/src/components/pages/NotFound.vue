@@ -16,7 +16,20 @@
 <script lang="ts">
 import { Component, Vue, Emit, Prop } from 'vue-property-decorator';
 
-@Component({})
+@Component({
+  head: {
+    title: {
+      inner: 'NOT FOUND',
+      separator: '/',
+    },
+    meta: [
+      {
+         name: 'description',
+         content: 'montage.bioのNOT FOUNDページ。',
+      },
+    ],
+  },
+})
 export default class NotFound extends Vue {
 }
 </script>

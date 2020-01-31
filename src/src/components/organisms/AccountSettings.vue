@@ -25,6 +25,18 @@ import { Component, Vue, Emit, Prop, Watch } from 'vue-property-decorator';
 import { userQuery } from '../../constants/user_query';
 
 @Component({
+  head: {
+    title: {
+      inner: 'settings',
+      separator: '/',
+    },
+    meta: [
+      {
+         name: 'description',
+         content: 'ユーザの設定ページ',
+      },
+    ],
+  },
   apollo: {
     $loadingKey: 'loading',
     user: {
@@ -48,7 +60,6 @@ import { userQuery } from '../../constants/user_query';
   },
 })
 export default class AccountSettings extends Vue {
-
   private get skipQuery() {
     /**
      * attrsに値が設定されたらスキップを解除する.

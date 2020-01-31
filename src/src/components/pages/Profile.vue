@@ -37,6 +37,20 @@ const Loading = () => import(
     ProfilePageMenu,
     Loading,
   },
+  head: {
+    title() {
+      return {
+        inner: this.$route.params.userName + 'さん',
+        separator: '/',
+      };
+    },
+    meta: [
+      {
+         name: 'description',
+         content: '質問一覧、、回答一覧を表示するプロフィールページ',
+      },
+    ],
+  },
   apollo: {
     $loadingKey: 'loading',
     user: {
