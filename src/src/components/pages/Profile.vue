@@ -3,7 +3,7 @@
     //- userが読み込まれるまでv-ifで非表示しないとundefined property
     div(v-if="user")
       ProfileImageTop(:user="user")
-      ProfilePageMenu(:username="user.username")
+      ProfilePageMenu(:username="user.username" :whichPage="this.$route.name")
       router-view(:user="user")
     div(v-else)
       Loading

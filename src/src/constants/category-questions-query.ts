@@ -1,14 +1,14 @@
 import gql from 'graphql-tag';
 
 export const categoryQuestionsQuery: any = gql`
-query getCategoryQuestions(
+query categoryQuestions(
   $userId: Int,
-  $categoryName: String,
+  $categoryId: Int,
   $page: Int,
   $size: Int){
   categoryQuestions(
     userId: $userId,
-    categoryName: $categoryName,
+    categoryId: $categoryId,
     page: $page,
     size: $size){
     id

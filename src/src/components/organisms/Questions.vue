@@ -1,10 +1,15 @@
 <template lang="pug">
   div
-    CategoryLabels(:categories="categories" :username="user.username")
+    CategoryLabels(:username="user.username")
     GrayCenterText
     p(v-for="question in categoryQuestions")
       QuestionCard(:question="question" @onModal="modalQuestionToggle")
-    ModalForm(v-if="showQuestionModal" :placeholder="placeholder" :selectedQuestionId="selectedQuestionId" :isImpression="isImpression" @offModal="modalQuestionToggle")
+    ModalForm(
+      v-if="showQuestionModal"
+      :placeholder="placeholder"
+      :selectedQuestionId="selectedQuestionId"
+      :isImpression="isImpression"
+      @offModal="modalQuestionToggle")
 </template>
 
 <script lang="ts">
@@ -44,11 +49,19 @@ const QuestionsPageSize: number = 10;
         if (this.$route && this.$route.params) {
           return {
             userId: this.user.id,
-            categoryName: this.$route.params.categoryName,
+            categoryId: this.$route.params.categoryId,
             page: 0,
             size: QuestionsPageSize,
           };
         }
+      },
+      result({ data }: any, loading: any, networkStatus: any) {
+        if (data.categoryQuestions === null) {
+          console.info('There is no questions of the category.');
+        }
+      },
+      error(error) {
+        console.error(error);
       },
     },
   },
@@ -57,12 +70,6 @@ export default class Questions extends Vue {
 
   @Prop()
   public user!: object;
-
-  public categories: object[] = [
-      { category: 'あなたについて', link: 'you', color: '#F0EBD8'},
-      { category: 'love', link: 'love', color: '#F0EBD8'},
-      { category: '趣味', link: 'hobby', color: '#F0EBD8'},
-  ];
   public page: number = 0;
   public loading: number = 0;
   public loadEnable: boolean = true;
