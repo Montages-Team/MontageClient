@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 export const categoryQuestionsQuery: any = gql`
-query getCategoryQuestions(
+query categoryQuestions(
   $userId: Int,
   $categoryId: Int,
   $page: Int,

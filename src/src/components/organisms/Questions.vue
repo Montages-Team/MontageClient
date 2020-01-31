@@ -55,7 +55,14 @@ const QuestionsPageSize: number = 10;
           };
         }
       },
-      update: ( data ) => data.getCategoryQuestions,
+      result({ data }: any, loading: any, networkStatus: any) {
+        if (data.categoryQuestions === null) {
+          console.info('There is no questions of the category.');
+        }
+      },
+      error(error) {
+        console.error(error);
+      },
     },
   },
 })
