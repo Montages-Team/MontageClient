@@ -79,6 +79,7 @@ const pageSize: any = 10;
           };
         }
       },
+      fetchPolicy: 'cache-and-network',
     },
   },
 })
