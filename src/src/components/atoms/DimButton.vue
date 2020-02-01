@@ -1,5 +1,11 @@
 <template lang='pug'>
-  button.dimmer(@click="dimmerLogin") {{ label }}
+  sui-button(
+    circular
+    social="twitter"
+    content="Twitterではじめる"
+    icon="twitter"
+    @click="dimmerLogin"
+    style="margin: 16px 0; background: rgba(0, 0, 0, 0.27);")
 </template>
 
 <script lang='ts'>
