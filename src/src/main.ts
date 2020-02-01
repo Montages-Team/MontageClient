@@ -13,6 +13,7 @@ import '../semantic/dist/semantic.css';
 import SuiVue from 'semantic-ui-vue';
 import AuthPlugin from './plugins/auth';
 import VueLazyload from 'vue-lazyload';
+import VueHead from 'vue-head';
 
 Vue.config.productionTip = false;
 const errorLink = onError(({ graphQLErrors, networkError }) => {
@@ -49,6 +50,7 @@ const apolloProvider = createProvider({
 Vue.use(SuiVue);
 Vue.use(AuthPlugin);
 Vue.use(VueLazyload, { lazyComponent: true});
+Vue.use(VueHead);
 
 new Vue({
   router,

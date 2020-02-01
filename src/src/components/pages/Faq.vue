@@ -41,6 +41,18 @@ const FeatureColumn = () => import(
   components: {
     FeatureColumn,
   },
+  head: {
+    title: {
+      inner: 'よくある質問',
+      separator: '/',
+    },
+    meta: [
+      {
+         name: 'description',
+         content: 'montage.bioの利用規約。',
+      },
+    ],
+  },
 })
 export default class Faq extends Vue {
 }

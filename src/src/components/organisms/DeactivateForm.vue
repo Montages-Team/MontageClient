@@ -26,6 +26,18 @@ const Button = () => import(
   components: {
     Button,
   },
+  head: {
+    title: {
+      inner: '退会',
+      separator: '/',
+    },
+    meta: [
+      {
+         name: 'description',
+         content: 'ユーザが退会をするためのページ',
+      },
+    ],
+  },
 })
 export default class DeactivateForm extends Vue {
   private listItems: string[] = [
