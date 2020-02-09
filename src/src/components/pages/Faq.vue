@@ -1,34 +1,34 @@
 <template lang="pug">
     div
-      div.faq-wrapper
-        h2.faq-title よくある質問
-        div.faq-content-wrapper
-          h3 Q. Montageとは何ですか？
-          h5.faq-description A. Montageは自分を含むユーザのプロフィールを匿名で自由にいじれるサービスです。
-          h3 Q. 他のサービスとの違いは?
-          h5.faq-description A. 不特定多数の人があなたのプロフィールを編集できるという特色があります。
-          h3 Q. 無料で使えますか?
-          h5.faq-description A. 利用は無料です。あなたや、あなたの友人のプロフィールもぜひ作りましょう！
-          h3 Q. Collageとは何ですか？
-          h5.faq-description
-            | A. すでに存在する回答をあなたの考えた回答に変えることができる機能です！
-            | 良い回答が思いついたらどんどんCollageしましょう！
-          h3 Q. Twitterアカウントを作らないといけませんか?
-          h5.faq-description A. MontageはTwitter連携サービスなのでTwitterアカウントがなければ利用できません。
-          h3 Q.質問作成者や回答者の情報は公開されていますか？
-          h5.faq-description A. 質問、回答はともに匿名で行われており確認することはできません。
-          h3 Q. 非公開アカウント（フォロワー限定公開アカウント）を作成することはできますか？
-          h5.faq-description
-            | A. できません。アカウントの情報は全てのユーザに公開されます。
-            | ユーザ様のご要望が多い場合新機能として実装するかもしれません。
-          h3 Q. 追加してほしい機能があります
-          h5.faq-description
-            | A. 新機能のご要望は
-            a(href='https://form.run/@montage') こちら
-            | へ投稿してください。
-          h3 Q. 退会するにはどうすればいいですか？
-          h5.faq-description A. 設定ページにアカウント削除ページへ遷移するボタンがあります。
-
+      div.content-for-pc
+        div.faq-wrapper
+          h2.faq-title よくある質問
+          div.faq-content-wrapper
+            h3 Q. Montageとは何ですか？
+            h5.faq-description A. Montageは自分を含むユーザのプロフィールを匿名で自由にいじれるサービスです。
+            h3 Q. 他のサービスとの違いは?
+            h5.faq-description A. 不特定多数の人があなたのプロフィールを編集できるという特色があります。
+            h3 Q. 無料で使えますか?
+            h5.faq-description A. 利用は無料です。あなたや、あなたの友人のプロフィールもぜひ作りましょう！
+            h3 Q. Collageとは何ですか？
+            h5.faq-description
+              | A. すでに存在する回答をあなたの考えた回答に変えることができる機能です！
+              | 良い回答が思いついたらどんどんCollageしましょう！
+            h3 Q. Twitterアカウントを作らないといけませんか?
+            h5.faq-description A. MontageはTwitter連携サービスなのでTwitterアカウントがなければ利用できません。
+            h3 Q.質問作成者や回答者の情報は公開されていますか？
+            h5.faq-description A. 質問、回答はともに匿名で行われており確認することはできません。
+            h3 Q. 非公開アカウント（フォロワー限定公開アカウント）を作成することはできますか？
+            h5.faq-description
+              | A. できません。アカウントの情報は全てのユーザに公開されます。
+              | ユーザ様のご要望が多い場合新機能として実装するかもしれません。
+            h3 Q. 追加してほしい機能があります
+            h5.faq-description
+              | A. 新機能のご要望は
+              a(href='https://form.run/@montage') こちら
+              | へ投稿してください。
+            h3 Q. 退会するにはどうすればいいですか？
+            h5.faq-description A. 設定ページにアカウント削除ページへ遷移するボタンがあります。
 </template>
 
 <script lang="ts">

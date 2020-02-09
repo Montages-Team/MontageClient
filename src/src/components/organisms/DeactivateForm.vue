@@ -1,17 +1,18 @@
 <template lang='pug'>
     div
-      div(is="sui-container" style="padding-top: 30px")
-        h3(is='sui-header') アカウントを削除した場合:
-        sui-list(inverted)
-          sui-list-item.list-items(v-for="item in listItems" :key="item.id") {{item}}
-        sui-divider(inverted=true)
-        h5.confirm-label 削除しようとしています。以下の「続ける」ボタンをタップしてください。
-        Button.justify(content='続ける' @click.native='toggleOpen')
-        sui-modal(v-model='open')
-          sui-modal-header 確認
-            p.modal-message アカウントを削除しようとしています。本当に続けますか？
-          sui-modal-actions
-            sui-button.modal-button-color(@click="deactivate") OK
+      div.content-for-pc
+        div(is="sui-container" style="padding-top: 30px")
+          h3(is='sui-header') アカウントを削除した場合:
+          sui-list(inverted)
+            sui-list-item.list-items(v-for="item in listItems" :key="item.id") {{item}}
+          sui-divider(inverted=true)
+          h5.confirm-label 削除しようとしています。以下の「続ける」ボタンをタップしてください。
+          Button.justify(content='続ける' @click.native='toggleOpen')
+          sui-modal(v-model='open')
+            sui-modal-header 確認
+              p.modal-message アカウントを削除しようとしています。本当に続けますか？
+            sui-modal-actions
+              sui-button.modal-button-color(@click="deactivate") OK
 </template>
 
 <script lang='ts'>
