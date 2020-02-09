@@ -28,6 +28,7 @@
     "graphql": "^14.5.3",
     "gulp": "^4.0.2",
     "is-builtin-module": "^3.0.0",
+    "ismobilejs": "^1.0.3",
     "jwt-decode": "^2.2.0",
     "node-fetch": "^2.6.0",
     "pug-plain-loader": "^1.0.0",
