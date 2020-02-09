@@ -30,7 +30,6 @@ export default class NoImpressionCard extends Vue {
 
 .message-box
   padding 12% 8% !important
-  height 30vh
   box-shadow none !important
   background #fff !important
 </style>
