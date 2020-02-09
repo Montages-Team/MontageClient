@@ -1,22 +1,10 @@
 <template lang='pug'>
     div
-      sui-button.buttonstyle__modal(v-if="content === 'キャンセル'",
-                                    :content='content' size="tiny",
-                                    compact=true,
-                                    @click="emitCancel",
-                                    :style="{background: backgroundColor}")
-      sui-button.buttonstyle__modal(v-if="content === '投稿する'",
-                                    :content='content',
-                                    size="tiny",
-                                    compact=true,
-                                    @click="emitPost",
-                                    :style="{background: backgroundColor}")
-      sui-button.buttonstyle__modal(v-if="content === 'Collage'",
-                                    :content='content',
-                                    size="tiny",
-                                    compact=true,
-                                    @click="emitPost",
-                                    :style="{background: backgroundColor}")
+      sui-button.buttonstyle__modal(:content='content'
+                                    size="standard"
+                                    compact=true
+                                    @click="emitHandler"
+                                    :style="{background: buttonBackgrondColor}")
 </template>
 
 <script lang='ts'>
@@ -29,16 +17,48 @@ export default class ConfirmButton extends Vue {
   @Prop({type: String})
   private content!: string;
 
-  @Prop({type: String})
-  private backgroundColor!: string;
+  private get buttonBackgrondColor() {
+    /**
+     * ボタンが発行するメソッドを切り替えるハンドラーメソッド
+     *
+     * - キャンセルボタン -> 親コンポーネントのキャンセル
+     * - Collage or 投稿ボタン -> 親コンポーネントの投稿メソッド
+     */
+    if (this.content === 'キャンセル') {
+      return '#dddddd';
+    } else {
+      return '#B464A3';
+    }
+  }
+
+  @Emit()
+  private emitHandler() {
+    /**
+     * ボタンが発行するメソッドを切り替えるハンドラーメソッド
+     *
+     * - キャンセルボタン -> 親コンポーネントのキャンセル
+     * - Collage or 投稿ボタン -> 親コンポーネントの投稿メソッド
+     */
+    if (this.content === 'キャンセル') {
+      this.emitCancel();
+    } else {
+      this.emitPost();
+    }
+  }
 
   @Emit()
   private emitCancel() {
+    /**
+     * 親コンポーネントの`@cancelImpression`で呼ばれているメソッドを実行する
+     */
     this.$emit('cancelImpression');
   }
 
   @Emit()
   private emitPost() {
+    /**
+     * 親コンポーネントの`@emitPost`で呼ばれているメソッドを実行する
+     */
     if (this.content === 'Collage') {
       this.isCollage = true;
     }

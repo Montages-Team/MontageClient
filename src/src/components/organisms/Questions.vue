@@ -5,10 +5,11 @@
     p(v-for="question in categoryQuestions")
       QuestionCard(:question="question" @onModal="modalQuestionToggle")
     ModalForm(
-      v-if="showQuestionModal"
+      v-show="placeholder"
+      ref="modalForm"
       :placeholder="placeholder"
       :selectedQuestionId="selectedQuestionId"
-      :isImpression="isImpression"
+      postButtonContent="回答する"
       @offModal="modalQuestionToggle")
 </template>
 
@@ -16,6 +17,7 @@
 import { Component, Vue, Emit, Prop } from 'vue-property-decorator';
 import { CreateCategory } from '../../constants/create_category-query';
 import { categoryQuestionsQuery } from '../../constants/category-questions-query';
+import ModalForm from '../organisms/ModalForm.vue';
 
 const CategoryLabels = () => import(
   /* webpackChunkName: "profile-round-image" */
@@ -29,10 +31,6 @@ const GrayCenterText = () => import(
   /* webpackChunkName: "gray-center-text" */
   '../atoms/GrayCenterText.vue');
 
-const ModalForm = () => import(
-  /* webpackChunkName: "modal-form" */
-  '../organisms/ModalForm.vue');
-
 const QuestionsPageSize: number = 10;
 
 @Component({
@@ -43,6 +41,9 @@ const QuestionsPageSize: number = 10;
     ModalForm,
   },
   apollo: {
+    /**
+     * カテゴリ毎の質問を取得する
+     */
     categoryQuestions: {
       query: categoryQuestionsQuery,
       variables() {
@@ -69,28 +70,49 @@ const QuestionsPageSize: number = 10;
 })
 export default class Questions extends Vue {
 
+  public $refs!: {
+    /**
+     * Vue.jsの$refsを利用するための型定義
+     *
+     * typescriptで$refsを用いて子コンポーネントのメソッドを実行させる場合は
+     * 子コンポーネントにrefで指定する値にその子コンポーネントの型を指定する必要がある。
+     * 型はその子コンポーネントのexportしている名称そのものとなる。
+     */
+    modalForm: ModalForm,
+  };
+
   @Prop()
   public user!: object;
+
   public page: number = 0;
   public loading: number = 0;
   public loadEnable: boolean = true;
-  public showQuestionModal: boolean = false;
   public placeholder: string = '';
-  public selectedQuestionId!: number;
-  public isImpression: boolean = false;
+  public selectedQuestionId: number = 0;
+
   public mounted() {
     this.watchScroll();
   }
 
   @Emit()
-  public modalQuestionToggle(placeholder: string, selectedQuetionId: string) {
+  public modalQuestionToggle(placeholder: string, selectedQuetionId: string): void {
+    /**
+     * 質問回答ボタンを押下した際に呼ばれる関数
+     *
+     * 1. 子コンポーネントのopenという変数を切り替えるメソッド(toggleOpen)を呼び、モーダルを開く
+     * 2. フォームのplaceholderを設定
+     * 3. 選択されたQuestionのIDをモーダルに設定
+     */
+    this.$refs.modalForm.toggleOpen();
     this.placeholder = placeholder || '';
     this.selectedQuestionId = Number(selectedQuetionId);
-    this.showQuestionModal = !this.showQuestionModal;
   }
 
   @Emit()
   public getMoreQuestions() {
+    /**
+     * スクロール時、現在まだ取得していない質問を取得させる関数
+     */
     this.page++;
     this.$apollo.queries.categoryQuestions.fetchMore({
       variables: {
@@ -113,6 +135,12 @@ export default class Questions extends Vue {
 
   @Emit()
   public watchScroll() {
+    /**
+     * スクロールを検知する関数
+     *
+     * profileページに行った後はwatchScrollがマウントされているので
+     * 不要な部分でgetMoreImpressionsが作動してしまうことを防ぐ目的
+     */
     window.onscroll = () => {
       const scrollingPosition: number = document.documentElement.scrollTop + window.innerHeight;
       const bottomPosition: HTMLElement | null = document.getElementById('app');
