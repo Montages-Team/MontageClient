@@ -80,14 +80,15 @@ export default class ModalForm extends Vue {
       })
       .then(({ ok, impression, errors }) => {
         if (ok) {
-          if (isCollage) {
+          console.log(this.$route.name);
+          if (this.$route.name === 'profile') {
             this.$emit('toggle');
             this.impression = '';
+          } else if (this.$route.name === 'individual') {
+            this.$router.push(`/profile/${this.$route.params.userName}`);
           } else {
             this.$router.push(`/profile/${this.$route.params.userName}`);
           }
-        } else {
-          console.log('fail');
         }
       }).catch((error) => {
         console.log(error);

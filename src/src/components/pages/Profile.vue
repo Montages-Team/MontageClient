@@ -3,18 +3,18 @@
     //- userが読み込まれるまでv-ifで非表示しないとundefined property
     div(v-if="user")
       div(v-if="isMobile")
-        ProfileImageTop(:user="user")
-        ProfilePageMenu(:username="user.username" :whichPage="this.$route.name")
-        router-view(:user="user")
+          ProfileImageTop(v-if="$route.name !== 'impression'" :user="user")
+          ProfilePageMenu(v-if="$route.name !== 'impression'" :username="user.username" :whichPage="this.$route.name")
+          router-view(:user="user")
       div(v-else)
-        sui-grid(centered :columns='3', style="margin: 16px;")
+        sui-grid.profile-grid-style(centered :columns='3')
           sui-grid-column(:width='3')
-            ProfileImageTop(:user="user" style="margin-right: 8px;")
-          sui-grid-column(:width='6' style="max-width: 480px;")
-            ProfilePageMenu(:username="user.username" :whichPage="this.$route.name")
+            ProfileImageTop(:user="user")
+          sui-grid-column.profile-center-column(:width='8')
+            ProfilePageMenu(v-if="$route.name !== 'impression'" :username="user.username" :whichPage="this.$route.name")
             router-view(:user="user")
           sui-grid-column(:width='3')
-            sui-segment(style="padding: 0 !important")
+            sui-segment.profile-right-footer
               Footer
     div(v-else)
       Loading
@@ -225,4 +225,12 @@ export default class Profile extends Vue {
   background-position 50%
   z-index -1
 
+.profile-right-footer
+  padding 0 !important
+
+.profile-center-column
+  max-width 480px !important
+
+.profile-grid-style
+  margin 16px !important
 </style>

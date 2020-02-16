@@ -1,9 +1,8 @@
 <template lang='pug'>
     div
       sui-button-group.button-group(icons size="small")
-        sui-button.icon-button-group(icon='like' content="4")
-        sui-button.icon-button-group(icon='twitter')
-        //- sui-button.icon-button-group(icon='sync')
+        sui-button.icon-button-group(icon='like' content="")
+        sui-button.icon-button-group(icon='share' @click="toggleShareModal")
         sui-button.icon-button-group(icon='paint brush', @click="openImpressionModal")
 </template>
 
@@ -16,12 +15,15 @@ export default class ReactionIconGroup extends Vue {
   public openImpressionModal() {
     this.$emit('modalToggle');
   }
+  public toggleShareModal() {
+    this.$emit('toggleShareModal');
+  }
 }
 </script>
 
 <style lang="stylus" scoped>
 .button-group
-  padding 0px 16px !important
+  padding 0px !important
   width -webkit-fill-available
 
 .icon-button-group

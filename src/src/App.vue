@@ -1,9 +1,6 @@
 <template lang="pug">
   div(id="app" class='wrapper')
-    Header(
-      v-if="$route.name !== 'home'"
-      v-on:login="login"
-      :profile="profile")
+    Header(v-if="$route.name !== 'home'" v-on:login="login" :profile="profile")
     div(v-if="isAuthenticated")
       //- router-viewに定義するとthis.$attrsで取得可能になる
       router-view(:userName="this.profile['https://montage.bio/screen_name']")
@@ -14,6 +11,7 @@
 
 <script>
 import { AuthService } from './auth/authService';
+import Loading from './components/organisms/Loading.vue';
 
 const Header = () => import(
   /* webpackChunkName: "header" */
@@ -29,6 +27,7 @@ export default {
   components: {
     Header,
     Footer,
+    Loading,
   },
   data() {
     return {

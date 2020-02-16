@@ -114,15 +114,14 @@ a:link, a:visited
     background-color rgba(0, 0, 0, 0.3)
     width 100vw
     height 100vh
+    z-index 1000
 
 .menu-wrapper
-    position absolute
-    margin 0
+    position fixed
     right 0
-    font-size 120%
-    width 60vw
     height 100vh
     background #fafafa
+    max-width 350px !important
     .menu-item
         display block
         padding 12px
