@@ -10,7 +10,7 @@
         sui-grid(centered :columns='3', style="margin: 16px;")
           sui-grid-column(:width='3')
             ProfileImageTop(:user="user" style="margin-right: 8px;")
-          sui-grid-column(:width='6')
+          sui-grid-column(:width='6' style="max-width: 480px;")
             ProfilePageMenu(:username="user.username" :whichPage="this.$route.name")
             router-view(:user="user")
           sui-grid-column(:width='3')
@@ -190,6 +190,11 @@ export default class Profile extends Vue {
         } else {
           this.$router.push('/');
         }
+      })
+      .catch(( error ) => {
+        // first loginがtrueの状態でリロードしたらDBにすでにあるのでエラー
+        console.error(error);
+        this.$apollo.queries.user.skip = false;
       });
   }
 }
