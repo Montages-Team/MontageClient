@@ -2,12 +2,22 @@
   div
     //- userが読み込まれるまでv-ifで非表示しないとundefined property
     div(v-if="user")
-      ProfileImageTop(:user="user")
-      ProfilePageMenu(:username="user.username" :whichPage="this.$route.name")
-      router-view(:user="user")
+      div(v-if="isMobile")
+        ProfileImageTop(:user="user")
+        ProfilePageMenu(:username="user.username" :whichPage="this.$route.name")
+        router-view(:user="user")
+      div(v-else)
+        sui-grid(centered :columns='3', style="margin: 16px;")
+          sui-grid-column(:width='3')
+            ProfileImageTop(:user="user" style="margin-right: 8px;")
+          sui-grid-column(:width='6' style="max-width: 480px;")
+            ProfilePageMenu(:username="user.username" :whichPage="this.$route.name")
+            router-view(:user="user")
+          sui-grid-column(:width='3')
+            sui-segment(style="padding: 0 !important")
+              Footer
     div(v-else)
       Loading
-
 </template>
 
 <script lang="ts">
@@ -16,6 +26,7 @@ import { userQuery } from '../../constants/user_query';
 import { createNewUserMutation } from '../../constants/create-new-user-query';
 import gql from 'graphql-tag';
 import axios from 'axios';
+import isMobile from 'ismobilejs';
 
 const ProfileCard = () => import(
   /* webpackChunkName: "profilecard" */
@@ -29,6 +40,9 @@ const ProfilePageMenu = () => import(
 const Loading = () => import(
   /* webpackChunkName: "loading" */
   '../organisms/Loading.vue');
+const Footer = () => import(
+  /* webpackChunkName: "footer" */
+  '../organisms/Footer.vue');
 
 @Component({
   components: {
@@ -36,6 +50,7 @@ const Loading = () => import(
     ProfileImageTop,
     ProfilePageMenu,
     Loading,
+    Footer,
   },
   head: {
     title() {
@@ -96,6 +111,10 @@ export default class Profile extends Vue {
     }
   }
 
+  private get isMobile() {
+    return isMobile(navigator.userAgent).phone;
+  }
+
   @Emit()
   private async callApi() {
     /**
@@ -106,6 +125,7 @@ export default class Profile extends Vue {
      * 3. 初回ログイン時であればオンボーディングでユーザが作成される
      * 4. 既存ユーザならプロフィール情報を取得する
      */
+
     await this.$auth.getAccessToken()
     .then( (accessToken: any) => {
         const header = { Authorization: `Bearer ${accessToken}`};
@@ -170,6 +190,11 @@ export default class Profile extends Vue {
         } else {
           this.$router.push('/');
         }
+      })
+      .catch(( error ) => {
+        // first loginがtrueの状態でリロードしたらDBにすでにあるのでエラー
+        console.error(error);
+        this.$apollo.queries.user.skip = false;
       });
   }
 }

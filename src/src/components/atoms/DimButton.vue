@@ -2,7 +2,7 @@
   sui-button(
     circular
     social="twitter"
-    content="Twitterではじめる"
+    :content='buttonLabel'
     icon="twitter"
     @click="dimmerLogin"
     style="margin: 16px 0; background: rgba(0, 0, 0, 0.27);")
@@ -12,8 +12,12 @@
 import { Component, Vue, Prop, Emit } from 'vue-property-decorator';
 
 @Component({})
-export default class SubButton extends Vue {
+export default class DimButton extends Vue {
   @Prop({ type: String }) private label!: string;
+
+  private get buttonLabel() {
+    return this.label;
+  }
 
   @Emit()
   private dimmerLogin() {

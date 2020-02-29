@@ -1,31 +1,32 @@
 <template lang="pug">
   div
-    transition(name='modal')
-      .modal-mask
+    transition(v-if="isMobile")
+      .modal-mask(v-show="open")
         .modal-wrapper
           .modal-container
             .modal-header
-              ConfirmButton(content="キャンセル",
-                            backgroundColor="#dddddd",
-                            style="margin-left: auto;",
-                            @cancelImpression="$listeners['offModal']")
-              ConfirmButton(v-if="!isImpression",
-                            content="投稿する",
-                            backgroundColor="#B464A3",
-                            @emitPost="postMutation")
-              ConfirmButton(v-if="isImpression",
-                            content="Collage",
-                            backgroundColor="#B464A3",
-                            @emitPost="postMutation",
-                            :showImpressionModal="showImpressionModal")
+              ConfirmButton.button-cancel(content="キャンセル" @cancelImpression="toggleOpen")
+              ConfirmButton(:content='postButtonContent' @emitPost="postMutation")
             .modal-body
               textarea.modalform__body.font-size__small(v-model="impression" :placeholder="placeholder")
+    sui-modal.dimmed(v-else v-model="open" size="tiny")
+      sui-modal-header
+        span(@click="toggleOpen")
+          i.close.icon
+      sui-modal-header
+        .modal-body
+          sui-form(inverted)
+            sui-form-field
+              input.modal-fontsize(v-model="impression" :placeholder="placeholder")
+      .modal-header
+        ConfirmButton(:content='postButtonContent' @emitPost="postMutation")
 </template>
 
 <script lang="ts">
 import { Component, Vue, Emit, Prop } from 'vue-property-decorator';
 import router from '../../router';
 import { CreateImpressionMutation } from '../../constants/create_impression_query';
+import isMobile from 'ismobilejs';
 
 const ConfirmButton = () => import(
   /* webpackChunkName: "confirm-button" */
@@ -38,6 +39,7 @@ const ConfirmButton = () => import(
 })
 export default class ModalForm extends Vue {
   private impression: string = '';
+  private open: boolean = false;
 
   @Prop({ type: Number })
   private selectedQuestionId!: number;
@@ -45,11 +47,17 @@ export default class ModalForm extends Vue {
   @Prop({ type: String })
   private placeholder!: string;
 
-  @Prop({ type: Boolean })
-  private isImpression!: boolean;
+  @Prop({ type: String })
+  private postButtonContent!: string;
 
-  @Prop({ type: Boolean })
-  private showImpressionModal!: boolean;
+  @Emit()
+  public toggleOpen(): void {
+    this.open = !this.open;
+  }
+
+  private get isMobile() {
+    return isMobile(navigator.userAgent).phone;
+  }
 
   @Emit()
   private postMutation(isCollage: boolean) {
@@ -74,6 +82,7 @@ export default class ModalForm extends Vue {
         if (ok) {
           if (isCollage) {
             this.$emit('toggle');
+            this.impression = '';
           } else {
             this.$router.push(`/profile/${this.$route.params.userName}`);
           }
@@ -88,6 +97,12 @@ export default class ModalForm extends Vue {
 </script>
 
 <style lang="stylus" scoped>
+.button-cancel
+  margin-left auto
+
+.dimmed
+ background rgba(0, 0, 0, 0.4) !important
+
 .modal-mask
   position fixed
   z-index 9998
@@ -115,8 +130,9 @@ export default class ModalForm extends Vue {
 
 .modal-header
   display flex
-  background #F8F8F8
-  padding 16px 8px !important
+  background #FFFFFF !important
+  padding 8px !important
+  float right
 
 .modal-body
   height 100%
@@ -140,5 +156,11 @@ export default class ModalForm extends Vue {
   padding 8px 16px
   line-height 2
   font-color #AAAAAA
+  resize none
+  height 144px
+  outline none
+  user-select text
+  white-space pre-wrap
+  overflow-wrap break-word
 
 </style>

@@ -69,6 +69,11 @@ body
   font-size calc(10px + 2vmin)
   color #444
 
+.content-for-pc
+  width 100%
+  max-width 700px
+  margin 0 auto
+
 .icon
   height 16x
   width 16px

@@ -1,19 +1,20 @@
 <template lang='pug'>
   div
-    div(is='sui-container')
-      TopMenu(isTerms=true)
-      h2.terms-title-style サービス利用規約
-      p.preface-style この利用規約（以下，「本規約」といいます。）は，Montage運営者（以下，「運営者」といいます。）が「Montage」の名称で提供するすべてのウェブサイト、ソフトウェア、アプリケーション、プロダクト、ドキュメントその他一切の製品およびサービス（以下，「本サービス」といいます。）の利用条件を定めるものです。登録ユーザーの皆さま（以下，「ユーザー」といいます。）には，本規約に従って，本サービスをご利用いただきます。
-      div(v-for="block in blocks")
-        TermsBlock
-          h3.terms-title-style(slot="terms-header") {{block.title}}
-          ol.paragraph-style(slot="terms-column")
-            span(v-for="column in block.columns")
-              ul.column-list-style(v-if="typeof(column) === 'object'")
-                p(v-for="(c, index) in column") ({{index + 1}}) {{ c }}
-              li.column-list-style(v-else="typeof(column) !== Array") {{ column }}
-      p.paragraph-style(align='right') 以上
-      p.paragraph-style(align='left') 2018年5月27日制定
+    div.content-for-pc
+      div(is='sui-container')
+        TopMenu(isTerms=true)
+        h2.terms-title-style サービス利用規約
+        p.preface-style この利用規約（以下，「本規約」といいます。）は，Montage運営者（以下，「運営者」といいます。）が「Montage」の名称で提供するすべてのウェブサイト、ソフトウェア、アプリケーション、プロダクト、ドキュメントその他一切の製品およびサービス（以下，「本サービス」といいます。）の利用条件を定めるものです。登録ユーザーの皆さま（以下，「ユーザー」といいます。）には，本規約に従って，本サービスをご利用いただきます。
+        div(v-for="block in blocks")
+          TermsBlock
+            h3.terms-title-style(slot="terms-header") {{block.title}}
+            ol.paragraph-style(slot="terms-column")
+              span(v-for="column in block.columns")
+                ul.column-list-style(v-if="typeof(column) === 'object'")
+                  p(v-for="(c, index) in column") ({{index + 1}}) {{ c }}
+                li.column-list-style(v-else="typeof(column) !== Array") {{ column }}
+        p.paragraph-style(align='right') 以上
+        p.paragraph-style(align='left') 2018年5月27日制定
 </template>
 
 

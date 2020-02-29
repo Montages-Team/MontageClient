@@ -1,23 +1,25 @@
 <template lang='pug'>
     div
-      sui-segment.account-setting-segment(v-if="user")
-        div(is="sui-container" style="display: flex;")
-        sui-form
-          sui-form-field
-            label プロフィール名
-            input.disable-input(:value="user.displayName" disabled)
-          sui-form-field
-            label ユーザー名
-            input.disable-input(:value="user.username" disabled)
-            sui-list
-              sui-list-item.input-status-info ユーザー名は変更できません
-          sui-divider.divider-top-margin
-          sui-form-field
-            label アカウント削除
-            sui-list
-              sui-list-item.input-status-info 一度アカウントを削除すると、二度と元に戻せません。十分ご注意ください。
-          router-link(:to="{ name: 'deactivate' }")
-            sui-button.danger-button(color="red" size="mini" content='退会申請ページへ進む')
+      div.content-for-pc
+        sui-segment.account-setting-segment(v-if="user")
+          h2.setting-title 設定
+          div(is="sui-container" style="display: flex;")
+          sui-form
+            sui-form-field
+              label プロフィール名
+              input.disable-input(:value="user.displayName" disabled)
+            sui-form-field
+              label ユーザー名
+              input.disable-input(:value="user.username" disabled)
+              sui-list
+                sui-list-item.input-status-info ユーザー名は変更できません
+            sui-divider.divider-top-margin
+            sui-form-field
+              label アカウント削除
+              sui-list
+                sui-list-item.input-status-info 一度アカウントを削除すると、二度と元に戻せません。十分ご注意ください。
+            router-link(:to="{ name: 'deactivate' }")
+              sui-button.danger-button(color="red" size="mini" content='退会申請ページへ進む')
 </template>
 
 <script lang='ts'>
@@ -84,10 +86,16 @@ export default class AccountSettings extends Vue {
 
 <style lang='stylus' scoped>
 .account-setting-segment
-  padding-top 30px !important
+  padding-top 16px !important
   height 70vh !important
   border None !important
   box-shadow None !important
+
+.setting-title
+  font-size 24px
+  margin 4px 0px 24px 0px
+  padding-bottom 4px
+  border-bottom 2px solid #9274b2
 
 .upload-link
   height 20px
