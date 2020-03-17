@@ -1,34 +1,34 @@
 <template lang="pug">
-sui-container.header-container
-  .header
-    .header-wrapper(v-if="this.$parent.isAuthenticated" )
-      //- ログイン済みの場合
-      .left-wrapper
-        router-link.header-link(:to="{name: 'profile', params: { userName: userName }}")
-          img(src='@/assets/icon.svg')
-      .right-wrapper
-        ProfileRoundImage(
-          :size='profileImageSize'
-          :url='profile.picture'
-          @click.native="toggleHeaderMenu")
-
-    .header-wrapper(v-else)
-      //- 未ログインの場合
-      .left-wrappe
+  div(v-if="isMobile")
+    sui-menu.header(attached='top')
+      sui-menu-menu(position='left')
         router-link.header-link(:to="{name: 'home'}")
-          img(src='@/assets/icon.svg')
-      .right-wrapper(v-if="this.$parent.isAuthenticated !== undefined")
-        SubButton(label='ログイン・登録' @click.native="$emit('login')")
+          img.svg-logo(src='@/assets/icon.svg')
+      sui-menu-menu(position='right')
+        sui-menu-item.right-segment(right v-if="this.$parent.isAuthenticated")
+          ProfileRoundImage(:size='profileImageSize' :url='profile.picture' @click.native="toggleHeaderMenu")
+        sui-menu-item.right-segment(right v-else)
+          SubButton(label='ログイン' @click.native="$emit('login')")
+    HeaderMenu(v-if='headerMenuFlag' v-on:toggleHeaderMenu='toggleHeaderMenu' :profile='profile')
+  div(v-else)
+    sui-grid.header(centered :columns='3')
+      sui-grid-column(:width='3')
+        router-link.header-link(:to="{name: 'home'}")
+          sui-segment.left-segment
+            img.svg-logo(src='@/assets/icon.svg')
+      sui-grid-column.center-grid-width(:width='6')
+      sui-grid-column(:width='4')
+        sui-segment.right-segment(v-if="this.$parent.isAuthenticated")
+          ProfileRoundImage.svg-logo(:size='profileImageSize' :url='profile.picture' @click.native="toggleHeaderMenu")
+        sui-segment.right-segment(v-else)
+          SubButton.svg-logo(label='ログイン' @click.native="$emit('login')")
+    HeaderMenu(v-if='headerMenuFlag' v-on:toggleHeaderMenu='toggleHeaderMenu' :profile='profile')
 
-    HeaderMenu(
-      v-if='headerMenuFlag'
-      v-on:toggleHeaderMenu='toggleHeaderMenu'
-      :profile='profile')
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
-
+import isMobile from 'ismobilejs';
 const SubButton = () => import(
   /* webpackChunkName: "sub-button" */
   '../atoms/SubButton.vue');
@@ -52,6 +52,7 @@ export default class Header extends Vue {
   @Prop({ type: Object }) private profile!: object;
   private profileImageSize: string =  'mini';
   private headerMenuFlag: boolean = false;
+
   private toggleHeaderMenu() {
     this.headerMenuFlag = !this.headerMenuFlag;
   }
@@ -65,32 +66,22 @@ export default class Header extends Vue {
     return null;
   }
 
+  private get isMobile() {
+    return isMobile(navigator.userAgent).phone;
+  }
+
 }
 </script>
 
 <style lang="stylus" scoped>
   .header
-    display block
-    position absolute
     width 100%
-    height 56px
-    left 0px
-    top 0px
-    z-index 100
-    background linear-gradient(180deg, rgba(180, 100, 163, 0.47) 0%, rgba(255, 255, 255, 0) 100%), #807DBA
+    height 64px
+    background linear-gradient(180deg, rgba(180, 100, 163, 0.47) 0%, rgba(255, 255, 255, 0) 100%), #807DBA !important
     box-shadow 0px 4px 4px rgba(0, 0, 0, 0.25)
+    z-index 100 !important
+    border none !important
 
-    .header-wrapper
-      margin 14px 5% 0 5%
-
-      .left-wrapper
-        margin-top -5px
-        display block
-        float left
-
-      .right-wrapper
-        display block
-        float right
   #logo
     display inline-block
     font-size 3vh
@@ -106,7 +97,7 @@ export default class Header extends Vue {
     display inline-block
     margin auto 0px
     padding 5px
-    height 56px
+    height 57px
     font-family Work Sans
     font-style normal
     font-weight normal
@@ -115,19 +106,27 @@ export default class Header extends Vue {
     color black
     text-shadow 0px 3px 3px rgba(255, 255, 255, 0.25)
 
-  .montage_logo_image
-    margin 8% auto
-    height 66.6%
-    display inline-block
-    position absolute
-
-  .header-container
-    width 100%
-    height 56px
-
  .svg-logo
-    x 0px
-    y 0px
-    width 200px
-    height 40px
+  display: block;
+  margin: auto;
+
+.left-segment
+  background #00ffff00
+  display grid
+  border unset
+  max-height 64px
+  box-shadow none
+  padding 0
+
+.right-segment
+  background #00ffff00
+  display grid
+  border unset
+  max-height 64px
+  box-shadow none
+  padding 0
+  margin-top 4px !important
+
+.center-grid-width
+  max-width 480px !important
 </style>

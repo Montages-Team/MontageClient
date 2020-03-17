@@ -1,33 +1,23 @@
 <template lang="pug">
   div
+    ModalForm(v-show="placeholder" ref="modalForm"
+              :placeholder="placeholder",
+              :selectedQuestionId="selectedQuestionId", :postButtonContent="buttonContent",
+              @offModal="modalImpressionToggle", @toggle="toggleImpressionModal")
+    ModalShare(ref="modalShare" :impressionId="selectedImpressionId" :questionBody="questionBody")
+    div(v-if='loadEnable')
+      sui-segment(v-if="$apollo.loading")
+        sui-dimmer(active inverted)
+        sui-loader(content='Loading...')
     div(v-if="impressionsCount > 0")
       div(v-for="imp in userImpressions").feed-content
-        sui-card.raised.qa-card
-          sui-card-content
-            sui-card-header.card-header
-              | Q. {{imp.question.about}}
-            div(v-if="user" style="display: flex;")
-              ProfileRoundImage.user-icon(:url="user.profileImgUrl" :size="impressionImgSize")
-              sui-label.baloon(pointing='left' size='medium' style="background: #f5f5f5")
-                p(style="color: #555555") {{imp.content}}
-          ReactionIconGroup(@modalToggle="modalImpressionToggle(imp.question.about, imp.question.id)")
-      div(v-if='loadEnable')
-        sui-segment(v-if="$apollo.loading")
-          sui-dimmer(active inverted)
-          sui-loader(content='Loading...')
-      div(else)
-        NoImpressionCard.no-impression(:displayName="user.displayName")
+        QAContent(:user="user" :content="imp.content" :questionAbout="imp.question.about" :impressionId="imp.id")
+        ReactionIconGroup(
+          @toggleShareModal="openShareModal(imp.id, imp.question.about)"
+          @modalToggle="modalImpressionToggle(imp.question.about, imp.question.id, imp.id)")
     div(v-else)
       NoImpressionCard.no-impression(:displayName="user.displayName")
-    ModalForm(v-show="placeholder"
-              ref="modalForm"
-              :placeholder="placeholder",
-              :selectedQuestionId="selectedQuestionId",
-              :postButtonContent="buttonContent",
-              @offModal="modalImpressionToggle",
-              @toggle="toggleImpressionModal")
 </template>
-
 
 <script lang="ts">
 import { Component, Vue, Emit, Prop } from 'vue-property-decorator';
@@ -36,6 +26,8 @@ import { Modal, DimmerDimmable } from 'semantic-ui-vue';
 import isMobile from 'ismobilejs';
 import ConfirmButton from '../atoms/ConfirmButton.vue';
 import ModalForm from '../organisms/ModalForm.vue';
+import ModalShare from './ModalShare.vue';
+import QAContent from '../molecules/QAContent.vue';
 
 const ProfileRoundImage = () => import(
   /* webpackChunkName: "profile-round-image" */
@@ -58,6 +50,8 @@ const pageSize: any = 10;
     ModalForm,
     ReactionIconGroup,
     ConfirmButton,
+    ModalShare,
+    QAContent,
   },
   apollo: {
     /**
@@ -92,19 +86,21 @@ export default class Impressions extends Vue {
      * 型はその子コンポーネントのexportしている名称そのものとなる。
      */
     modalForm: ModalForm,
+    modalShare: ModalShare,
   };
 
   @Prop({ type: Object })
   public user!: object;
 
-  public page: number = 0;
-  public impressionImgSize: string = 'mini';
-  public loading: number = 0;
-  public loadEnable: boolean = true;
-  public placeholder: string = '';
-  public selectedQuestionId: number = 0;
-  public isImpression: boolean = true;
-  public userImpressions: object = [];
+  private page: number = 0;
+  private loading: number = 0;
+  private loadEnable: boolean = true;
+  private placeholder: string = '';
+  private selectedQuestionId: number = 0;
+  private selectedImpressionId: string = '';
+  private isImpression: boolean = true;
+  private userImpressions: object = [];
+  private questionBody: string = '';
 
   private mounted() {
     this.watchScroll();
@@ -161,6 +157,16 @@ export default class Impressions extends Vue {
   }
 
   @Emit()
+  private openShareModal(
+    selectedImpressionId: number,
+    questionBody: string,
+  ) {
+    this.selectedImpressionId = String(selectedImpressionId);
+    this.questionBody = questionBody;
+    this.$refs.modalShare.toggleShareOpen();
+  }
+
+  @Emit()
   private watchScroll() {
     window.onscroll = () => {
       /**
@@ -196,7 +202,11 @@ export default class Impressions extends Vue {
   }
 
   @Emit()
-  private modalImpressionToggle(placeholder: string, selectedQuetionId: string): void {
+  private modalImpressionToggle(
+    placeholder: string,
+    selectedQuetionId: string,
+    selectedImpressionId: string,
+    ): void {
     /**
      * collageボタンを押下した際に呼ばれる関数
      *
@@ -207,6 +217,7 @@ export default class Impressions extends Vue {
     this.$refs.modalForm.toggleOpen();
     this.placeholder = placeholder || '';
     this.selectedQuestionId = Number(selectedQuetionId);
+    this.selectedImpressionId = selectedImpressionId;
   }
 }
 </script>

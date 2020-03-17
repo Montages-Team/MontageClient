@@ -38,6 +38,9 @@ const About = () => import(
 const NotFound = () => import(
   /* webpackChunkName: "notfound" */
   './components/pages/NotFound.vue');
+const Individual = () => import(
+  /* webpackChunkName: "individual" */
+  './components/organisms/Individual.vue');
 
 Vue.use(Router);
 
@@ -53,6 +56,7 @@ const PUBLIC_ALLOWED_ACCESS = [
     'profile',
     'questions',
     'notfound',
+    'impression',
   ];
 
 const router = new Router({
@@ -119,6 +123,11 @@ const router = new Router({
           path: 'category/:categoryId',
           name: 'questions',
           component: Questions,
+        },
+        {
+          path: 'impression/:impressionId',
+          name: 'impression',
+          component: Individual,
         },
       ],
     },
