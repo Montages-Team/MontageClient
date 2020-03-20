@@ -12,6 +12,7 @@
 <script>
 import { AuthService } from './auth/authService';
 import Loading from './components/organisms/Loading.vue';
+import clipboard from 'clipboard';
 
 const Header = () => import(
   /* webpackChunkName: "header" */
@@ -34,6 +35,7 @@ export default {
       isAuthenticated: undefined,
       profile: this.$auth.profile,
       pathName: this.$route.name,
+      clipBoard: null,
     };
   },
   async created() {
@@ -42,6 +44,20 @@ export default {
     } catch (e) {
       console.log(e);
     }
+  },
+  mounted() {
+    /**
+     * URLコピーをするためのプラグインclipboardのコピー時に発火する関数の設定
+     *
+     * 初期化とログ出す以外は特に何もしていない
+     */
+    this.clipBoard = new clipboard('.clipcopy');
+    this.clipBoard.on('success', (e) => {
+      e.clearSelection();
+    });
+    this.clipBoard.on('error', (e) => {
+      console.error(e);
+    });
   },
   methods: {
     login() {
