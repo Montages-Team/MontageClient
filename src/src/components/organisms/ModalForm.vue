@@ -23,7 +23,8 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Emit, Prop } from 'vue-property-decorator';
+import { Component, Vue, Emit, Prop, Watch } from 'vue-property-decorator';
+import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import router from '../../router';
 import { CreateImpressionMutation } from '../../constants/create_impression_query';
 import isMobile from 'ismobilejs';
@@ -49,6 +50,16 @@ export default class ModalForm extends Vue {
 
   @Prop({ type: String })
   private postButtonContent!: string;
+
+  @Watch('open')
+  public toggleScroll() {
+    const modal: any = document.querySelector('.modals');
+    if (this.open === true) {
+      disableBodyScroll(modal);
+    } else {
+      enableBodyScroll(modal);
+    }
+  }
 
   @Emit()
   public toggleOpen(): void {

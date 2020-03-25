@@ -29,13 +29,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Emit, Prop } from 'vue-property-decorator';
+import { Component, Vue, Emit, Prop, Watch } from 'vue-property-decorator';
+import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import router from '../../router';
 import isMobile from 'ismobilejs';
 
 @Component({
-  components: {
-  },
 })
 export default class ModalShare extends Vue {
   private open: boolean = false;
@@ -57,6 +56,16 @@ export default class ModalShare extends Vue {
       this.copied = false;
     }
     this.open = !this.open;
+  }
+
+  @Watch('open')
+  public toggleScroll() {
+    const modal: any = document.querySelector('.modals');
+    if (this.open === true) {
+      disableBodyScroll(modal);
+    } else {
+      enableBodyScroll(modal);
+    }
   }
 
   @Emit()
