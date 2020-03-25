@@ -8,7 +8,7 @@
               ConfirmButton.button-cancel(content="キャンセル" @cancelImpression="toggleOpen")
               ConfirmButton(:content='postButtonContent' @emitPost="postMutation")
             .modal-body
-              textarea.modalform__body.font-size__small(v-model="impression" :placeholder="placeholder")
+              textarea.modalform__body.font-size__small(v-model="impressionInput" :placeholder="placeholder")
     sui-modal.dimmed(v-else v-model="open" size="tiny")
       sui-modal-header
         span(@click="toggleOpen")
@@ -17,7 +17,9 @@
         .modal-body
           sui-form(inverted)
             sui-form-field
-              input.modal-fontsize(v-model="impression" :placeholder="placeholder")
+              input.modal-fontsize(v-model="impressionInput" :placeholder="placeholder")
+              p {{ this.impressionInput.length }}/42
+              p {{ this.impressionInput }}
       .modal-header
         ConfirmButton(:content='postButtonContent' @emitPost="postMutation")
 </template>
@@ -39,7 +41,7 @@ const ConfirmButton = () => import(
   },
 })
 export default class ModalForm extends Vue {
-  private impression: string = '';
+  private impressionInput: string = '';
   private open: boolean = false;
 
   @Prop({ type: Number })
@@ -75,7 +77,7 @@ export default class ModalForm extends Vue {
     const mutation = this.$apollo.mutate({
       mutation: CreateImpressionMutation,
       variables: {
-        content: this.impression,
+        content: this.impressionInput,
         userName:  this.$route.params.userName,
         questionId: this.selectedQuestionId,
       },
@@ -94,7 +96,7 @@ export default class ModalForm extends Vue {
           console.log(this.$route.name);
           if (this.$route.name === 'profile') {
             this.$emit('toggle');
-            this.impression = '';
+            this.impressionInput = '';
           } else if (this.$route.name === 'individual') {
             this.$router.push(`/profile/${this.$route.params.userName}`);
           } else {
