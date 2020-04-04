@@ -24,7 +24,6 @@ export class AuthService extends EventEmitter {
     // ログイン時に認証処理を行う。
     webAuth.authorize({
       appState: customState,
-      connection: 'twitter',
     });
   }
 

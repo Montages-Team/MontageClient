@@ -41,7 +41,7 @@ const ReactionIconGroup = () => import(
   /* webpackChunkName: "reaction-icon-group" */
   '../molecules/ReactionIconGroup.vue');
 
-const pageSize: any = 10;
+const pageSize: any = 15;
 
 @Component({
   components: {
@@ -99,7 +99,7 @@ export default class Impressions extends Vue {
   private selectedQuestionId: number = 0;
   private selectedImpressionId: string = '';
   private isImpression: boolean = true;
-  private userImpressions: object = [];
+  private userImpressions: any = [];
   private questionBody: string = '';
 
   private mounted() {
@@ -168,18 +168,18 @@ export default class Impressions extends Vue {
 
   @Emit()
   private watchScroll() {
+    /**
+     * スクロールを検知する関数
+     *
+     * profileページに行った後はwatchScrollがマウントされているので
+     * 不要な部分でgetMoreImpressionsが作動してしまうことを防ぐ目的
+     */
     window.onscroll = () => {
-      /**
-       * スクロールを検知する関数
-       *
-       * profileページに行った後はwatchScrollがマウントされているので
-       * 不要な部分でgetMoreImpressionsが作動してしまうことを防ぐ目的
-       */
       if (this.$route.name !== 'profile') { return; }
       const scrollingPosition: number = document.documentElement.scrollTop + window.innerHeight;
       const bottomPosition: HTMLElement | null = document.getElementById('app');
       if (bottomPosition == null) { return; }
-      if (scrollingPosition === bottomPosition.offsetHeight) {
+      if (scrollingPosition > bottomPosition.offsetHeight - 500) {
         this.getMoreImpressions();
       }
     };

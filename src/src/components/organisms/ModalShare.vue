@@ -1,11 +1,12 @@
 <template lang="pug">
   div
     sui-modal.dimmed(v-if="isMobile" v-model='open' size="tiny")
-      //- sui-modal-header.header 質問と回答を共有する
       sui-modal-content.modal-body
-        p.heading URLをコピー
-        p.url {{this.sharedUrl}}
-        p(style="").heading SNSでシェアしよう！
+        div(v-show="copied").ui.yellow.message {{ copiedMessage }}
+        p.heading {{ headingCopyTitle }}
+        p.clipcopy(:data-clipboard-text="this.sharedUrl" @click="CopyExecuted()").url
+          | {{this.sharedUrl}}
+        p.heading {{ headingShareTitle }}
         sui-button-group(vertical)
           a(:href="TwitterShareUrl" target="_blank")
             sui-button.social-margin(basic color='blue', content='Twitter', icon='twitter' size="big")
@@ -14,9 +15,11 @@
     sui-modal.dimmed(v-else v-model='open' size="tiny")
       sui-modal-header.header 質問と回答を共有する
       sui-modal-content.modal-body
-        p.heading URLをコピー
-        p.url {{this.sharedUrl}}
-        p(style="").heading SNSでシェアしよう！
+        div(v-show="copied").ui.yellow.message {{ copiedMessage }}
+        p.heading {{ headingCopyTitle }}
+        p.clipcopy(:data-clipboard-text="this.sharedUrl" @click="CopyExecuted()").url
+          | {{this.sharedUrl}}
+        p.heading {{ headingShareTitle }}
         sui-button-group(vertical)
           a(:href="TwitterShareUrl" target="_blank")
             sui-button.social-margin(basic color='blue', content='Twitter', icon='twitter' size="big")
@@ -26,22 +29,53 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Emit, Prop } from 'vue-property-decorator';
+import { Component, Vue, Emit, Prop, Watch } from 'vue-property-decorator';
+import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import router from '../../router';
 import isMobile from 'ismobilejs';
 
 @Component({
-  components: {
-  },
 })
 export default class ModalShare extends Vue {
   private open: boolean = false;
+  private copied: boolean = false;
+  private headingCopyTitle: string = 'URLをコピー';
+  private headingShareTitle: string = 'SNSでシェアしよう！';
+  private copiedMessage: string = 'URLをコピーしました！';
   @Prop({ type: String }) private impressionId!: string;
   @Prop({ type: String }) private questionBody!: string;
 
   @Emit()
   public toggleShareOpen(): void {
+    /**
+     * URL共有用モーダルを切り替える関数。
+     *
+     * 開いた状態から閉じる時のみ、コピーをしたかどうか判定する変数copiedをfalseへ戻す。
+     */
+    if (this.open === false) {
+      this.copied = false;
+    }
     this.open = !this.open;
+  }
+
+  @Watch('open')
+  public toggleScroll() {
+    const modal: any = document.querySelector('.modals');
+    if (this.open === true) {
+      disableBodyScroll(modal);
+    } else {
+      enableBodyScroll(modal);
+    }
+  }
+
+  @Emit()
+  public CopyExecuted() {
+    /**
+     * コピー実行後に実行される関数
+     *
+     * アラートの表示を切り替える変数copiedをtrueにする
+     */
+    this.copied = true;
   }
 
   private get isMobile() {
@@ -50,12 +84,22 @@ export default class ModalShare extends Vue {
      */
     return isMobile(navigator.userAgent).phone;
   }
+  private get domainName() {
+    /**
+     * ドメインを取得
+     */
+    if (process.env.NODE_ENV === 'production') {
+      return `https://montage.bio`;
+    } else {
+      return `http://localhost:8080`;
+    }
+  }
 
   private get sharedUrl() {
     /**
      * シェア用リンクを取得
      */
-    return `https://montage.bio/profile/${this.targetUserName}/impression/${this.impressionId}`;
+    return `${this.domainName}/profile/${this.targetUserName}/impression/${this.impressionId}`;
   }
 
   private get targetUserName() {

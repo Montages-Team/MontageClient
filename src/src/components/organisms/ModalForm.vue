@@ -4,11 +4,18 @@
       .modal-mask(v-show="open")
         .modal-wrapper
           .modal-container
+            .modal-header(v-show="isInvalidInput" style="width: inherit;")
+              sui-message(warning style="margin: 4px; width: inherit;") 文字数が不正です.
             .modal-header
               ConfirmButton.button-cancel(content="キャンセル" @cancelImpression="toggleOpen")
               ConfirmButton(:content='postButtonContent' @emitPost="postMutation")
             .modal-body
-              textarea.modalform__body.font-size__small(v-model="impression" :placeholder="placeholder")
+              textarea.modalform__body.font-size__small(
+                v-model="impressionInput"
+                :placeholder="placeholder"
+                :maxlength="maxCount")
+              sui-container(text-align='right')
+                p(style="color: #AAAAAA;") {{ this.impressionInput.length }}/42
     sui-modal.dimmed(v-else v-model="open" size="tiny")
       sui-modal-header
         span(@click="toggleOpen")
@@ -17,13 +24,21 @@
         .modal-body
           sui-form(inverted)
             sui-form-field
-              input.modal-fontsize(v-model="impression" :placeholder="placeholder")
+              input.modal-fontsize(
+                v-model="impressionInput"
+                :placeholder="placeholder"
+                :maxlength="maxCount")
+              sui-container(text-align='right')
+                p(style="color: #AAAAAA;") {{ this.impressionInput.length }}/42
+      .modal-header(v-show="isInvalidInput" style="width: inherit;")
+        sui-message(warning style="margin: 4px; width: inherit;") 文字数が不正です.
       .modal-header
         ConfirmButton(:content='postButtonContent' @emitPost="postMutation")
 </template>
 
 <script lang="ts">
-import { Component, Vue, Emit, Prop } from 'vue-property-decorator';
+import { Component, Vue, Emit, Prop, Watch } from 'vue-property-decorator';
+import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import router from '../../router';
 import { CreateImpressionMutation } from '../../constants/create_impression_query';
 import isMobile from 'ismobilejs';
@@ -38,8 +53,10 @@ const ConfirmButton = () => import(
   },
 })
 export default class ModalForm extends Vue {
-  private impression: string = '';
+  private impressionInput: string = '';
   private open: boolean = false;
+  private maxCount: number = 42;
+  private isInvalidInput: boolean = false;
 
   @Prop({ type: Number })
   private selectedQuestionId!: number;
@@ -50,9 +67,22 @@ export default class ModalForm extends Vue {
   @Prop({ type: String })
   private postButtonContent!: string;
 
+  @Watch('open')
+  public toggleScroll() {
+    const modal: any = document.querySelector('.modals');
+    if (this.open === true) {
+      disableBodyScroll(modal);
+    } else {
+      enableBodyScroll(modal);
+    }
+  }
+
   @Emit()
   public toggleOpen(): void {
     this.open = !this.open;
+    if (this.open === false) {
+      this.isInvalidInput = false;
+    }
   }
 
   private get isMobile() {
@@ -61,38 +91,46 @@ export default class ModalForm extends Vue {
 
   @Emit()
   private postMutation(isCollage: boolean) {
-    const mutation = this.$apollo.mutate({
-      mutation: CreateImpressionMutation,
-      variables: {
-        content: this.impression,
-        userName:  this.$route.params.userName,
-        questionId: this.selectedQuestionId,
-      },
-    });
-
-    mutation
-      .then(({ data }) => {
-        if (!data) {
-          throw new Error('data is undefined');
-        }
-        const res = data.createImpression;
-        return res;
-      })
-      .then(({ ok, impression, errors }) => {
-        if (ok) {
-          console.log(this.$route.name);
-          if (this.$route.name === 'profile') {
-            this.$emit('toggle');
-            this.impression = '';
-          } else if (this.$route.name === 'individual') {
-            this.$router.push(`/profile/${this.$route.params.userName}`);
-          } else {
-            this.$router.push(`/profile/${this.$route.params.userName}`);
-          }
-        }
-      }).catch((error) => {
-        console.log(error);
+    if (this.impressionInput.length > 0 && this.impressionInput.length < 43) {
+      this.isInvalidInput = false;
+      const mutation = this.$apollo.mutate({
+        mutation: CreateImpressionMutation,
+        variables: {
+          content: this.impressionInput,
+          userName:  this.$route.params.userName,
+          questionId: this.selectedQuestionId,
+        },
       });
+      mutation
+        .then(({ data }) => {
+          if (!data) {
+            throw new Error('data is undefined');
+          }
+          const res = data.createImpression;
+          return res;
+        })
+        .then(({ ok, impression, errors }) => {
+          if (ok) {
+            console.log(this.$route.name);
+            if (this.$route.name === 'profile') {
+              this.$emit('toggle');
+              this.impressionInput = '';
+            } else if (this.$route.name === 'individual') {
+              this.$router.push(`/profile/${this.$route.params.userName}`);
+            } else {
+              this.$router.push(`/profile/${this.$route.params.userName}`);
+            }
+            const modal: any = document.querySelector('.modals');
+            enableBodyScroll(modal);
+          }
+        }).catch((error) => {
+          console.log(error);
+        });
+    } else {
+      console.error('invalid input length.');
+      this.isInvalidInput = true;
+      return;
+    }
   }
 }
 </script>

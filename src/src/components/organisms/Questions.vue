@@ -31,7 +31,7 @@ const GrayCenterText = () => import(
   /* webpackChunkName: "gray-center-text" */
   '../atoms/GrayCenterText.vue');
 
-const QuestionsPageSize: number = 10;
+const QuestionsPageSize: number = 15;
 
 @Component({
   components: {
@@ -64,7 +64,6 @@ const QuestionsPageSize: number = 10;
       error(error) {
         console.error(error);
       },
-      fetchPolicy: 'no-cache',
     },
   },
 })
@@ -89,6 +88,7 @@ export default class Questions extends Vue {
   public loadEnable: boolean = true;
   public placeholder: string = '';
   public selectedQuestionId: number = 0;
+  public categoryQuestions: any = [];
 
   public mounted() {
     this.watchScroll();
@@ -145,7 +145,7 @@ export default class Questions extends Vue {
       const scrollingPosition: number = document.documentElement.scrollTop + window.innerHeight;
       const bottomPosition: HTMLElement | null = document.getElementById('app');
       if (bottomPosition == null) { return; }
-      if (scrollingPosition > bottomPosition.offsetHeight) {
+      if (scrollingPosition > bottomPosition.offsetHeight - 500) {
         this.getMoreQuestions();
       }
     };
