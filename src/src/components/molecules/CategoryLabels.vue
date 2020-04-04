@@ -42,7 +42,7 @@ export default class CategoryLabels extends Vue {
 .flex-category-box-inline
     display inline-block
     list-style none
-    padding 0
+    padding 16px !important
     overflow-x auto
     overflow-y hidden
     white-space nowrap
