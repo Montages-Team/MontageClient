@@ -53,6 +53,7 @@ export default class Home extends Vue {
 <style lang="stylus" scoped>
 .wrapper
   width 100vw
+  height 85vh !important
   background linear-gradient(#B464A3,#807DBA)
   margin unset !important
 
