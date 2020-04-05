@@ -1,5 +1,5 @@
 <template lang="pug">
-  div.wrapper
+  div.mainwrapper
     div.content-wrapper(is='sui-container' textAlign='center')
       img.logo(src='@/assets/icon.svg')
       h5.catch-copy(is='sui-header') 友達も、好きな人も、自由にイジろう
@@ -51,9 +51,8 @@ export default class Home extends Vue {
 </script>
 
 <style lang="stylus" scoped>
-.wrapper
+.mainwrapper
   width 100vw
-  height 85vh !important
   background linear-gradient(#B464A3,#807DBA)
   margin unset !important
 
@@ -88,6 +87,10 @@ export default class Home extends Vue {
   font-weight bold
 
 @media screen and (min-width:1100px)
+  .mainwrapper
+    height 85vh !important
+  .content-wrapper
+    padding-top 10% !importan
   .flex-column
     display flex
 </style>
