@@ -124,7 +124,7 @@ export default class ModalForm extends Vue {
               // 回答投稿後にモーダルを閉じる
               this.open = false;
               this.impressionInput = '';
-              this.$emit('hoge');
+              this.$emit('emitSetNotify');
             }
             const modal: any = document.querySelector('.modals');
             enableBodyScroll(modal);

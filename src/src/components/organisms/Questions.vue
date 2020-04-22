@@ -1,5 +1,7 @@
 <template lang="pug">
   div
+    transition(v-if="notification" name='fade')
+      sui-label.success-label(inverted color='pink') プロフィールに反映されました
     CategoryLabels(:username="user.username")
     GrayCenterText
     p(v-for="question in categoryQuestions")
@@ -10,7 +12,8 @@
       :placeholder="placeholder"
       :selectedQuestionId="selectedQuestionId"
       postButtonContent="回答する"
-      @offModal="modalQuestionToggle")
+      @offModal="modalQuestionToggle"
+      @emitSetNotify="setNotify")
 </template>
 
 <script lang="ts">
@@ -86,6 +89,7 @@ export default class Questions extends Vue {
   public page: number = 0;
   public loading: number = 0;
   public loadEnable: boolean = true;
+  public notification: boolean = false;
   public placeholder: string = '';
   public selectedQuestionId: number = 0;
   public categoryQuestions: any = [];
@@ -106,6 +110,22 @@ export default class Questions extends Vue {
     this.$refs.modalForm.toggleOpen();
     this.placeholder = placeholder || '';
     this.selectedQuestionId = Number(selectedQuetionId);
+  }
+
+  @Emit()
+  public offNotification(): any {
+    console.log('off notifi');
+    this.notification = false;
+  }
+
+  @Emit()
+  public setNotify(): void {
+    /**
+     * 質問回答ボタンを押下した際に呼ばれる関数
+     */
+    this.notification = true;
+    setTimeout(this.offNotification, 3000);
+    // TODO: 回答した質問を非表示にする
   }
 
   @Emit()
@@ -164,4 +184,22 @@ ul > li
 .modal-fixed
   position fixed
   width 100%
+
+.success-label
+  right 4vw !important
+  bottom 3vh !important
+  position fixed !important
+  z-index 1000 !important
+
+.fade-leave-active
+  transition opacity .5s !important
+
+.fade-enter-active
+  transition opacity .5s !important
+
+.fade-leave-to
+  opacity 0 !important
+
+.fade-enter
+  opacity 0 !importan
 </style>
