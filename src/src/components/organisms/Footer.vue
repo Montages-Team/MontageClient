@@ -10,10 +10,10 @@
         a.link-style(href="https://twitter.com/montage_bio") 公式Twitter
       router-link.cp-style(v-if="this.$parent.isAuthenticated" :to="{name: 'profile', params: { userName: getUserName }}")
         i.creative.commons.icon
-        | 2019 Montag
+        | 2020 montage.bio
       router-link.cp-style(v-else :to="{ name: 'home'}")
         i.creative.commons.icon
-        | 2019 Montage
+        | 2020 Montage.bio
 </template>
 
 <script lang='ts'>
