@@ -10,7 +10,7 @@
     div(v-if="answersForIndividualPage" v-for="item in answersForIndividualPage")
       //- isTargetがtrueの場合
       div.feed-content(v-if="item.isTarget")
-        QAContent(:user="user" :content="item.answer" :questionAbout="item.about" :impressionId="String(item.impressionId)")
+        QAContent(:url="user.profileImgUrl" :content="item.answer" :questionAbout="item.about" :impressionId="String(item.impressionId)")
         ReactionIconGroup(
           @toggleShareModal="openShareModal(item.impressionId, item.about)" @modalToggle="modalImpressionToggle(item.about, item.questionId)")
         div.another-answer-title

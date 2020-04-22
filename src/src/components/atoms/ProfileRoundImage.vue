@@ -1,7 +1,6 @@
 <template lang='pug'>
   div
-    lazy-component
-      sui-image(:src="url" circular :size="size")
+    sui-image(:src="url" circular :size="size")
 </template>
 
 <script lang='ts'>
