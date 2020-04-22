@@ -25,7 +25,7 @@
                 | {{item.answer}}
       //- 指定した回答の他に回答がない場合
       div(v-if="impressionsCount == 1" style="color: #777;")
-        span ほかの回答はまだありません
+        span(style="margin: 8px;") ほかの回答はまだありません
 </template>
 
 
