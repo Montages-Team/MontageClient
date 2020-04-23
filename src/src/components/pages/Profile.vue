@@ -16,6 +16,14 @@
           sui-grid-column(:width='3')
             sui-segment.profile-right-footer
               Footer
+            div
+              h4.no-margin 関連人物?
+              p.recommend-sub-title プロフィールを見てみましょう
+            sui-grid(celled="internally")
+              sui-grid-row(v-for="line in recommendUserList" :key="line.id")
+                sui-grid-column.montage-grid-column(v-for="r in line" :key="r.id" :width='5')
+                  router-link.column-link(:to="{ name: 'profile', params: { userName: r.username }}")
+                    sui-image(:src="r.profileImgUrl" circular size="mini")
     div(v-else)
       Loading
 </template>
@@ -23,6 +31,7 @@
 <script lang="ts">
 import { Component, Vue, Emit } from 'vue-property-decorator';
 import { userQuery } from '../../constants/user_query';
+import { recommendUsersQuery } from '../../constants/recommend_users_query';
 import { createNewUserMutation } from '../../constants/create-new-user-query';
 import gql from 'graphql-tag';
 import axios from 'axios';
@@ -90,6 +99,14 @@ const Footer = () => import(
       error(error) {
        this.$apollo.queries.user.skip = true;
        this.$router.push('/');
+    recommendUsers: {
+      query: recommendUsersQuery,
+      variables() {
+        if (this.$route && this.$route.params) {
+          return {
+            userName: this.$route.params.userName,
+          };
+        }
       },
     },
   },
@@ -100,6 +117,7 @@ export default class Profile extends Vue {
   private displayName: string = '';
   private firstLogin: boolean = false;
   private skipQuery: boolean = true;
+  private recommendUsers: any = [];
 
   private created() {
     if ( this.$auth.isAuthenticated() === true ) {
@@ -113,6 +131,15 @@ export default class Profile extends Vue {
 
   private get isMobile() {
     return isMobile(navigator.userAgent).phone;
+  }
+
+  private get recommendUserList() {
+    /**
+     * おすすめユーザを取得してリストにして返却する
+     */
+    const recommendList: any = [];
+    recommendList.push(this.recommendUsers);
+    return recommendList;
   }
 
   @Emit()
@@ -233,4 +260,13 @@ export default class Profile extends Vue {
 
 .profile-grid-style
   margin 16px !important
+
+.recommend-sub-title
+  font-size 10px !important
+  color #9D9D9D !important
+  margin 8px 0px !important
+
+.montage-grid-column
+  box-shadow none !important
+  padding 8px !important
 </style>
