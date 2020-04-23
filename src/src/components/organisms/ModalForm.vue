@@ -24,7 +24,7 @@
         .modal-body
           sui-form(inverted)
             sui-form-field
-              input.modal-fontsize(
+              textarea.modalform__body__pc.font-size__small(
                 v-model="impressionInput"
                 :placeholder="placeholder"
                 :maxlength="maxCount")
@@ -111,14 +111,20 @@ export default class ModalForm extends Vue {
         })
         .then(({ ok, impression, errors }) => {
           if (ok) {
-            console.log(this.$route.name);
             if (this.$route.name === 'profile') {
               this.$emit('toggle');
               this.impressionInput = '';
-            } else if (this.$route.name === 'individual') {
-              this.$router.push(`/profile/${this.$route.params.userName}`);
+            } else if (this.$route.name === 'impression') {
+              const postedImpressionId: string = impression.id;
+              const afterAnswerUrl: string = `/profile/${this.$route.params.userName}/impression/${postedImpressionId}`;
+              this.open = false;
+              this.impressionInput = '';
+              this.$router.push(afterAnswerUrl);
             } else {
-              this.$router.push(`/profile/${this.$route.params.userName}`);
+              // 回答投稿後にモーダルを閉じる
+              this.open = false;
+              this.impressionInput = '';
+              this.$emit('emitSetNotify');
             }
             const modal: any = document.querySelector('.modals');
             enableBodyScroll(modal);
@@ -157,6 +163,10 @@ export default class ModalForm extends Vue {
   display table-cell
   vertical-align bottom
 
+.modal-fontsize
+  overflow-wrap break-word
+  height 12px !important
+
 .modal-container
   width 100%
   height 76%
@@ -190,16 +200,28 @@ export default class ModalForm extends Vue {
   transform scale(1.1)
 
 .modalform__body
-  width 100%
-  height inherit
-  padding 8px 16px
-  line-height 2
-  font-color #AAAAAA
-  resize none
-  height 144px
-  outline none
-  user-select text
-  white-space pre-wrap
-  overflow-wrap break-word
+  width 100% !important
+  height inherit !important
+  padding 8px 16px !important
+  line-height 2 !important
+  font-color #AAAAAA !important
+  resize none !important
+  height 144px !important
+  outline none !important
+  user-select text !important
+  white-space pre-wrap !important
+  overflow-wrap break-word !important
+
+.modalform__body__pc
+  padding 8px 16px !important
+  line-height 2 !important
+  font-color #AAAAAA !important
+  resize none !important
+  height 20px !important
+  outline none !important
+  user-select text !important
+  white-space pre-wrap !important
+  overflow-wrap break-word !important
+  border none !important
 
 </style>

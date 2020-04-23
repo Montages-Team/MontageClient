@@ -10,18 +10,28 @@
         sui-dimmer(active inverted)
         sui-loader(content='Loading...')
     div(v-if="impressionsCount > 0")
-      div(v-for="imp in userImpressions").feed-content
-        QAContent(:user="user" :content="imp.content" :questionAbout="imp.question.about" :impressionId="imp.id")
+      div(v-for="(imp, index) in userImpressions").feed-content
+        QAContent(:url="user.profileImgUrl" :content="imp.content" :questionAbout="imp.question.about" :impressionId="imp.id")
         ReactionIconGroup(
           @toggleShareModal="openShareModal(imp.id, imp.question.about)"
           @modalToggle="modalImpressionToggle(imp.question.about, imp.question.id, imp.id)")
+        div.recommend-block(v-if="index !== 0 && index % recommendIndex === 0")
+          h4 この人知ってる?
+          sui-grid(devided)
+            sui-grid-row(v-for="line in recommendUserList" :key="line.id")
+              sui-grid-column.montage-grid-column(:width='3')
+              sui-grid-column.montage-grid-column(v-for="r in line" :key="r.id" :width='4')
+                router-link.column-link(:to="{ name: 'profile', params: { userName: r.username }}")
+                  sui-image(:src="r.profileImgUrl" circular size="mini")
+                  span.recommend-username {{ r.username }}
     div(v-else)
-      NoImpressionCard.no-impression(:displayName="user.displayName")
+      NoImpressionCard.no-impression
 </template>
 
 <script lang="ts">
 import { Component, Vue, Emit, Prop } from 'vue-property-decorator';
 import { impressionQuery } from '../../constants/get-user-impression-query';
+import { recommendUsersQuery } from '../../constants/recommend_users_query';
 import { Modal, DimmerDimmable } from 'semantic-ui-vue';
 import isMobile from 'ismobilejs';
 import ConfirmButton from '../atoms/ConfirmButton.vue';
@@ -41,7 +51,7 @@ const ReactionIconGroup = () => import(
   /* webpackChunkName: "reaction-icon-group" */
   '../molecules/ReactionIconGroup.vue');
 
-const pageSize: any = 15;
+const pageSize: number = 15;
 
 @Component({
   components: {
@@ -73,6 +83,21 @@ const pageSize: any = 15;
       // 投稿後にすぐに反映させるためにキャッシュとネットワーク併用
       fetchPolicy: 'cache-and-network',
     },
+    recommendUsers: {
+      query: recommendUsersQuery,
+      variables() {
+        if (this.$route && this.$route.params) {
+          return {
+            userName: this.$route.params.userName,
+          };
+        }
+      },
+      result({ data }: any, loading: any, networkStatus: any) {
+        if (data.user === null) {
+          this.$router.push({name: 'notfound'});
+        }
+      },
+    },
   },
 })
 export default class Impressions extends Vue {
@@ -101,6 +126,8 @@ export default class Impressions extends Vue {
   private isImpression: boolean = true;
   private userImpressions: any = [];
   private questionBody: string = '';
+  private recommendUsers: any = [];
+  private recommendIndex: number = 10;
 
   private mounted() {
     this.watchScroll();
@@ -130,11 +157,21 @@ export default class Impressions extends Vue {
     return buttonContent;
   }
 
+  private get recommendUserList() {
+    /**
+     * おすすめユーザをリストにして返す
+     */
+    const recommendList: any = [];
+    recommendList.push(this.recommendUsers.slice(0, 3));
+    return recommendList;
+  }
+
   @Emit()
   private getMoreImpressions() {
     /**
      * スクロール時、現在まだ取得していない回答を取得させる関数
      */
+    if (this.impressionsCount === 0) { return; }
     this.page++;
     this.$apollo.queries.userImpressions.fetchMore({
       variables: {
@@ -144,6 +181,8 @@ export default class Impressions extends Vue {
       },
       updateQuery: (previousResult, { fetchMoreResult }) => {
         if (!fetchMoreResult) { return previousResult; }
+        if (this.impressionsCount === 0) { return previousResult; }
+
         const pre = previousResult.userImpressions;
         const result = fetchMoreResult.userImpressions;
         if (result.length < pageSize) {
@@ -152,6 +191,7 @@ export default class Impressions extends Vue {
         // 新しく取得したものと過去に取得していたものをマージ
         const userImpressions = [...pre, ...result];
         return { userImpressions };
+        return { previousResult };
       },
     });
   }
@@ -179,7 +219,7 @@ export default class Impressions extends Vue {
       const scrollingPosition: number = document.documentElement.scrollTop + window.innerHeight;
       const bottomPosition: HTMLElement | null = document.getElementById('app');
       if (bottomPosition == null) { return; }
-      if (scrollingPosition > bottomPosition.offsetHeight - 500) {
+      if (scrollingPosition > bottomPosition.offsetHeight - 1000 && this.userImpressions) {
         this.getMoreImpressions();
       }
     };
@@ -266,4 +306,17 @@ export default class Impressions extends Vue {
 
 .no-NoImpressionCard
   background red !important
+
+.montage-grid-column
+  box-shadow none !important
+  padding 8px !important
+
+.recommend-block
+  margin 8px 0px !important
+  padding 16px !important
+  background border-box !important
+
+.recommend-username
+  color #555555 !important
+  padding 4px !important
 </style>

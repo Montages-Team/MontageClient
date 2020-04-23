@@ -5,8 +5,8 @@
         router-link.header-link(:to="{name: 'home'}")
           img.svg-logo(src='@/assets/icon.svg')
       sui-menu-menu(position='right')
-        sui-menu-item.right-segment(right v-if="this.$parent.isAuthenticated")
-          ProfileRoundImage(:size='profileImageSize' :url='profile.picture' @click.native="toggleHeaderMenu")
+        sui-menu-item.right-segment(right v-if="this.$parent.isAuthenticated" style="padding: 4px;")
+          sui-icon.menu-icon-style(name='bars', size='big' @click.native="toggleHeaderMenu")
         sui-menu-item.right-segment(right v-else)
           SubButton(label='ログイン' @click.native="$emit('login')")
     HeaderMenu(v-if='headerMenuFlag' v-on:toggleHeaderMenu='toggleHeaderMenu' :profile='profile')
@@ -18,8 +18,8 @@
             img.svg-logo(src='@/assets/icon.svg')
       sui-grid-column.center-grid-width(:width='6')
       sui-grid-column(:width='4')
-        sui-segment.right-segment(v-if="this.$parent.isAuthenticated")
-          ProfileRoundImage.svg-logo(:size='profileImageSize' :url='profile.picture' @click.native="toggleHeaderMenu")
+        sui-segment.right-segment(v-if="this.$parent.isAuthenticated" style="padding: 4px;")
+          sui-icon.menu-icon-style(name='bars', size='big' @click.native="toggleHeaderMenu")
         sui-segment.right-segment(v-else)
           SubButton.svg-logo(label='ログイン' @click.native="$emit('login')")
     HeaderMenu(v-if='headerMenuFlag' v-on:toggleHeaderMenu='toggleHeaderMenu' :profile='profile')
@@ -129,4 +129,9 @@ export default class Header extends Vue {
 
 .center-grid-width
   max-width 480px !important
+
+.menu-icon-style
+  color #fff !important
+  margin auto !important
+  display contents !important
 </style>

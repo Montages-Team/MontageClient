@@ -14,7 +14,7 @@
                   p(v-for="c in column") ◇ {{ c }}
                 ol.privacy-column-list-style(v-else="typeof(column) !== Array") {{ column }}
         p.privacy-paragraph-style(align='right') 以上
-        p.privacy-paragraph-style(align='left') 2018年5月27日制定
+        p.privacy-paragraph-style(align='left') 2020年4月26日制定
 </template>
 
 

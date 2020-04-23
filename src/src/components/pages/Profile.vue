@@ -16,6 +16,14 @@
           sui-grid-column(:width='3')
             sui-segment.profile-right-footer
               Footer
+            div
+              h4.no-margin 関連人物?
+              p.recommend-sub-title プロフィールを見てみましょう
+            sui-grid(celled="internally")
+              sui-grid-row(v-for="line in recommendUserList" :key="line.id")
+                sui-grid-column.montage-grid-column(v-for="r in line" :key="r.id" :width='5')
+                  router-link.column-link(:to="{ name: 'profile', params: { userName: r.username }}")
+                    sui-image(:src="r.profileImgUrl" circular size="mini")
     div(v-else)
       Loading
 </template>
@@ -23,6 +31,7 @@
 <script lang="ts">
 import { Component, Vue, Emit } from 'vue-property-decorator';
 import { userQuery } from '../../constants/user_query';
+import { recommendUsersQuery } from '../../constants/recommend_users_query';
 import { createNewUserMutation } from '../../constants/create-new-user-query';
 import gql from 'graphql-tag';
 import axios from 'axios';
@@ -88,8 +97,19 @@ const Footer = () => import(
         }
       },
       error(error) {
+       console.debug('fetch error when apollo fetch user query');
        this.$apollo.queries.user.skip = true;
        this.$router.push('/');
+      },
+    },
+    recommendUsers: {
+      query: recommendUsersQuery,
+      variables() {
+        if (this.$route && this.$route.params) {
+          return {
+            userName: this.$route.params.userName,
+          };
+        }
       },
     },
   },
@@ -100,6 +120,7 @@ export default class Profile extends Vue {
   private displayName: string = '';
   private firstLogin: boolean = false;
   private skipQuery: boolean = true;
+  private recommendUsers: any = [];
 
   private created() {
     if ( this.$auth.isAuthenticated() === true ) {
@@ -115,6 +136,15 @@ export default class Profile extends Vue {
     return isMobile(navigator.userAgent).phone;
   }
 
+  private get recommendUserList() {
+    /**
+     * おすすめユーザを取得してリストにして返却する
+     */
+    const recommendList: any = [];
+    recommendList.push(this.recommendUsers);
+    return recommendList;
+  }
+
   @Emit()
   private async callApi() {
     /**
@@ -128,6 +158,7 @@ export default class Profile extends Vue {
 
     await this.$auth.getAccessToken()
     .then( (accessToken: any) => {
+        console.debug('fetch access token');
         const header = { Authorization: `Bearer ${accessToken}`};
         this.fetch_meta_data(header);
     })
@@ -144,6 +175,7 @@ export default class Profile extends Vue {
     /**
      * userinfoエンドポイントからメタデータを取得する関数
      */
+    console.debug('start fetch meta data');
     const baseUrl = 'https://' + process.env.VUE_APP_AUTH0_DOMAIN;
     const url = baseUrl + '/userinfo';
     // メタデータを取得
@@ -153,8 +185,10 @@ export default class Profile extends Vue {
         const meta = response.data[`https://montage:auth0:com/user_metadata`];
         this.firstLogin = meta.first_login;
         this.handleOnbordingEvent();
+        console.debug('successed to fetch meta data');
       })
       .catch(( error ) => {
+        console.error('error occured when fetching meta data');
         console.error(error);
         this.$router.push('/');
       });
@@ -164,7 +198,9 @@ export default class Profile extends Vue {
     /**
      * 初回ログイン時のみユーザ作成を行うことをハンドリングするオンボーディング関数
      */
+    console.log('handle onbording event');
     if (this.firstLogin === true) {
+      console.log('This is first login. so createUser() is emitted');
       this.createUser();
     } else {
       this.$apollo.queries.user.skip = false;
@@ -176,23 +212,29 @@ export default class Profile extends Vue {
     /**
      * ユーザ作成のミューテーションをリクエストする関数
      */
+    console.debug('createuser() is starting.');
     const mutation = this.$apollo.mutate({
       mutation: createNewUserMutation,
       fetchPolicy: 'no-cache',
     });
     mutation
       .then(({ data: { createUser } }) => {
+        console.debug('mutation is start');
         return createUser;
       })
       .then(({ user, errors }) => {
+        console.debug('mutation is successed. if user is fetched, we turn skip for query off');
         if (user) {
           this.$apollo.queries.user.skip = false;
+          console.debug('Now, queries.user.skip is false');
         } else {
+          console.debug('user is not found');
           this.$router.push('/');
         }
       })
       .catch(( error ) => {
         // first loginがtrueの状態でリロードしたらDBにすでにあるのでエラー
+        console.debug('user is already registered');
         console.error(error);
         this.$apollo.queries.user.skip = false;
       });
@@ -233,4 +275,13 @@ export default class Profile extends Vue {
 
 .profile-grid-style
   margin 16px !important
+
+.recommend-sub-title
+  font-size 10px !important
+  color #9D9D9D !important
+  margin 8px 0px !important
+
+.montage-grid-column
+  box-shadow none !important
+  padding 8px !important
 </style>

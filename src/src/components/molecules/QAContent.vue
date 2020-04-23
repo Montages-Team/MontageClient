@@ -5,7 +5,7 @@
         sui-card-header.card-header Q. {{ questionAbout }}
         router-link(:to="{ name: 'impression', params: { impressionId: impressionId }}")
           div(style="display: flex;")
-            ProfileRoundImage.user-icon(:url="user.profileImgUrl" size="mini")
+            ProfileRoundImage.user-icon(:url="url" size="mini")
             sui-label.baloon(pointing='left' size='medium' style="background: #f5f5f5")
               p(style="color: #555555") {{ content }}
 </template>
@@ -20,8 +20,8 @@ import ProfileRoundImage from '../atoms/ProfileRoundImage.vue';
   },
 })
 export default class QAContent extends Vue {
-  @Prop({ type: Object})
-  private user!: object;
+  @Prop({ type: String})
+  private url!: string;
 
   @Prop({ type: String})
   private questionAbout!: string;

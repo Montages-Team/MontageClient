@@ -10,7 +10,7 @@
     div(v-if="answersForIndividualPage" v-for="item in answersForIndividualPage")
       //- isTargetがtrueの場合
       div.feed-content(v-if="item.isTarget")
-        QAContent(:user="user" :content="item.answer" :questionAbout="item.about" :impressionId="String(item.impressionId)")
+        QAContent(:url="user.profileImgUrl" :content="item.answer" :questionAbout="item.about" :impressionId="String(item.impressionId)")
         ReactionIconGroup(
           @toggleShareModal="openShareModal(item.impressionId, item.about)" @modalToggle="modalImpressionToggle(item.about, item.questionId)")
         div.another-answer-title
@@ -25,7 +25,7 @@
                 | {{item.answer}}
       //- 指定した回答の他に回答がない場合
       div(v-if="impressionsCount == 1" style="color: #777;")
-        span ほかの回答はまだありません
+        span(style="margin: 8px;") ほかの回答はまだありません
 </template>
 
 
