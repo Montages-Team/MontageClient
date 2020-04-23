@@ -171,6 +171,7 @@ export default class Impressions extends Vue {
     /**
      * スクロール時、現在まだ取得していない回答を取得させる関数
      */
+    if (this.impressionsCount === 0) { return; }
     this.page++;
     this.$apollo.queries.userImpressions.fetchMore({
       variables: {
@@ -180,6 +181,8 @@ export default class Impressions extends Vue {
       },
       updateQuery: (previousResult, { fetchMoreResult }) => {
         if (!fetchMoreResult) { return previousResult; }
+        if (this.impressionsCount === 0) { return previousResult; }
+
         const pre = previousResult.userImpressions;
         const result = fetchMoreResult.userImpressions;
         if (result.length < pageSize) {
@@ -188,6 +191,7 @@ export default class Impressions extends Vue {
         // 新しく取得したものと過去に取得していたものをマージ
         const userImpressions = [...pre, ...result];
         return { userImpressions };
+        return { previousResult };
       },
     });
   }
@@ -215,7 +219,7 @@ export default class Impressions extends Vue {
       const scrollingPosition: number = document.documentElement.scrollTop + window.innerHeight;
       const bottomPosition: HTMLElement | null = document.getElementById('app');
       if (bottomPosition == null) { return; }
-      if (scrollingPosition > bottomPosition.offsetHeight - 500) {
+      if (scrollingPosition > bottomPosition.offsetHeight - 1000 && this.userImpressions) {
         this.getMoreImpressions();
       }
     };
