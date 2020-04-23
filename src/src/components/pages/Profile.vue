@@ -97,8 +97,11 @@ const Footer = () => import(
         }
       },
       error(error) {
+       console.debug('fetch error when apollo fetch user query');
        this.$apollo.queries.user.skip = true;
        this.$router.push('/');
+      },
+    },
     recommendUsers: {
       query: recommendUsersQuery,
       variables() {
@@ -155,6 +158,7 @@ export default class Profile extends Vue {
 
     await this.$auth.getAccessToken()
     .then( (accessToken: any) => {
+        console.debug('fetch access token');
         const header = { Authorization: `Bearer ${accessToken}`};
         this.fetch_meta_data(header);
     })
@@ -171,6 +175,7 @@ export default class Profile extends Vue {
     /**
      * userinfoエンドポイントからメタデータを取得する関数
      */
+    console.debug('start fetch meta data');
     const baseUrl = 'https://' + process.env.VUE_APP_AUTH0_DOMAIN;
     const url = baseUrl + '/userinfo';
     // メタデータを取得
@@ -180,8 +185,10 @@ export default class Profile extends Vue {
         const meta = response.data[`https://montage:auth0:com/user_metadata`];
         this.firstLogin = meta.first_login;
         this.handleOnbordingEvent();
+        console.debug('successed to fetch meta data');
       })
       .catch(( error ) => {
+        console.error('error occured when fetching meta data');
         console.error(error);
         this.$router.push('/');
       });
@@ -191,7 +198,9 @@ export default class Profile extends Vue {
     /**
      * 初回ログイン時のみユーザ作成を行うことをハンドリングするオンボーディング関数
      */
+    console.log('handle onbording event');
     if (this.firstLogin === true) {
+      console.log('This is first login. so createUser() is emitted');
       this.createUser();
     } else {
       this.$apollo.queries.user.skip = false;
@@ -203,23 +212,29 @@ export default class Profile extends Vue {
     /**
      * ユーザ作成のミューテーションをリクエストする関数
      */
+    console.debug('createuser() is starting.');
     const mutation = this.$apollo.mutate({
       mutation: createNewUserMutation,
       fetchPolicy: 'no-cache',
     });
     mutation
       .then(({ data: { createUser } }) => {
+        console.debug('mutation is start');
         return createUser;
       })
       .then(({ user, errors }) => {
+        console.debug('mutation is successed. if user is fetched, we turn skip for query off');
         if (user) {
           this.$apollo.queries.user.skip = false;
+          console.debug('Now, queries.user.skip is false');
         } else {
+          console.debug('user is not found');
           this.$router.push('/');
         }
       })
       .catch(( error ) => {
         // first loginがtrueの状態でリロードしたらDBにすでにあるのでエラー
+        console.debug('user is already registered');
         console.error(error);
         this.$apollo.queries.user.skip = false;
       });
