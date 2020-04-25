@@ -28,7 +28,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
     }
 });
 
-// HTTP connexion to the API
+// HTTP connection to the API
 const httpLink = new HttpLink({
   uri: process.env.VUE_APP_GRAPHQL_HTTP || '',
 });
