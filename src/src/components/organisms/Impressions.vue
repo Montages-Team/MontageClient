@@ -10,11 +10,20 @@
         sui-dimmer(active inverted)
         sui-loader(content='Loading...')
     div(v-if="impressionsCount > 0")
-      div(v-for="(imp, index) in userImpressions").feed-content
-        QAContent(:url="user.profileImgUrl" :content="imp.content" :questionAbout="imp.question.about" :impressionId="imp.id")
+      div(v-for="(qa, index) in userImpressions").feed-content
+        QAContent(
+          :url="user.profileImgUrl"
+          :content="(qa.items[0].content) ? String(qa.items[0].content): ''"
+          :questionAbout="qa.about"
+          :impressionId="String(qa.items[0].id)")
         ReactionIconGroup(
-          @toggleShareModal="openShareModal(imp.id, imp.question.about)"
-          @modalToggle="modalImpressionToggle(imp.question.about, imp.question.id, imp.id)")
+          :impressionId="Number(qa.items[0].id)"
+          :deleteIndex="index"
+          routeName="impressions"
+          nextId=""
+          :createrUserName="qa.items[0].createrUserName"
+          @toggleShareModal="openShareModal(qa.id, qa.about)"
+          @modalToggle="modalImpressionToggle(qa.about, qa.id, String(qa.items[0].id))")
         div.recommend-block(v-if="index !== 0 && index % recommendIndex === 0")
           h4 この人知ってる?
           div(v-for="line in recommendUserList" :key="line.id")
@@ -196,7 +205,6 @@ export default class Impressions extends Vue {
         // 新しく取得したものと過去に取得していたものをマージ
         const userImpressions = [...pre, ...result];
         return { userImpressions };
-        return { previousResult };
       },
     });
   }
@@ -324,4 +332,18 @@ export default class Impressions extends Vue {
 .recommend-username
   color #555555 !important
   padding 4px !important
+
+.column-link
+  margin 0 8px !important
+  background #f0f0e0 !important
+
+.border-gradient
+  border 1px solid
+  border-image-slice 1
+  border-width 1px
+  background #fff
+
+.border-gradient-purple
+  border-image-source linear-gradient(to left, #807DBA, #B464A3
+)
 </style>
