@@ -115,8 +115,7 @@ export default class Questions extends Vue {
   }
 
   @Emit()
-  public offNotification(): any {
-    console.log('off notifi');
+  public offNotification(): void {
     this.notification = false;
   }
 
@@ -127,7 +126,6 @@ export default class Questions extends Vue {
      */
     this.notification = true;
     setTimeout(this.offNotification, 3000);
-    // TODO: 回答した質問を非表示にする
   }
 
   @Emit()
