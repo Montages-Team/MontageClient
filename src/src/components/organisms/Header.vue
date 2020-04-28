@@ -81,6 +81,7 @@ export default class Header extends Vue {
     box-shadow 0px 4px 4px rgba(0, 0, 0, 0.25)
     z-index 100 !important
     border none !important
+    margin 0 !important
 
   #logo
     display inline-block
@@ -133,5 +134,5 @@ export default class Header extends Vue {
 .menu-icon-style
   color #fff !important
   margin auto !important
-  display contents !important
+  display contents
 </style>

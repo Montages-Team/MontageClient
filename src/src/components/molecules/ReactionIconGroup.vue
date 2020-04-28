@@ -25,6 +25,7 @@ export default class ReactionIconGroup extends Vue {
 .button-group
   padding 0px !important
   width -webkit-fill-available
+  width: -moz-available;
 
 .icon-button-group
   background #FFF !important
