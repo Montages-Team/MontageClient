@@ -11,9 +11,6 @@
             a(:href='twitterLink')
               sui-icon(name='twitter')
               | Twitter
-          //- sui-dropdown-item
-          //-   sui-icon(name='images')
-          //-   | 写真の変更
       sui-statistic(style="width: 100vw; padding: 40px;")
         sui-statistic-value
           img.ui.circular.inline.image(:src='user.profileImgUrl' size="small")

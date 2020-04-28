@@ -67,6 +67,7 @@ export default class ModalForm extends Vue {
   @Prop({ type: String })
   private postButtonContent!: string;
 
+
   @Watch('open')
   public toggleScroll() {
     const modal: any = document.querySelector('.modals');
