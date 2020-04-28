@@ -22,7 +22,7 @@
           routeName="impressions"
           nextId=""
           :createrUserName="qa.items[0].createrUserName"
-          @toggleShareModal="openShareModal(qa.id, qa.about)"
+          @toggleShareModal="openShareModal(Number(qa.items[0].id), qa.about)"
           @modalToggle="modalImpressionToggle(qa.about, qa.id, String(qa.items[0].id))")
         div.recommend-block(v-if="index !== 0 && index % recommendIndex === 0")
           h4 この人知ってる?
