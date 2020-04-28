@@ -1,6 +1,6 @@
 <template lang='pug'>
   div
-    div.content-for-pc
+    div.setttings-content-pc
       div(is='sui-container')
         TopMenu(isTerms=false)
         h2.terms-title-style サービス利用規約

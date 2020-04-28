@@ -66,8 +66,7 @@ export default class ProfileImageTop extends Vue {
 <style lang="stylus" scoped>
 .overlay-area
   position relative
-  background -webkit-gradient(linear,left top,left bottom, color-stop(-30%,transparent),to(#181818))
-  background linear-gradient(#00000000 90%, #f0f0f0)
+  background none !important
 
 .card-content-style-pc
   text-align center !important

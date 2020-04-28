@@ -6,14 +6,14 @@
           ProfileImageTop(v-if="$route.name !== 'impression'" :user="user")
           ProfilePageMenu(v-if="$route.name !== 'impression'" :username="user.username" :whichPage="this.$route.name")
           router-view(:user="user")
-      div(v-else)
+      div.content-for-pc(v-else)
         sui-grid.profile-grid-style(centered :columns='3')
           sui-grid-column(:width='3')
             ProfileImageTop(:user="user")
           sui-grid-column.profile-center-column(:width='8')
             ProfilePageMenu(v-if="$route.name !== 'impression'" :username="user.username" :whichPage="this.$route.name")
             router-view(:user="user")
-          sui-grid-column(:width='3')
+          sui-grid-column(:width='4')
             sui-segment.profile-right-footer
               Footer
             div
