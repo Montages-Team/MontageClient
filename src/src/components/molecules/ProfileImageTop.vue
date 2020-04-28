@@ -1,9 +1,9 @@
 <template lang='pug'>
   div
-    div.overlay-area(v-if="isMobile" :style="{ backgroundImage: 'url(' + 'https://cdn.pixabay.com/photo/2015/03/26/09/59/purple-690724_960_720.jpg' + ')' }")
+    div(v-if="isMobile" :style="{ backgroundImage: 'url(' + 'https://res.cloudinary.com/hzmikcp3i/image/upload/v1587893583/production/top-background_ibpoou.jpg' + ')' }")
       sui-dropdown.icon.montage-dropdown(icon='ellipsis horizontal' button pointing)
         sui-dropdown-menu
-          sui-dropdown-item
+          sui-dropdown-item(v-if="this.$parent.displayName === this.$route.params.userName")
             router-link(:to="{ name: 'settings'}")
               sui-icon(name='wrench')
               | 設定
@@ -11,9 +11,6 @@
             a(:href='twitterLink')
               sui-icon(name='twitter')
               | Twitter
-          //- sui-dropdown-item
-          //-   sui-icon(name='images')
-          //-   | 写真の変更
       sui-statistic(style="width: 100vw; padding: 40px;")
         sui-statistic-value
           img.ui.circular.inline.image(:src='user.profileImgUrl' size="small")
@@ -66,8 +63,7 @@ export default class ProfileImageTop extends Vue {
 <style lang="stylus" scoped>
 .overlay-area
   position relative
-  background -webkit-gradient(linear,left top,left bottom, color-stop(-30%,transparent),to(#181818))
-  background linear-gradient(#00000000 90%, #f0f0f0)
+  background none !important
 
 .card-content-style-pc
   text-align center !important

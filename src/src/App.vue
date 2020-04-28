@@ -85,9 +85,16 @@ body
   color #444
 
 .content-for-pc
-  width 100%
-  max-width 700px
+  width 90vw !important
+  min-width 45vw !important
+  max-width 1800px
   margin 0 auto
+
+.settings-content-pc
+  width 90vw !important
+  min-width 45vw !important
+  max-width 780px
+  margin 8px auto
 
 .icon
   height 16x
@@ -141,4 +148,6 @@ body
   pt-md-50
   padding-top 50px
 
+.string-left-margin
+  margin-left 8px !important
 </style>

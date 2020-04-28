@@ -17,6 +17,7 @@ export default class Loading extends Vue {
 <style lang='stylus' scoped>
 .loading-wrapper
   width -webkit-fill-available !important
+  width: -moz-available;
   height 100%
   margin unset !important
   z-index 1000 !important

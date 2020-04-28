@@ -7,31 +7,35 @@
               @offModal="modalImpressionToggle"
               @toggle="toggleImpressionModal")
     ModalShare(ref="modalShare" :impressionId="String(selectedImpressionId)" :questionBody="questionBody")
-    div(v-if="answersForIndividualPage" v-for="item in answersForIndividualPage")
+    div(v-if="answersForIndividualPage" v-for="(item, index) in answersForIndividualPage")
       //- isTargetがtrueの場合
       div.feed-content(v-if="item.isTarget")
+        //- TODO: revImpressionから回答を表示するようにする
         QAContent(:url="user.profileImgUrl" :content="item.answer" :questionAbout="item.about" :impressionId="String(item.impressionId)")
         ReactionIconGroup(
-          @toggleShareModal="openShareModal(item.impressionId, item.about)" @modalToggle="modalImpressionToggle(item.about, item.questionId)")
+          :impressionId="item.impressionId"
+          :deleteIndex="index"
+          routeName="individual"
+          :nextId="(answersForIndividualPage.length > 1) ? String(answersForIndividualPage[1].impressionId) : ''"
+          :createrUserName="item.createrUserName"
+          @toggleShareModal="openShareModal(item.impressionId, item.about)"
+          @modalToggle="modalImpressionToggle(item.about, item.questionId)")
         div.another-answer-title
           p.sub-title 他の回答
       //- isTargetがfalseの場合
       div(v-if="!item.isTarget" )
         router-link(:to="{ name: 'impression', params: { impressionId: item.impressionId }}")
           div(style="display: flex; cursor: pointer;")
-            sui-label.baloon(pointing='left' size='medium', style='background: transparent')
-              p(style="color: #555555")
-                i.pencil.alternate.icon(style="margin-right: 8px;")
-                | {{item.answer}}
+            sui-label.baloon(pointing='left' size='medium', style='background: transparent; width: inherit;')
+              sui-feed
+                sui-feed-event.feed-event(icon='pencil' size="small" :summary="item.answer")
       //- 指定した回答の他に回答がない場合
       div(v-if="impressionsCount == 1" style="color: #777;")
         span(style="margin: 8px;") ほかの回答はまだありません
 </template>
 
-
 <script lang="ts">
 import { Component, Vue, Emit, Prop } from 'vue-property-decorator';
-import { getImpressionQuery } from '../../constants/getImpression';
 import { answersForIndividualPageQuery } from '../../constants/get_answers_for_individual_page_query';
 
 import isMobile from 'ismobilejs';
@@ -70,7 +74,7 @@ const pageSize: any = 10;
         // 動的ルートマッチングを利用する場合はthis.$routeのありなしでvariablesを決める
         if (this.$route && this.$route.params) {
           return {
-            targetUserId: Number(this.user.id),
+            targetUserName: this.user.username,
             targetImpressionId: Number(this.$route.params.impressionId),
           };
         }
@@ -113,11 +117,15 @@ export default class Individual extends Vue {
   private selectedImpressionId: number = 0;
   private questionBody: string = '';
   private isImpression: boolean = true;
-  private answersForIndividualPage: object = [];
+  private answersForIndividualPage: object | undefined = [];
+  private nextId: string = '';
 
   private get impressionsCount() {
     // json内のarrayの数を数える場合はObject.keysを用いる
-    return Object.keys(this.answersForIndividualPage).length;
+    if (this.answersForIndividualPage !== undefined) {
+      return Object.keys(this.answersForIndividualPage).length;
+    }
+    return 0;
   }
 
   private get isMobile() {
@@ -209,4 +217,10 @@ p.sub-title
 
 .card-header
   margin-bottom 10px
+
+.feed-event
+  color #777 !important
+  font-size 12px !important
+  padding 4px !important
+  line-height normal !important
 </style>

@@ -1,8 +1,10 @@
 import gql from 'graphql-tag';
 
-export const answersForIndividualPageQuery: any = gql`
+export const answersForIndividualPageLocalQuery: any = gql`
 query answersForIndividualPage($targetUserName: String, $targetImpressionId: Int){
-    answersForIndividualPage: answersForIndividualPage(targetUserName: $targetUserName, targetImpressionId: $targetImpressionId){
+    answersForIndividualPage: answersForIndividualPage(
+      targetUserName: $targetUserName,
+      targetImpressionId: $targetImpressionId) @client {
       questionId
       about
       answer

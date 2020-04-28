@@ -3,9 +3,11 @@
     transition(v-if="notification" name='fade')
       sui-label.success-label(inverted color='pink') プロフィールに反映されました
     CategoryLabels(:username="user.username")
-    GrayCenterText
-    p(v-for="question in categoryQuestions")
+    GrayCenterText(content="カテゴリごとに質問を選ぼう!")
+    p(v-for="(question, index) in categoryQuestions")
       QuestionCard(:question="question" @onModal="modalQuestionToggle")
+      CategoryLabels(v-show="index !== 0 && index % 10 === 0" :username="user.username")
+      GrayCenterText(v-show="index !== 0 && index % 10 === 0" content="他のカテゴリー")
     ModalForm(
       v-show="placeholder"
       ref="modalForm"
@@ -113,8 +115,7 @@ export default class Questions extends Vue {
   }
 
   @Emit()
-  public offNotification(): any {
-    console.log('off notifi');
+  public offNotification(): void {
     this.notification = false;
   }
 
@@ -125,7 +126,6 @@ export default class Questions extends Vue {
      */
     this.notification = true;
     setTimeout(this.offNotification, 3000);
-    // TODO: 回答した質問を非表示にする
   }
 
   @Emit()

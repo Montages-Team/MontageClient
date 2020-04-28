@@ -16,7 +16,7 @@
       sui-message.message-box
         p.main-message What's Next?
         div.buttonstyle__normal
-          sui-button-group(size='large')
+          sui-button-group(size='small' style="padding: 5px;")
             sui-button(content='サイトを知る' @click="pushToContent" )
             sui-button-or
             sui-button(content='質問ページへ' positive @click="pushToQuestion")

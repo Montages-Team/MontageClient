@@ -67,6 +67,7 @@ export default class ModalForm extends Vue {
   @Prop({ type: String })
   private postButtonContent!: string;
 
+
   @Watch('open')
   public toggleScroll() {
     const modal: any = document.querySelector('.modals');
@@ -84,9 +85,13 @@ export default class ModalForm extends Vue {
       this.isInvalidInput = false;
     }
   }
-
   private get isMobile() {
     return isMobile(navigator.userAgent).phone;
+  }
+
+  private get authUsername() {
+    const authUsername = this.$parent.$auth.profile[`https://montage.bio/screen_name`];
+    return authUsername;
   }
 
   @Emit()
@@ -99,6 +104,7 @@ export default class ModalForm extends Vue {
           content: this.impressionInput,
           userName:  this.$route.params.userName,
           questionId: this.selectedQuestionId,
+          authUsername: this.authUsername,
         },
       });
       mutation

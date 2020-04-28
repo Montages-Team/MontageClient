@@ -1,6 +1,6 @@
 <template lang='pug'>
-    div
-      div.content-for-pc
+    div.settings-content-pc
+      div
         sui-segment.account-setting-segment(v-if="user")
           h2.setting-title 設定
           div(is="sui-container" style="display: flex;")
