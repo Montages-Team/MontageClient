@@ -16,14 +16,15 @@
           sui-grid-column(:width='4')
             sui-segment.profile-right-footer
               Footer
-            div
+            div.recommend-block
               h4.no-margin 関連人物?
               p.recommend-sub-title プロフィールを見てみましょう
-            sui-grid(celled="internally")
-              sui-grid-row(v-for="line in recommendUserList" :key="line.id")
-                sui-grid-column.montage-grid-column(v-for="r in line" :key="r.id" :width='5')
-                  router-link.column-link(:to="{ name: 'profile', params: { userName: r.username }}")
-                    sui-image(:src="r.profileImgUrl" circular size="mini")
+              div(v-for="line in recommendUserList" :key="line.id" style="display: inline-grid; min-length: 150px;")
+                router-link.column-link(is='sui-label' v-for="r in line" :key="r.id" :to="{ name: 'profile', params: { userName: r.username }}")
+                  img(:src='r.profileImgUrl' style="border-radius: 50%;")
+                  span.string-left-margin(v-if="r.displayName.length > 10")
+                    |  {{ r.displayName.slice(0, 10) }} ...
+                  span.string-left-margin(v-else) {{ r.displayName }}
     div(v-else)
       Loading
 </template>
@@ -284,4 +285,17 @@ export default class Profile extends Vue {
 .montage-grid-column
   box-shadow none !important
   padding 8px !important
+
+.recommend-block
+  margin 8px 0px !important
+  padding 4px !important
+  background border-box !important
+
+.recommend-username
+  color #555555 !important
+  padding 4px !important
+
+.column-link
+  margin 0 !important
+  background #f8f8f8 !important
 </style>
