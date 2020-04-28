@@ -1,6 +1,6 @@
 <template lang='pug'>
   div
-    div.overlay-area(v-if="isMobile" :style="{ backgroundImage: 'url(' + 'https://cdn.pixabay.com/photo/2015/03/26/09/59/purple-690724_960_720.jpg' + ')' }")
+    div(v-if="isMobile" :style="{ backgroundImage: 'url(' + 'https://res.cloudinary.com/hzmikcp3i/image/upload/v1587893583/production/top-background_ibpoou.jpg' + ')' }")
       sui-dropdown.icon.montage-dropdown(icon='ellipsis horizontal' button pointing)
         sui-dropdown-menu
           sui-dropdown-item(v-if="this.$parent.displayName === this.$route.params.userName")
