@@ -216,6 +216,21 @@ export default class Impressions extends Vue {
   ) {
     this.selectedImpressionId = String(selectedImpressionId);
     this.questionBody = questionBody;
+    // 取得済みのImpressionnから共有用の画像URLを取得する
+    let impressionImgUrl = null;
+    this.userImpressions.forEach((v: any) => {
+      v.items.forEach((l: any) => {
+        if (l.id === Number(this.selectedImpressionId)) {
+          impressionImgUrl = l.impressionImgUrl;
+        }
+      });
+    });
+    if (impressionImgUrl) {
+      const ogpImg = (document.getElementById('ogp-img') as HTMLMetaElement);
+      if (ogpImg) {
+        ogpImg.content = impressionImgUrl;
+      }
+    }
     this.$refs.modalShare.toggleShareOpen();
   }
 

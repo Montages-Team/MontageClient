@@ -6,7 +6,7 @@
           p.notfound-description
             | URLをクリックしてこのページにたどり着いた場合は、リンクが間違っているかもしれません
           p.notfound-description
-            | お友達にURLが間違っていることを投稿者に教えてあげてください!
+            | お友達にURLが間違っていることを教えてあげてください!
         router-link(v-if="this.$parent.isAuthenticated === true" :to="{name: 'profile', params: { userName: this.$auth.profile['https://montage.bio/screen_name'] }}")
           button.toplink TOPへ戻る
         router-link(v-else :to="{ name: 'home' }")

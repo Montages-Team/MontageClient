@@ -14,6 +14,7 @@ import SuiVue from 'semantic-ui-vue';
 import AuthPlugin from './plugins/auth';
 import VueLazyload from 'vue-lazyload';
 import VueHead from 'vue-head';
+import VueMeta from 'vue-meta';
 
 Vue.config.productionTip = false;
 const errorLink = onError(({ graphQLErrors, networkError }) => {
@@ -51,6 +52,7 @@ Vue.use(SuiVue);
 Vue.use(AuthPlugin);
 Vue.use(VueLazyload, { lazyComponent: true});
 Vue.use(VueHead);
+Vue.use(VueMeta, { refreshOnceOnNavigation: true });
 
 new Vue({
   router,

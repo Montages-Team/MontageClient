@@ -30,12 +30,25 @@ export default {
     Footer,
     Loading,
   },
+  metaInfo() {
+    return {
+      meta: [
+        {property: 'og:title', content: 'Montage'},
+        {property: 'og:site_name', content: 'Montage'},
+        {property: 'og:description', content: '友達も、好きな人も自由にイジろう'},
+        {id: 'ogp-img', property: 'og:image', content: this.defaultShareImageUrl},
+        {property: 'og:image:width', content: '400'},
+        {name: 'twitter:card', content: 'photo'},
+      ],
+      };
+  },
   data() {
     return {
       isAuthenticated: undefined,
       profile: this.$auth.profile,
       pathName: this.$route.name,
       clipBoard: null,
+      defaultShareImageUrl: 'https://res.cloudinary.com/hzmikcp3i/image/upload/v1588151691/production/default_share_image_bf2uf6.png',
     };
   },
   async created() {
