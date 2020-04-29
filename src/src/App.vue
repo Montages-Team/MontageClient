@@ -1,11 +1,5 @@
 <template lang="pug">
   div(id="app" class='wrapper')
-    meta(property="og:type" content="article")
-    meta(property="og:url" content="https://www.google.com")
-    meta(property="og:image" content="https://res.cloudinary.com/hugc8unfj/image/upload/v1587776312/dev923/ewvmgnqx7htbnt9imtrw.jpg")
-    meta(name="twitter:card" content="summary_large_image")
-    meta(name="twitter:site" content="@johnsmith0951")
-    meta(name="twitter:player" content="@RAGUNA2")
     Header(v-if="$route.name !== 'home'" v-on:login="login" :profile="profile")
     div(v-if="isAuthenticated")
       //- router-viewに定義するとthis.$attrsで取得可能になる
