@@ -42,6 +42,7 @@ export default class ModalShare extends Vue {
   private headingCopyTitle: string = 'URLをコピー';
   private headingShareTitle: string = 'SNSでシェアしよう！';
   private copiedMessage: string = 'URLをコピーしました！';
+  private defaultShareImageUrl: string = 'https://res.cloudinary.com/hzmikcp3i/image/upload/v1588151691/production/default_share_image_bf2uf6.png';
   @Prop({ type: String }) private impressionId!: string;
   @Prop({ type: String }) private questionBody!: string;
 
@@ -65,6 +66,11 @@ export default class ModalShare extends Vue {
       disableBodyScroll(modal);
     } else {
       enableBodyScroll(modal);
+      // 閉じる時にOPG共有画像をデフォルトに戻す
+      const ogpImg: HTMLMetaElement = (document.getElementById('ogp-img') as HTMLMetaElement);
+      if (ogpImg) {
+        ogpImg.content = this.defaultShareImageUrl;
+      }
     }
   }
 

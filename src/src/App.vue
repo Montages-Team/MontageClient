@@ -1,5 +1,11 @@
 <template lang="pug">
   div(id="app" class='wrapper')
+    meta(property="og:type" content="article")
+    meta(property="og:url" content="https://www.google.com")
+    meta(property="og:image" content="https://res.cloudinary.com/hugc8unfj/image/upload/v1587776312/dev923/ewvmgnqx7htbnt9imtrw.jpg")
+    meta(name="twitter:card" content="summary_large_image")
+    meta(name="twitter:site" content="@johnsmith0951")
+    meta(name="twitter:player" content="@RAGUNA2")
     Header(v-if="$route.name !== 'home'" v-on:login="login" :profile="profile")
     div(v-if="isAuthenticated")
       //- router-viewに定義するとthis.$attrsで取得可能になる
@@ -30,12 +36,25 @@ export default {
     Footer,
     Loading,
   },
+  metaInfo() {
+    return {
+      meta: [
+        {property: 'og:title', content: 'Montage'},
+        {property: 'og:site_name', content: 'Montage'},
+        {property: 'og:description', content: '友達も、好きな人も自由にイジろう'},
+        {id: 'ogp-img', property: 'og:image', content: this.defaultShareImageUrl},
+        {property: 'og:image:width', content: '400'},
+        {name: 'twitter:card', content: 'photo'},
+      ],
+      };
+  },
   data() {
     return {
       isAuthenticated: undefined,
       profile: this.$auth.profile,
       pathName: this.$route.name,
       clipBoard: null,
+      defaultShareImageUrl: 'https://res.cloudinary.com/hzmikcp3i/image/upload/v1588151691/production/default_share_image_bf2uf6.png',
     };
   },
   async created() {

@@ -10,6 +10,7 @@ query getUserImpressions($name: String, $page: Int, $size: Int){
       content
       postedAt
       createrUserName
+      impressionImgUrl
     }
   }
 }`;
