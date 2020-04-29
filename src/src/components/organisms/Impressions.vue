@@ -24,7 +24,7 @@
           :createrUserName="qa.items[0].createrUserName"
           @toggleShareModal="openShareModal(Number(qa.items[0].id), qa.about)"
           @modalToggle="modalImpressionToggle(qa.about, qa.id, String(qa.items[0].id))")
-        div.recommend-block(v-if="index !== 0 && index % recommendIndex === 0")
+        div.recommend-block(v-if="index === 0 || index !== 0 && index % recommendIndex === 0")
           h4 この人知ってる?
           div(v-for="line in recommendUserList" :key="line.id")
             router-link.border-gradient.border-gradient-purple(is='sui-label' v-for="r in line" :key="r.id" :to="{ name: 'profile', params: { userName: r.username }}")
@@ -141,7 +141,7 @@ export default class Impressions extends Vue {
   private userImpressions: any = [];
   private questionBody: string = '';
   private recommendUsers: any = [];
-  private recommendIndex: number = 4;
+  private recommendIndex: number = 10;
 
   private mounted() {
     this.watchScroll();
