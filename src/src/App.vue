@@ -33,9 +33,9 @@ export default {
   metaInfo() {
     return {
       meta: [
-        {property: 'og:title', content: 'Montage'},
-        {property: 'og:site_name', content: 'Montage'},
-        {property: 'og:description', content: '友達も、好きな人も自由にイジろう'},
+        {property: 'og:title', content: 'Montage | 匿名プロフィール投稿SNS'},
+        {property: 'og:site_name', content: 'Montage | 匿名プロフィール投稿SN'},
+        {property: 'og:description', content: 'みんなで好き勝手にイジれる匿名プロフィール投稿SNS「Montage(モンタージュ)」。ホントも、楽しいウソもご自由に。'},
         {id: 'ogp-img', property: 'og:image', content: this.defaultShareImageUrl},
         {property: 'og:image:width', content: '400'},
         {name: 'twitter:card', content: 'photo'},

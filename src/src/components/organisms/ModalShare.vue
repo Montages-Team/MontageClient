@@ -117,7 +117,7 @@ export default class ModalShare extends Vue {
 
   private get TwitterShareUrl() {
     const baseTwitterUrl = `https://twitter.com/intent/tweet`;
-    return `${baseTwitterUrl}?text=${this.questionBody}&url=${this.sharedUrl}`;
+    return `${baseTwitterUrl}?text=${this.questionBody}%20%23Montage&url=${this.sharedUrl}`;
   }
 
   private get LineShareUrl() {
