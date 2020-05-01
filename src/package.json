@@ -22,7 +22,7 @@
     "apollo-client": "^2.6.4",
     "apollo-link-context": "^1.0.18",
     "apollo-link-http": "^1.5.15",
-    "auth0-js": "^9.11.3",
+    "auth0-js": "^9.13.2",
     "axios": "^0.19.2",
     "body-scroll-lock": "^3.0.1",
     "clipboard": "^2.0.6",
