@@ -2,11 +2,15 @@
   div
     transition(v-if="notification" name='fade')
       sui-label.success-label(inverted color='pink') プロフィールに反映されました
-    CategoryLabels(:username="user.username")
+    CategoryLabels(:username="user.username" :categoryId="targetCategoryId")
     GrayCenterText(content="カテゴリごとに質問を選ぼう!")
     p(v-for="(question, index) in categoryQuestions")
       QuestionCard(:question="question" @onModal="modalQuestionToggle")
-      CategoryLabels(v-show="index !== 0 && index % 10 === 0" :username="user.username")
+      CategoryLabels(
+        v-show="index !== 0 && index % 10 === 0"
+        :username="user.username"
+        :categoryId="targetCategoryId"
+      )
       GrayCenterText(v-show="index !== 0 && index % 10 === 0" content="他のカテゴリー")
     ModalForm(
       v-show="placeholder"
@@ -98,6 +102,10 @@ export default class Questions extends Vue {
 
   public mounted() {
     this.watchScroll();
+  }
+
+  private get targetCategoryId() {
+    return String(this.$parent.$route.params.categoryId);
   }
 
   @Emit()
