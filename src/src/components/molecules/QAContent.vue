@@ -3,11 +3,13 @@
     sui-card.raised.qa-card
       sui-card-content
         sui-card-header.card-header Q. {{ questionAbout }}
-        router-link(:to="{ name: 'impression', params: { impressionId: impressionId }}")
           div(style="display: flex;")
-            ProfileRoundImage.user-icon(:url="url" size="mini")
-            sui-label.baloon(pointing='left' size='medium' style="background: #f5f5f5")
-              p(style="color: #555555") {{ content }}
+            router-link(:to="{ name: 'profile', params: { userName: this.$route.params.userName }}")
+              ProfileRoundImage.user-icon(:url="url" size="mini")
+            router-link.card-content-width(
+              :to="{ name: 'impression', params: { impressionId: impressionId }}")
+              sui-label.baloon(pointing='left' size='medium' style="background: #f5f5f5")
+                p(style="color: #555555") {{ content }}
 </template>
 
 <script lang='ts' scoped>
@@ -47,9 +49,14 @@ export default class QAContent extends Vue {
  margin 5px !important
 
 .baloon
-  width 80%
   word-break break-word
   margin 6px !important
   padding 8px !important
   color #555555 !important
+  width 90% !important
+
+
+.card-content-width
+  width -webkit-fill-available
+  width -moz-available
 </style>

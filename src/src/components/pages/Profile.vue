@@ -245,7 +245,7 @@ export default class Profile extends Vue {
 
 <style lang="stylus" scoped>
 .active
-  border-bottoms solid linear-gradient(180deg, rgba(180,100,163,0.47) 0%, rgba(255,255,255,0) 100%) 1px
+  border-bottoms solid linear-gradient(180deg, #B464A3 0%, rgba(255,255,255,0) 100%) 1px
 
 .right-icon
   float right
