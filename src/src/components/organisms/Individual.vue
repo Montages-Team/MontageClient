@@ -20,6 +20,15 @@
           :createrUserName="item.createrUserName"
           @toggleShareModal="openShareModal(item.impressionId, item.about)"
           @modalToggle="modalImpressionToggle(item.about, item.questionId)")
+        sui-segment(style="border: none; box-shadow: none;")
+          h3 画像と一緒にツイートしてみませんか?
+          h4 ツイートするとこんな風に投稿ができます
+          sui-image(src=`https://res.cloudinary.com/hzmikcp3i/image/upload/v1588345541/production/montage-tweet_blypiz.png` centered)
+          sui-button-group.share-twitter
+            a(:href="TwitterShareUrl(item.about)" target="_blank")
+              sui-button.button-width(
+                basic color='blue' content='この回答をTwitterでシェア',
+                icon='twitter' size="medium")
         div.another-answer-title
           p.sub-title 他の回答
       //- isTargetがfalseの場合
@@ -32,6 +41,8 @@
       //- 指定した回答の他に回答がない場合
       div(v-if="impressionsCount == 1" style="color: #777;")
         span(style="margin: 8px;") ほかの回答はまだありません
+
+
 </template>
 
 <script lang="ts">
@@ -182,6 +193,12 @@ export default class Individual extends Vue {
     this.placeholder = placeholder || '';
     this.selectedQuestionId = Number(selectedQuetionId);
   }
+
+  private TwitterShareUrl(answer: string) {
+    const baseTwitterUrl = `https://twitter.com/intent/tweet`;
+    const sharedUrl = `https://montage.bio`  + this.$route.path;
+    return `${baseTwitterUrl}?text=${answer}%20%23Montage&url=${sharedUrl}`;
+  }
 }
 </script>
 
@@ -223,4 +240,14 @@ p.sub-title
   font-size 12px !important
   padding 4px !important
   line-height normal !important
+
+.share-twitter
+  padding 8px !important
+  margin-left 0 !important
+  display grid !important
+
+.button-width
+  width -webkit-fill-available
+  width -moz-available
+
 </style>
