@@ -76,5 +76,11 @@ app.get('/profile/:userName/impression/:impressionId', (req, res, next) => {
     }).catch(err => console.log(err));
 });
 
+app.get(/.*/, (req, res, next) => {
+    const filePath = `${__dirname}/dist/index.html`;
+    res.sendfile(filePath);
+});
+
+
 app.listen(port);
 console.log('server started '+ port);
