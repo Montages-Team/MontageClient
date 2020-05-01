@@ -29,6 +29,7 @@ const isBot = function(userAgent) {
     userAgent.includes('ia_archiver') ||
     userAgent.includes('facebookexternalhit') ||
     userAgent.includes('twitterbot') ||
+    userAgent.includes('slackbot') ||
     userAgent.includes('developers\.google\.com') ? true : false
 }
 
