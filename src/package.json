@@ -33,7 +33,7 @@
     "is-builtin-module": "^3.0.0",
     "ismobilejs": "^1.0.3",
     "jwt-decode": "^2.2.0",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.1",
     "pug-plain-loader": "^1.0.0",
     "query-string": "^6.8.2",
     "register-service-worker": "^1.6.2",
