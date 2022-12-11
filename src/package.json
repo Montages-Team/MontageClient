@@ -26,7 +26,7 @@
     "axios": "^0.19.2",
     "body-scroll-lock": "^3.0.1",
     "clipboard": "^2.0.6",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "fetch": "^1.1.0",
     "graphql": "^14.5.3",
     "gulp": "^4.0.2",
